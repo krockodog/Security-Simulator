@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Shield, Target, Network, AlertTriangle, Lock, Search } from 'lucide-react'
+import { Shield, Target, Network, AlertTriangle, Lock, Search, FileText, BookOpen } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -13,7 +13,7 @@ export default function HomePage() {
             <Shield className="h-8 w-8 text-blue-600" />
             <div>
               <h1 className="text-2xl font-bold text-slate-900">CompTIA Security+ SY0-701</h1>
-              <p className="text-sm text-slate-600">PBQ Simulator</p>
+              <p className="text-sm text-slate-600">Exam Preparation Platform</p>
             </div>
           </div>
         </div>
@@ -25,14 +25,83 @@ export default function HomePage() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
             <Target className="h-4 w-4" />
-            Exam-Realistic Practice
+            Vollständige Prüfungsvorbereitung
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-            Master Performance-Based Questions
+            Security+ Prüfungsvorbereitung
           </h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Practice realistic PBQ scenarios that closely replicate the actual CompTIA Security+ OneVUE exam environment with interactive drag-and-drop functionality.
+            Realistische PBQs, 60-Fragen Exam und Akronym-Quiz für die CompTIA Security+ SY0-701 Zertifizierung.
           </p>
+        </div>
+
+        {/* Exam Modes */}
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
+          {/* Full Exam */}
+          <Card className="hover:shadow-xl transition-shadow border-2 border-blue-300">
+            <CardHeader className="bg-gradient-to-br from-blue-100 to-white">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 bg-blue-600 rounded-lg">
+                  <FileText className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <CardTitle className="text-2xl">60-Fragen Exam</CardTitle>
+                  <CardDescription>Vollständige Prüfungssimulation</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <p className="text-slate-600 mb-4">
+                Komplette Prüfungssimulation mit 60 zufälligen Fragen aus allen Domains. 90 Minuten Zeit, 765+ Punkte zum Bestehen. Auswertung am Ende!
+              </p>
+              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-4">
+                <span className="px-2 py-1 bg-slate-100 rounded">60 Fragen</span>
+                <span className="px-2 py-1 bg-slate-100 rounded">90 Minuten</span>
+                <span className="px-2 py-1 bg-slate-100 rounded">765+ zum Bestehen</span>
+              </div>
+              <Link href="/exam">
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-6">
+                  Exam starten
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+          {/* Acronym Quiz */}
+          <Card className="hover:shadow-xl transition-shadow border-2 border-green-300">
+            <CardHeader className="bg-gradient-to-br from-green-100 to-white">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 bg-green-600 rounded-lg">
+                  <BookOpen className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <CardTitle className="text-2xl">Akronymen Quiz</CardTitle>
+                  <CardDescription>Lerne wichtige Begriffe</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <p className="text-slate-600 mb-4">
+                Teste dein Wissen über Security+ Akronyme! 40 Fragen mit sofortiger Rückmeldung und Erklärungen nach jeder Antwort.
+              </p>
+              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-4">
+                <span className="px-2 py-1 bg-slate-100 rounded">40 Akronyme</span>
+                <span className="px-2 py-1 bg-slate-100 rounded">Sofortiges Feedback</span>
+                <span className="px-2 py-1 bg-slate-100 rounded">Mit Erklärungen</span>
+              </div>
+              <Link href="/acronym-quiz">
+                <Button className="w-full bg-green-600 hover:bg-green-700 text-lg py-6">
+                  Quiz starten
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* PBQ Section Header */}
+        <div className="text-center mb-8">
+          <h3 className="text-3xl font-bold text-slate-900 mb-2">Performance-Based Questions (PBQs)</h3>
+          <p className="text-lg text-slate-600">Interaktive Szenarien mit Drag-and-Drop Funktionalität</p>
         </div>
 
         {/* Instructions Card */}
@@ -40,9 +109,9 @@ export default function HomePage() {
           <CardHeader className="bg-slate-50">
             <CardTitle className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-amber-600" />
-              Exam Instructions
+              PBQ Instructions
             </CardTitle>
-            <CardDescription>Read carefully before starting the simulation</CardDescription>
+            <CardDescription>Lese die Anweisungen vor dem Start</CardDescription>
           </CardHeader>
           <CardContent className="pt-6 space-y-4">
             <div className="grid md:grid-cols-2 gap-6">
@@ -55,36 +124,36 @@ export default function HomePage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
-                    <span>Interactive interfaces similar to actual exam</span>
+                    <span>Interaktive Oberflächen wie im echten Exam</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
-                    <span>Immediate feedback and detailed explanations</span>
+                    <span>Sofortiges Feedback mit Erklärungen</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
-                    <span>Can reset and retry each question</span>
+                    <span>Beliebig oft wiederholen</span>
                   </li>
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900 mb-2">Instructions</h3>
+                <h3 className="font-semibold text-slate-900 mb-2">Anleitung</h3>
                 <ul className="space-y-2 text-sm text-slate-600">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
-                    <span>Read the scenario carefully before starting</span>
+                    <span>Lese das Szenario sorgfältig</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
-                    <span>Follow the specific instructions for each PBQ type</span>
+                    <span>Folge den spezifischen Anweisungen</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
-                    <span>Complete all required fields before submitting</span>
+                    <span>Fülle alle Felder aus vor dem Absenden</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
-                    <span>Submit when ready to see your score and explanation</span>
+                    <span>Absenden um Score und Erklärung zu sehen</span>
                   </li>
                 </ul>
               </div>
@@ -220,9 +289,9 @@ export default function HomePage() {
           <CardContent className="pt-6">
             <div className="text-center">
               <Shield className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-2">Prepare for Success</h3>
+              <h3 className="text-2xl font-bold mb-2">Vollständige Prüfungsvorbereitung</h3>
               <p className="text-slate-300 max-w-2xl mx-auto">
-                These realistic PBQ simulations are designed to help you master the hands-on skills tested in the CompTIA Security+ SY0-701 certification exam. Practice as many times as you need to build confidence.
+                Bereite dich optimal auf die CompTIA Security+ SY0-701 Zertifizierung vor: Mit realistischen PBQs, einem 60-Fragen Exam und Akronym-Quiz. Übe so oft du willst und baue Selbstvertrauen auf!
               </p>
             </div>
           </CardContent>
@@ -233,7 +302,7 @@ export default function HomePage() {
       <footer className="border-t bg-white mt-12">
         <div className="container mx-auto px-4 py-6 max-w-6xl">
           <p className="text-center text-sm text-slate-600">
-            CompTIA Security+ SY0-701 PBQ Simulator • Practice Environment
+            CompTIA Security+ SY0-701 Exam Preparation • PBQs • 60-Fragen Exam • Akronym-Quiz
           </p>
         </div>
       </footer>
