@@ -246,7 +246,7 @@ export default function HomePage() {
         {/* PBQ Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {/* PBQ 1: Firewall Rules */}
-          <Card className="hover:shadow-xl transition-shadow border-2">
+          <Card className="hover:shadow-xl transition-shadow border-2 flex flex-col h-full">
             <CardHeader className="bg-gradient-to-br from-blue-50 to-white">
               <div className="flex items-center gap-3 mb-2">
                 <div className="p-2 bg-blue-600 rounded-lg">
@@ -258,7 +258,7 @@ export default function HomePage() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 flex-1 flex flex-col">
               <p className="text-slate-600 mb-4">
                 Configure firewall rules for a corporate network with DMZ. Apply proper rule ordering, implement security best practices, and follow the principle of least privilege.
               </p>
@@ -267,8 +267,8 @@ export default function HomePage() {
                 <span className="px-2 py-1 bg-slate-100 rounded">Network Segmentation</span>
                 <span className="px-2 py-1 bg-slate-100 rounded">Implicit Deny</span>
               </div>
-              <Link href="/pbq/firewall">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">
+              <Link href="/pbq/firewall" className="mt-auto">
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-lg transition-all">
                   Start PBQ 1
                 </Button>
               </Link>
@@ -276,7 +276,7 @@ export default function HomePage() {
           </Card>
 
           {/* PBQ 2: Incident Response */}
-          <Card className="hover:shadow-xl transition-shadow border-2">
+          <Card className="hover:shadow-xl transition-shadow border-2 flex flex-col h-full">
             <CardHeader className="bg-gradient-to-br from-red-50 to-white">
               <div className="flex items-center gap-3 mb-2">
                 <div className="p-2 bg-red-600 rounded-lg">
@@ -288,7 +288,7 @@ export default function HomePage() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 flex-1 flex flex-col">
               <p className="text-slate-600 mb-4">
                 Respond to a ransomware incident following the NIST incident response lifecycle. Properly sequence steps from detection through post-incident activities.
               </p>
@@ -297,8 +297,8 @@ export default function HomePage() {
                 <span className="px-2 py-1 bg-slate-100 rounded">Containment</span>
                 <span className="px-2 py-1 bg-slate-100 rounded">Forensics</span>
               </div>
-              <Link href="/pbq/incident-response">
-                <Button className="w-full bg-red-600 hover:bg-red-700">
+              <Link href="/pbq/incident-response" className="mt-auto">
+                <Button className="w-full bg-red-600 hover:bg-red-700 shadow-md hover:shadow-lg transition-all">
                   Start PBQ 2
                 </Button>
               </Link>
@@ -306,7 +306,7 @@ export default function HomePage() {
           </Card>
 
           {/* PBQ 3: VPN Configuration */}
-          <Card className="hover:shadow-xl transition-shadow border-2">
+          <Card className="hover:shadow-xl transition-shadow border-2 flex flex-col h-full">
             <CardHeader className="bg-gradient-to-br from-indigo-50 to-white">
               <div className="flex items-center gap-3 mb-2">
                 <div className="p-2 bg-indigo-600 rounded-lg">
@@ -318,7 +318,7 @@ export default function HomePage() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 flex-1 flex flex-col">
               <p className="text-slate-600 mb-4">
                 Configure a secure Site-to-Site IPsec VPN tunnel. Select appropriate encryption, hashing, DH group, and protocol to meet current security standards.
               </p>
@@ -327,8 +327,8 @@ export default function HomePage() {
                 <span className="px-2 py-1 bg-slate-100 rounded">Encryption</span>
                 <span className="px-2 py-1 bg-slate-100 rounded">VPN</span>
               </div>
-              <Link href="/pbq/vpn-config">
-                <Button className="w-full bg-indigo-600 hover:bg-indigo-700">
+              <Link href="/pbq/vpn-config" className="mt-auto">
+                <Button className="w-full bg-indigo-600 hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all">
                   Start PBQ 3
                 </Button>
               </Link>
@@ -336,7 +336,7 @@ export default function HomePage() {
           </Card>
 
           {/* PBQ 4: Threat Analysis */}
-          <Card className="hover:shadow-xl transition-shadow border-2">
+          <Card className="hover:shadow-xl transition-shadow border-2 flex flex-col h-full">
             <CardHeader className="bg-gradient-to-br from-orange-50 to-white">
               <div className="flex items-center gap-3 mb-2">
                 <div className="p-2 bg-orange-600 rounded-lg">
@@ -348,7 +348,7 @@ export default function HomePage() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 flex-1 flex flex-col">
               <p className="text-slate-600 mb-4">
                 Identify attack types and match them with appropriate remediation. Analyze server logs to determine Patient Zero in a malware outbreak scenario.
               </p>
@@ -357,8 +357,8 @@ export default function HomePage() {
                 <span className="px-2 py-1 bg-slate-100 rounded">Attack Types</span>
                 <span className="px-2 py-1 bg-slate-100 rounded">Forensics</span>
               </div>
-              <Link href="/pbq/threat-analysis">
-                <Button className="w-full bg-orange-600 hover:bg-orange-700">
+              <Link href="/pbq/threat-analysis" className="mt-auto">
+                <Button className="w-full bg-orange-600 hover:bg-orange-700 shadow-md hover:shadow-lg transition-all">
                   Start PBQ 4
                 </Button>
               </Link>
@@ -366,7 +366,7 @@ export default function HomePage() {
           </Card>
 
           {/* PBQ 5: System Log Analysis */}
-          <Card className="hover:shadow-xl transition-shadow border-2">
+          <Card className="hover:shadow-xl transition-shadow border-2 flex flex-col h-full">
             <CardHeader className="bg-gradient-to-br from-purple-50 to-white">
               <div className="flex items-center gap-3 mb-2">
                 <div className="p-2 bg-purple-600 rounded-lg">
@@ -378,7 +378,7 @@ export default function HomePage() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 flex-1 flex flex-col">
               <p className="text-slate-600 mb-4">
                 Investigate a sophisticated APT attack by analyzing system, security, and firewall logs. Identify Patient Zero, attack vectors, and compromised accounts.
               </p>
@@ -387,8 +387,8 @@ export default function HomePage() {
                 <span className="px-2 py-1 bg-slate-100 rounded">APT Analysis</span>
                 <span className="px-2 py-1 bg-slate-100 rounded">Kill Chain</span>
               </div>
-              <Link href="/pbq/log-analysis">
-                <Button className="w-full bg-purple-600 hover:bg-purple-700">
+              <Link href="/pbq/log-analysis" className="mt-auto">
+                <Button className="w-full bg-purple-600 hover:bg-purple-700 shadow-md hover:shadow-lg transition-all">
                   Start PBQ 5
                 </Button>
               </Link>
@@ -396,7 +396,7 @@ export default function HomePage() {
           </Card>
 
           {/* PBQ 6: Certificate Management */}
-          <Card className="hover:shadow-xl transition-shadow border-2">
+          <Card className="hover:shadow-xl transition-shadow border-2 flex flex-col h-full">
             <CardHeader className="bg-gradient-to-br from-teal-50 to-white">
               <div className="flex items-center gap-3 mb-2">
                 <div className="p-2 bg-teal-600 rounded-lg">
@@ -408,7 +408,7 @@ export default function HomePage() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 flex-1 flex flex-col">
               <p className="text-slate-600 mb-4">
                 Troubleshoot certificate issues across the enterprise. Identify expired, revoked, and misconfigured certificates and implement proper remediation actions.
               </p>
@@ -417,8 +417,8 @@ export default function HomePage() {
                 <span className="px-2 py-1 bg-slate-100 rounded">Certificate Lifecycle</span>
                 <span className="px-2 py-1 bg-slate-100 rounded">Troubleshooting</span>
               </div>
-              <Link href="/pbq/certificate-mgmt">
-                <Button className="w-full bg-teal-600 hover:bg-teal-700">
+              <Link href="/pbq/certificate-mgmt" className="mt-auto">
+                <Button className="w-full bg-teal-600 hover:bg-teal-700 shadow-md hover:shadow-lg transition-all">
                   Start PBQ 6
                 </Button>
               </Link>
