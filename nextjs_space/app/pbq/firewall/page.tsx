@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Shield, Network, ArrowLeft, Send, CheckCircle2, XCircle } from 'lucide-react'
 import Link from 'next/link'
@@ -10,12 +10,28 @@ import { DragDropArea } from '@/components/pbq/drag-drop-area'
 import { firewallScenario, firewallRules, correctFirewallOrder, firewallExplanation, type FirewallRule } from '@/lib/pbq-data'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 
+// Shuffle function to randomize array
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
+
 export default function FirewallPBQPage() {
   const router = useRouter()
+  const [shuffledRules, setShuffledRules] = useState<FirewallRule[]>([])
   const [userOrder, setUserOrder] = useState<string[]>([])
   const [submitted, setSubmitted] = useState(false)
   const [score, setScore] = useState(0)
   const [isCorrect, setIsCorrect] = useState(false)
+
+  // Shuffle rules on component mount
+  useEffect(() => {
+    setShuffledRules(shuffleArray(firewallRules))
+  }, [])
 
   const handleSubmit = async () => {
     if (userOrder?.length !== firewallRules?.length) {
@@ -63,6 +79,7 @@ export default function FirewallPBQPage() {
     setSubmitted(false)
     setScore(0)
     setIsCorrect(false)
+    setShuffledRules(shuffleArray(firewallRules)) // Re-shuffle on reset
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -139,7 +156,7 @@ export default function FirewallPBQPage() {
           </CardHeader>
           <CardContent>
             <DragDropArea
-              availableItems={firewallRules ?? []}
+              availableItems={shuffledRules}
               onOrderChange={setUserOrder}
               renderItem={renderFirewallRule}
               disabled={submitted}

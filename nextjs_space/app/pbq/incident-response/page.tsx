@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Shield, AlertTriangle, ArrowLeft, Send, CheckCircle2, XCircle } from 'lucide-react'
 import Link from 'next/link'
@@ -16,12 +16,28 @@ import {
 } from '@/lib/pbq-data'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 
+// Shuffle function to randomize array
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
+
 export default function IncidentResponsePBQPage() {
   const router = useRouter()
+  const [shuffledSteps, setShuffledSteps] = useState<IncidentResponseStep[]>([])
   const [userOrder, setUserOrder] = useState<string[]>([])
   const [submitted, setSubmitted] = useState(false)
   const [score, setScore] = useState(0)
   const [isCorrect, setIsCorrect] = useState(false)
+
+  // Shuffle steps on component mount
+  useEffect(() => {
+    setShuffledSteps(shuffleArray(incidentResponseSteps))
+  }, [])
 
   const handleSubmit = async () => {
     if (userOrder?.length !== incidentResponseSteps?.length) {
@@ -69,6 +85,7 @@ export default function IncidentResponsePBQPage() {
     setSubmitted(false)
     setScore(0)
     setIsCorrect(false)
+    setShuffledSteps(shuffleArray(incidentResponseSteps)) // Re-shuffle on reset
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -165,7 +182,7 @@ export default function IncidentResponsePBQPage() {
           </CardHeader>
           <CardContent>
             <DragDropArea
-              availableItems={incidentResponseSteps ?? []}
+              availableItems={shuffledSteps}
               onOrderChange={setUserOrder}
               renderItem={renderIncidentStep}
               disabled={submitted}
