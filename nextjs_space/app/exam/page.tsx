@@ -4,15 +4,24 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle2, XCircle, Home, RotateCcw } from 'lucide-react';
+import { CheckCircle2, XCircle, Home, RotateCcw, List, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { getRandomQuestions, ExamQuestion } from '@/lib/exam-data';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 
 interface UserAnswer {
   questionId: string;
-  selectedOption: number;
+  selectedOptions: number[]; // Changed to support multiple selections
 }
 
 export default function ExamPage() {
@@ -20,9 +29,10 @@ export default function ExamPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
   const [showResults, setShowResults] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [selectedOptions, setSelectedOptions] = useState<number[]>([]); // Changed to array
   const [timeRemaining, setTimeRemaining] = useState(90 * 60); // 90 minutes in seconds
   const [examStarted, setExamStarted] = useState(false);
+  const [showOverview, setShowOverview] = useState(false);
 
   useEffect(() => {
     // Initialize exam with random questions
@@ -51,15 +61,33 @@ export default function ExamPage() {
 
   const handleStartExam = () => {
     setExamStarted(true);
-    setSelectedOption(null); // Ensure no option is pre-selected
+    setSelectedOptions([]); // Ensure no options are pre-selected
   };
 
   const handleAnswerSelect = (optionIndex: number) => {
-    setSelectedOption(optionIndex);
+    const currentQ = questions[currentQuestion];
+    
+    if (currentQ.isMultipleChoice) {
+      // Toggle selection for multiple choice
+      setSelectedOptions(prev => {
+        if (prev.includes(optionIndex)) {
+          return prev.filter(i => i !== optionIndex);
+        } else {
+          // Only allow up to requiredSelections
+          if (prev.length < (currentQ.requiredSelections || 2)) {
+            return [...prev, optionIndex];
+          }
+          return prev;
+        }
+      });
+    } else {
+      // Single selection for radio
+      setSelectedOptions([optionIndex]);
+    }
   };
 
   const handleNextQuestion = () => {
-    if (selectedOption !== null) {
+    if (selectedOptions.length > 0) {
       // Save answer
       const newAnswers = [...userAnswers];
       const existingAnswerIndex = newAnswers.findIndex(
@@ -67,11 +95,11 @@ export default function ExamPage() {
       );
       
       if (existingAnswerIndex !== -1) {
-        newAnswers[existingAnswerIndex].selectedOption = selectedOption;
+        newAnswers[existingAnswerIndex].selectedOptions = selectedOptions;
       } else {
         newAnswers.push({
           questionId: questions[currentQuestion].id,
-          selectedOption,
+          selectedOptions: [...selectedOptions],
         });
       }
       setUserAnswers(newAnswers);
@@ -84,7 +112,7 @@ export default function ExamPage() {
         const nextAnswer = newAnswers.find(
           (a) => a.questionId === questions[nextQuestionIndex].id
         );
-        setSelectedOption(nextAnswer?.selectedOption ?? null);
+        setSelectedOptions(nextAnswer?.selectedOptions ?? []);
       }
     }
   };
@@ -97,8 +125,17 @@ export default function ExamPage() {
       const prevAnswer = userAnswers.find(
         (a) => a.questionId === questions[prevQuestionIndex].id
       );
-      setSelectedOption(prevAnswer?.selectedOption ?? null);
+      setSelectedOptions(prevAnswer?.selectedOptions ?? []);
     }
+  };
+
+  const jumpToQuestion = (index: number) => {
+    setCurrentQuestion(index);
+    const answer = userAnswers.find(
+      (a) => a.questionId === questions[index].id
+    );
+    setSelectedOptions(answer?.selectedOptions ?? []);
+    setShowOverview(false);
   };
 
   const handleSubmitExam = () => {
@@ -109,8 +146,25 @@ export default function ExamPage() {
     let correct = 0;
     userAnswers.forEach((answer) => {
       const question = questions.find((q) => q.id === answer.questionId);
-      if (question && question.correctAnswer === answer.selectedOption) {
-        correct++;
+      if (question) {
+        if (question.isMultipleChoice && question.correctAnswers) {
+          // Check if all correct answers are selected and no incorrect ones
+          const sortedUserAnswers = [...answer.selectedOptions].sort();
+          const sortedCorrectAnswers = [...question.correctAnswers].sort();
+          
+          if (
+            sortedUserAnswers.length === sortedCorrectAnswers.length &&
+            sortedUserAnswers.every((val, index) => val === sortedCorrectAnswers[index])
+          ) {
+            correct++;
+          }
+        } else {
+          // Single choice question
+          if (answer.selectedOptions.length === 1 && 
+              question.correctAnswer === answer.selectedOptions[0]) {
+            correct++;
+          }
+        }
       }
     });
     // CompTIA uses scaled scoring: 100-900, passing is 750
@@ -129,9 +183,14 @@ export default function ExamPage() {
     setCurrentQuestion(0);
     setUserAnswers([]);
     setShowResults(false);
-    setSelectedOption(null);
+    setSelectedOptions([]);
     setTimeRemaining(90 * 60);
     setExamStarted(false);
+    setShowOverview(false);
+  };
+
+  const isQuestionAnswered = (questionId: string) => {
+    return userAnswers.some((a) => a.questionId === questionId);
   };
 
   if (questions.length === 0) {
@@ -188,7 +247,19 @@ export default function ExamPage() {
     const passed = score >= 765;
     const correctCount = userAnswers.filter((answer) => {
       const question = questions.find((q) => q.id === answer.questionId);
-      return question && question.correctAnswer === answer.selectedOption;
+      if (!question) return false;
+      
+      if (question.isMultipleChoice && question.correctAnswers) {
+        const sortedUserAnswers = [...answer.selectedOptions].sort();
+        const sortedCorrectAnswers = [...question.correctAnswers].sort();
+        return (
+          sortedUserAnswers.length === sortedCorrectAnswers.length &&
+          sortedUserAnswers.every((val, index) => val === sortedCorrectAnswers[index])
+        );
+      } else {
+        return answer.selectedOptions.length === 1 && 
+               question.correctAnswer === answer.selectedOptions[0];
+      }
     }).length;
 
     return (
@@ -247,8 +318,20 @@ export default function ExamPage() {
             <CardContent className="space-y-6">
               {questions.map((question, index) => {
                 const userAnswer = userAnswers.find((a) => a.questionId === question.id);
-                const isCorrect = userAnswer?.selectedOption === question.correctAnswer;
                 const wasAnswered = userAnswer !== undefined;
+                
+                let isCorrect = false;
+                if (userAnswer && question.isMultipleChoice && question.correctAnswers) {
+                  const sortedUserAnswers = [...userAnswer.selectedOptions].sort();
+                  const sortedCorrectAnswers = [...question.correctAnswers].sort();
+                  isCorrect = (
+                    sortedUserAnswers.length === sortedCorrectAnswers.length &&
+                    sortedUserAnswers.every((val, idx) => val === sortedCorrectAnswers[idx])
+                  );
+                } else if (userAnswer) {
+                  isCorrect = userAnswer.selectedOptions.length === 1 && 
+                             question.correctAnswer === userAnswer.selectedOptions[0];
+                }
 
                 return (
                   <div key={question.id} className="border-b pb-6 last:border-b-0">
@@ -265,14 +348,21 @@ export default function ExamPage() {
                       <div className="flex-1">
                         <div className="font-semibold mb-2">
                           Frage {index + 1}: {question.question}
+                          {question.isMultipleChoice && (
+                            <span className="ml-2 text-sm text-purple-600 dark:text-purple-400">
+                              (Multiple Choice - {question.requiredSelections || 2} Antworten)
+                            </span>
+                          )}
                         </div>
                         <div className="text-sm text-muted-foreground mb-3">
                           Domain: {question.domain}
                         </div>
                         <div className="space-y-2">
                           {question.options.map((option, optionIndex) => {
-                            const isUserAnswer = userAnswer?.selectedOption === optionIndex;
-                            const isCorrectAnswer = question.correctAnswer === optionIndex;
+                            const isUserAnswer = userAnswer?.selectedOptions.includes(optionIndex);
+                            const isCorrectAnswer = question.isMultipleChoice 
+                              ? question.correctAnswers?.includes(optionIndex)
+                              : question.correctAnswer === optionIndex;
 
                             return (
                               <div
@@ -346,6 +436,55 @@ export default function ExamPage() {
                   {getAnsweredCount()} / {questions.length}
                 </div>
               </div>
+              <Sheet open={showOverview} onOpenChange={setShowOverview}>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <List className="h-4 w-4 mr-2" />
+                    Übersicht
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="w-full sm:max-w-md overflow-y-auto">
+                  <SheetHeader>
+                    <SheetTitle>Fragenübersicht</SheetTitle>
+                    <SheetDescription>
+                      {getAnsweredCount()} von {questions.length} Fragen beantwortet
+                    </SheetDescription>
+                  </SheetHeader>
+                  <div className="mt-6 grid grid-cols-5 gap-2">
+                    {questions.map((q, idx) => {
+                      const answered = isQuestionAnswered(q.id);
+                      return (
+                        <Button
+                          key={q.id}
+                          variant={idx === currentQuestion ? "default" : answered ? "secondary" : "outline"}
+                          size="sm"
+                          onClick={() => jumpToQuestion(idx)}
+                          className={`h-12 ${!answered ? 'border-amber-500 text-amber-600 hover:text-amber-700' : ''}`}
+                        >
+                          {idx + 1}
+                          {!answered && (
+                            <AlertCircle className="h-3 w-3 ml-1 text-amber-600" />
+                          )}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-6 space-y-2 text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="h-8 w-8 rounded bg-primary" />
+                      <span>Aktuelle Frage</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-8 w-8 rounded bg-secondary" />
+                      <span>Beantwortet</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-8 w-8 rounded border-2 border-amber-500" />
+                      <span>Nicht beantwortet</span>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
             </div>
             <Progress value={((currentQuestion + 1) / questions.length) * 100} />
           </CardContent>
@@ -354,7 +493,14 @@ export default function ExamPage() {
         {/* Question Card */}
         <Card>
           <CardHeader>
-            <CardTitle>Frage {currentQuestion + 1}</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              Frage {currentQuestion + 1}
+              {questions[currentQuestion].isMultipleChoice && (
+                <span className="text-sm font-normal text-purple-600 dark:text-purple-400">
+                  (Wähle {questions[currentQuestion].requiredSelections || 2} Antworten)
+                </span>
+              )}
+            </CardTitle>
             <CardDescription>{questions[currentQuestion].domain}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -362,17 +508,24 @@ export default function ExamPage() {
               <p className="text-lg">{questions[currentQuestion].question}</p>
             </div>
 
-            <RadioGroup
-              value={selectedOption !== null ? selectedOption.toString() : ""}
-              onValueChange={(value) => handleAnswerSelect(parseInt(value))}
-            >
+            {questions[currentQuestion].isMultipleChoice ? (
+              // Multiple Choice - use Checkboxes
               <div className="space-y-3">
                 {questions[currentQuestion].options.map((option, index) => (
                   <div
                     key={index}
-                    className="flex items-center space-x-3 p-4 rounded-lg border-2 hover:border-primary transition-colors cursor-pointer"
+                    className={`flex items-center space-x-3 p-4 rounded-lg border-2 transition-colors cursor-pointer ${
+                      selectedOptions.includes(index) 
+                        ? 'border-primary bg-primary/5' 
+                        : 'hover:border-primary'
+                    }`}
+                    onClick={() => handleAnswerSelect(index)}
                   >
-                    <RadioGroupItem value={index.toString()} id={`option-${index}`} />
+                    <Checkbox
+                      id={`option-${index}`}
+                      checked={selectedOptions.includes(index)}
+                      onCheckedChange={() => handleAnswerSelect(index)}
+                    />
                     <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer">
                       <span className="font-medium mr-2">
                         {String.fromCharCode(65 + index)}.
@@ -382,7 +535,40 @@ export default function ExamPage() {
                   </div>
                 ))}
               </div>
-            </RadioGroup>
+            ) : (
+              // Single Choice - use Radio buttons
+              <RadioGroup
+                value={selectedOptions.length > 0 ? selectedOptions[0].toString() : ""}
+                onValueChange={(value) => handleAnswerSelect(parseInt(value))}
+              >
+                <div className="space-y-3">
+                  {questions[currentQuestion].options.map((option, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center space-x-3 p-4 rounded-lg border-2 hover:border-primary transition-colors cursor-pointer"
+                    >
+                      <RadioGroupItem value={index.toString()} id={`option-${index}`} />
+                      <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer">
+                        <span className="font-medium mr-2">
+                          {String.fromCharCode(65 + index)}.
+                        </span>
+                        {option}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+              </RadioGroup>
+            )}
+
+            {/* Warning for multiple choice */}
+            {questions[currentQuestion].isMultipleChoice && (
+              <div className="text-sm text-purple-600 dark:text-purple-400 flex items-center gap-2">
+                <AlertCircle className="h-4 w-4" />
+                <span>
+                  {selectedOptions.length} von {questions[currentQuestion].requiredSelections || 2} Antworten ausgewählt
+                </span>
+              </div>
+            )}
 
             <div className="flex gap-4">
               <Button
@@ -395,7 +581,7 @@ export default function ExamPage() {
               {currentQuestion < questions.length - 1 ? (
                 <Button
                   onClick={handleNextQuestion}
-                  disabled={selectedOption === null}
+                  disabled={selectedOptions.length === 0}
                   className="flex-1"
                 >
                   Nächste Frage
@@ -412,8 +598,12 @@ export default function ExamPage() {
             </div>
 
             {getAnsweredCount() < questions.length && currentQuestion === questions.length - 1 && (
-              <div className="text-sm text-amber-600 dark:text-amber-400 text-center">
-                Bitte beantworte alle Fragen, bevor du die Prüfung abgibst
+              <div className="text-sm text-amber-600 dark:text-amber-400 text-center flex items-center justify-center gap-2">
+                <AlertCircle className="h-4 w-4" />
+                <span>
+                  Bitte beantworte alle Fragen, bevor du die Prüfung abgibst.
+                  Klicke auf "Übersicht" um zu sehen, welche Fragen noch fehlen.
+                </span>
               </div>
             )}
           </CardContent>
