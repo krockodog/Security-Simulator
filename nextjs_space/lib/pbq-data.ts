@@ -540,3 +540,355 @@ export const threatAnalysisExplanation = {
     "False Negatives: Clean scan results don't guarantee cleanliness if definitions are outdated"
   ]
 };
+
+// PBQ 5: System Log Analysis
+export interface SystemLogEntry {
+  id: string;
+  host: string;
+  timestamp: string;
+  logType: 'System' | 'Security' | 'Application' | 'Firewall';
+  severity: 'Info' | 'Warning' | 'Error' | 'Critical';
+  message: string;
+  pid?: number;
+  user?: string;
+  sourceIp?: string;
+}
+
+export interface LogQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctAnswer: string;
+  explanation: string;
+}
+
+export const systemLogAnalysisScenario = {
+  title: "System Log Analysis & Forensic Investigation",
+  scenario: `You are a security analyst investigating suspicious activity on your network. Multiple systems have reported anomalies, and you need to analyze system logs, security logs, and firewall logs to determine:
+
+1. **What type of attack occurred?**
+2. **Which user account was compromised?**
+3. **What was the attack vector (initial access method)?**
+4. **Which system was Patient Zero?**
+5. **What remediation steps should be taken?**
+
+Your organization uses Windows servers with standard logging enabled. The Security Operations Center (SOC) has collected logs from multiple sources spanning a 24-hour period. Analyze the logs carefully to identify the attack timeline, tactics, and indicators of compromise (IOCs).`,
+  instructions: "Review all log entries from different systems and sources. Answer each question based on your forensic analysis of the logs. Pay attention to timestamps, user accounts, source IPs, and process behaviors."
+};
+
+export const systemLogEntries: SystemLogEntry[] = [
+  // Web Server - Initial compromise
+  { id: 'log1', host: 'WEB-SRV-01', timestamp: '2024-01-15 08:45:12', logType: 'Application', severity: 'Info', message: 'IIS: GET /login.php - 200 OK', sourceIp: '203.0.113.45' },
+  { id: 'log2', host: 'WEB-SRV-01', timestamp: '2024-01-15 09:23:41', logType: 'Application', severity: 'Warning', message: 'IIS: Multiple failed login attempts detected', sourceIp: '203.0.113.45' },
+  { id: 'log3', host: 'WEB-SRV-01', timestamp: '2024-01-15 09:24:15', logType: 'Security', severity: 'Warning', message: 'Account lockout: admin after 10 failed attempts', user: 'admin' },
+  { id: 'log4', host: 'WEB-SRV-01', timestamp: '2024-01-15 09:31:22', logType: 'Application', severity: 'Info', message: 'IIS: POST /upload.php - SQL injection attempt blocked by WAF', sourceIp: '203.0.113.45' },
+  { id: 'log5', host: 'WEB-SRV-01', timestamp: '2024-01-15 10:15:33', logType: 'Security', severity: 'Critical', message: 'Successful login: jdavis from 203.0.113.45', user: 'jdavis', sourceIp: '203.0.113.45' },
+  { id: 'log6', host: 'WEB-SRV-01', timestamp: '2024-01-15 10:16:01', logType: 'Application', severity: 'Warning', message: 'Unusual file upload: cmd.php (detected web shell patterns)', user: 'jdavis' },
+  { id: 'log7', host: 'WEB-SRV-01', timestamp: '2024-01-15 10:16:45', logType: 'System', severity: 'Error', message: 'Process created: cmd.exe (PID: 3344) by w3wp.exe', pid: 3344 },
+  
+  // Firewall logs showing lateral movement
+  { id: 'log8', host: 'FIREWALL-01', timestamp: '2024-01-15 10:17:12', logType: 'Firewall', severity: 'Info', message: 'Allowed: 10.0.10.50 -> 192.168.10.100:445 (SMB)', sourceIp: '10.0.10.50' },
+  { id: 'log9', host: 'FIREWALL-01', timestamp: '2024-01-15 10:17:45', logType: 'Firewall', severity: 'Warning', message: 'Port scan detected: 10.0.10.50 scanning 192.168.10.0/24', sourceIp: '10.0.10.50' },
+  
+  // Database Server - Lateral movement target
+  { id: 'log10', host: 'DB-SRV-02', timestamp: '2024-01-15 10:18:33', logType: 'Security', severity: 'Critical', message: 'Failed login attempt: Administrator from 10.0.10.50', sourceIp: '10.0.10.50' },
+  { id: 'log11', host: 'DB-SRV-02', timestamp: '2024-01-15 10:19:41', logType: 'Security', severity: 'Critical', message: 'Successful login: svc_backup from 10.0.10.50 using NTLM', user: 'svc_backup', sourceIp: '10.0.10.50' },
+  { id: 'log12', host: 'DB-SRV-02', timestamp: '2024-01-15 10:20:15', logType: 'System', severity: 'Warning', message: 'Scheduled task created: SystemUpdate by svc_backup', user: 'svc_backup' },
+  { id: 'log13', host: 'DB-SRV-02', timestamp: '2024-01-15 10:21:02', logType: 'Application', severity: 'Error', message: 'SQL Server: Unusual query - SELECT * FROM users; Data exfiltration suspected' },
+  
+  // Domain Controller - Credential dumping
+  { id: 'log14', host: 'DC-01', timestamp: '2024-01-15 10:22:18', logType: 'Security', severity: 'Critical', message: 'LSASS memory access by unknown process (mimikatz.exe)', pid: 4512 },
+  { id: 'log15', host: 'DC-01', timestamp: '2024-01-15 10:22:45', logType: 'Security', severity: 'Critical', message: 'Domain Admin credential access: KRBTGT hash requested', user: 'svc_backup' },
+  
+  // Indicators of persistence
+  { id: 'log16', host: 'WEB-SRV-01', timestamp: '2024-01-15 10:25:33', logType: 'System', severity: 'Critical', message: 'Registry modification: HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run - Persistence established' },
+  { id: 'log17', host: 'WEB-SRV-01', timestamp: '2024-01-15 10:26:12', logType: 'Application', severity: 'Error', message: 'Windows Defender: Real-time protection disabled by administrator' }
+];
+
+export const systemLogQuestions: LogQuestion[] = [
+  {
+    id: 'q1',
+    question: 'What type of attack is being executed based on the log analysis?',
+    options: [
+      'Distributed Denial of Service (DDoS)',
+      'Advanced Persistent Threat (APT) with lateral movement',
+      'Ransomware outbreak',
+      'Insider threat data exfiltration'
+    ],
+    correctAnswer: 'Advanced Persistent Threat (APT) with lateral movement',
+    explanation: 'The logs show a sophisticated multi-stage attack: (1) Initial compromise via web server, (2) Credential harvesting, (3) Lateral movement to database server, (4) Privilege escalation to Domain Admin, (5) Credential dumping (mimikatz), (6) Persistence establishment. This pattern is characteristic of an APT attack.'
+  },
+  {
+    id: 'q2',
+    question: 'Which user account was initially compromised by the attacker?',
+    options: [
+      'admin',
+      'jdavis',
+      'svc_backup',
+      'Administrator'
+    ],
+    correctAnswer: 'jdavis',
+    explanation: 'Log5 shows the first successful login was "jdavis" at 10:15:33 from the malicious IP 203.0.113.45, right after multiple failed attempts on the "admin" account. The attacker then used jdavis credentials to upload a web shell.'
+  },
+  {
+    id: 'q3',
+    question: 'What was the initial attack vector (entry point)?',
+    options: [
+      'SQL Injection vulnerability',
+      'Brute force attack on RDP',
+      'Phishing email with malicious attachment',
+      'Password spraying attack on web application'
+    ],
+    correctAnswer: 'Password spraying attack on web application',
+    explanation: 'Logs show multiple failed login attempts (log2-log4) against different accounts (admin, then jdavis) from the same IP, followed by successful authentication. This pattern indicates a password spraying attack where the attacker tries common passwords against multiple accounts to avoid account lockouts.'
+  },
+  {
+    id: 'q4',
+    question: 'Which system was Patient Zero (the first compromised system)?',
+    options: [
+      'WEB-SRV-01 (Web Server)',
+      'DB-SRV-02 (Database Server)',
+      'DC-01 (Domain Controller)',
+      'FIREWALL-01'
+    ],
+    correctAnswer: 'WEB-SRV-01 (Web Server)',
+    explanation: 'WEB-SRV-01 shows the earliest compromise indicators: initial failed logins (09:23), successful login (10:15), web shell upload (10:16), and command execution (10:16). All subsequent activity on other systems originated from this server, making it Patient Zero.'
+  },
+  {
+    id: 'q5',
+    question: 'What critical security control failed to prevent the web shell upload?',
+    options: [
+      'Antivirus software was disabled',
+      'File upload validation and execution prevention',
+      'Network segmentation',
+      'Multi-factor authentication'
+    ],
+    correctAnswer: 'File upload validation and execution prevention',
+    explanation: 'Log6 shows a web shell (cmd.php) was successfully uploaded despite being detected. The application should have: (1) Blocked PHP file uploads, (2) Validated file types, (3) Prevented execution in upload directories. The web shell execution (log7) indicates inadequate upload security controls.'
+  }
+];
+
+export const systemLogExplanation = {
+  attackTimeline: [
+    '08:45 - Initial reconnaissance: Attacker accesses login page',
+    '09:23-09:31 - Brute force/password spray: Multiple failed logins, then SQL injection attempt',
+    '10:15 - Initial compromise: Successful login as jdavis',
+    '10:16 - Web shell deployment: cmd.php uploaded and executed',
+    '10:17 - Discovery: Port scanning internal network for SMB shares',
+    '10:18-10:19 - Lateral movement: Access DB server using compromised credentials',
+    '10:20-10:21 - Persistence & Exfiltration: Scheduled task creation, data theft',
+    '10:22 - Privilege escalation: Credential dumping (mimikatz) on Domain Controller',
+    '10:25-10:26 - Post-exploitation: Registry persistence, disable AV'
+  ],
+  killChain: [
+    'Reconnaissance: Web application enumeration',
+    'Weaponization: Password list preparation',
+    'Delivery: Password spraying attack',
+    'Exploitation: Successful authentication as jdavis',
+    'Installation: Web shell upload (cmd.php)',
+    'Command & Control: cmd.exe execution for remote commands',
+    'Actions on Objectives: Lateral movement, credential dumping, data exfiltration'
+  ],
+  remediationSteps: [
+    'Immediate: Isolate all affected systems (WEB-SRV-01, DB-SRV-02, DC-01)',
+    'Immediate: Reset passwords for jdavis, svc_backup, and all domain accounts',
+    'Immediate: Block source IP 203.0.113.45 at perimeter firewall',
+    'Short-term: Remove web shells, scheduled tasks, and registry persistence',
+    'Short-term: Force password reset for all users with MFA enrollment',
+    'Short-term: Rebuild compromised systems from known-good backups',
+    'Long-term: Implement MFA on all web applications',
+    'Long-term: Enable file upload restrictions and execution prevention',
+    'Long-term: Deploy EDR solutions for behavioral detection',
+    'Long-term: Network segmentation between DMZ and internal networks'
+  ]
+};
+
+// PBQ 6: Certificate Management
+export interface Certificate {
+  id: string;
+  commonName: string;
+  issuer: string;
+  validFrom: string;
+  validTo: string;
+  keyUsage: string[];
+  extendedKeyUsage?: string[];
+  subjectAltNames?: string[];
+  status: 'Valid' | 'Expired' | 'Revoked' | 'Self-Signed';
+  purpose: string;
+}
+
+export interface CertificateIssue {
+  id: string;
+  certificate: Certificate;
+  issue: string;
+  correctAction: string;
+}
+
+export const certificateManagementScenario = {
+  title: "PKI Certificate Management & Troubleshooting",
+  scenario: `You are a security administrator managing your organization's Public Key Infrastructure (PKI). Several certificate-related issues have been reported across the network:
+
+1. Web server SSL/TLS certificates showing browser warnings
+2. VPN authentication failures
+3. Email encryption problems
+4. Code signing verification errors
+
+Your task is to:
+- Review each digital certificate
+- Identify the security issue or misconfiguration
+- Select the appropriate remediation action
+- Understand PKI best practices and certificate lifecycle management
+
+Organization Details:
+- Internal CA: dc01.company.local
+- External web services: *.company.com
+- Valid certificate authorities: DigiCert, Let's Encrypt, Internal CA
+- Certificate validity period policy: Maximum 13 months for web certificates`,
+  instructions: "Examine each certificate carefully. Identify the problem and select the correct remediation action based on PKI best practices and security standards."
+};
+
+export const certificates: Certificate[] = [
+  {
+    id: 'cert1',
+    commonName: 'www.company.com',
+    issuer: 'Self-Signed',
+    validFrom: '2022-01-01',
+    validTo: '2027-01-01',
+    keyUsage: ['Digital Signature', 'Key Encipherment'],
+    extendedKeyUsage: ['Server Authentication'],
+    subjectAltNames: ['www.company.com', 'company.com'],
+    status: 'Self-Signed',
+    purpose: 'Public-facing web server'
+  },
+  {
+    id: 'cert2',
+    commonName: 'vpn.company.com',
+    issuer: 'CN=DigiCert SHA2 Secure Server CA',
+    validFrom: '2023-01-15',
+    validTo: '2024-01-14',
+    keyUsage: ['Digital Signature', 'Key Encipherment'],
+    extendedKeyUsage: ['Server Authentication', 'Client Authentication'],
+    subjectAltNames: ['vpn.company.com'],
+    status: 'Expired',
+    purpose: 'VPN gateway'
+  },
+  {
+    id: 'cert3',
+    commonName: 'John Smith',
+    issuer: 'CN=company.local-CA',
+    validFrom: '2023-06-01',
+    validTo: '2025-06-01',
+    keyUsage: ['Digital Signature', 'Key Encipherment', 'Data Encipherment'],
+    extendedKeyUsage: ['Email Protection', 'Client Authentication'],
+    status: 'Revoked',
+    purpose: 'S/MIME email encryption'
+  },
+  {
+    id: 'cert4',
+    commonName: 'company-codesign',
+    issuer: 'CN=DigiCert Code Signing CA',
+    validFrom: '2021-03-10',
+    validTo: '2024-03-10',
+    keyUsage: ['Digital Signature'],
+    extendedKeyUsage: ['Code Signing'],
+    status: 'Valid',
+    purpose: 'Software code signing'
+  },
+  {
+    id: 'cert5',
+    commonName: '*.company.com',
+    issuer: "CN=Let's Encrypt Authority X3",
+    validFrom: '2024-01-01',
+    validTo: '2025-07-01',
+    keyUsage: ['Digital Signature', 'Key Encipherment'],
+    extendedKeyUsage: ['Server Authentication'],
+    subjectAltNames: ['*.company.com', 'company.com', 'www.company.com'],
+    status: 'Valid',
+    purpose: 'Wildcard certificate for multiple subdomains'
+  }
+];
+
+export const certificateIssues: CertificateIssue[] = [
+  {
+    id: 'issue1',
+    certificate: certificates[0],
+    issue: 'Browsers show "Not Secure" warning - Untrusted certificate authority',
+    correctAction: 'Replace with certificate from trusted public CA (DigiCert, Let\'s Encrypt)'
+  },
+  {
+    id: 'issue2',
+    certificate: certificates[1],
+    issue: 'VPN clients cannot connect - Certificate validation failure',
+    correctAction: 'Renew the expired certificate immediately'
+  },
+  {
+    id: 'issue3',
+    certificate: certificates[2],
+    issue: 'Email encryption fails - Certificate not trusted',
+    correctAction: 'Issue new certificate - current one is revoked'
+  },
+  {
+    id: 'issue4',
+    certificate: certificates[3],
+    issue: 'Code signing warnings appear during software installation',
+    correctAction: 'Renew certificate - approaching expiration date'
+  },
+  {
+    id: 'issue5',
+    certificate: certificates[4],
+    issue: 'Certificate violates policy - exceeds maximum validity period',
+    correctAction: 'Replace with certificate having maximum 13-month validity'
+  }
+];
+
+export const certificateActions = [
+  'Replace with certificate from trusted public CA (DigiCert, Let\'s Encrypt)',
+  'Renew the expired certificate immediately',
+  'Issue new certificate - current one is revoked',
+  'Renew certificate - approaching expiration date',
+  'Replace with certificate having maximum 13-month validity',
+  'Add certificate to trusted root store',
+  'Enable certificate pinning',
+  'Update certificate with correct key usage extensions',
+  'Implement certificate transparency monitoring',
+  'Configure OCSP stapling'
+];
+
+export const certificateExplanation = {
+  issue1: {
+    problem: 'Self-signed certificates are not trusted by browsers because they are not issued by a recognized Certificate Authority (CA). This causes browser security warnings and erodes user trust.',
+    solution: 'Obtain a certificate from a publicly trusted CA like DigiCert or Let\'s Encrypt. Public CAs are included in browser and OS trust stores, eliminating security warnings.',
+    bestPractice: 'Never use self-signed certificates for public-facing services. Reserve self-signed certificates for internal testing only.'
+  },
+  issue2: {
+    problem: 'Expired certificates are automatically rejected by VPN clients as they can no longer be validated. Certificate validity is crucial for establishing trust.',
+    solution: 'Renew the certificate before expiration. Implement certificate monitoring to alert 30-60 days before expiration to prevent service disruptions.',
+    bestPractice: 'Set up automated certificate renewal where possible (e.g., Let\'s Encrypt ACME protocol) and maintain a certificate inventory with expiration dates.'
+  },
+  issue3: {
+    problem: 'Revoked certificates are published on Certificate Revocation Lists (CRL) or checked via OCSP. Once revoked, a certificate is permanently untrusted and cannot be un-revoked.',
+    solution: 'Issue a new certificate with a new key pair. Investigate why the certificate was revoked (key compromise, employee termination, etc.) before issuing a replacement.',
+    bestPractice: 'Implement proper key management and protection. Use HSMs for high-value certificates. Maintain procedures for certificate revocation in security incidents.'
+  },
+  issue4: {
+    problem: 'Code signing certificates require high trust levels. Users will see warnings if the certificate is expired or nearing expiration, potentially blocking software installation.',
+    solution: 'Renew the code signing certificate before expiration. After renewal, re-sign all software packages with the new certificate.',
+    bestPractice: 'Code signing certificates typically have longer validity periods (1-3 years). Plan renewals well in advance as re-signing software takes time.'
+  },
+  issue5: {
+    problem: 'CA/Browser Forum Baseline Requirements limit TLS certificate validity to 398 days (approximately 13 months). Certificates with longer validity violate these requirements and may be distrusted.',
+    solution: 'Replace the certificate with one having a maximum 398-day (13-month) validity period to comply with industry standards.',
+    bestPractice: 'Follow CA/Browser Forum guidelines for certificate issuance. The 13-month limit improves security by forcing more frequent key rotation and certificate updates.'
+  },
+  pkiConcepts: [
+    'Certificate Authorities (CAs): Trusted entities that issue digital certificates',
+    'Certificate Lifecycle: Issuance → Renewal → Revocation → Expiration',
+    'Certificate Validation: Checking validity period, revocation status, and trust chain',
+    'Key Usage: Specifies what cryptographic operations a certificate can perform',
+    'Extended Key Usage (EKU): Specifies specific purposes (Server Auth, Code Signing, Email)',
+    'Subject Alternative Names (SAN): Allows multiple domain names in one certificate',
+    'Trust Chain: Certificate → Intermediate CA → Root CA',
+    'Certificate Transparency: Public logging of certificate issuance for security',
+    'OCSP: Online Certificate Status Protocol for real-time revocation checking'
+  ]
+};

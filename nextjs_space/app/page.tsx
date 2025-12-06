@@ -202,7 +202,7 @@ export default function HomePage() {
                 <ul className="space-y-2 text-sm text-slate-600">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
-                    <span>4 Performance-Based Questions (PBQs)</span>
+                    <span>6 Performance-Based Questions (PBQs)</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
@@ -244,7 +244,7 @@ export default function HomePage() {
         </Card>
 
         {/* PBQ Cards */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {/* PBQ 1: Firewall Rules */}
           <Card className="hover:shadow-xl transition-shadow border-2">
             <CardHeader className="bg-gradient-to-br from-blue-50 to-white">
@@ -364,6 +364,66 @@ export default function HomePage() {
               </Link>
             </CardContent>
           </Card>
+
+          {/* PBQ 5: System Log Analysis */}
+          <Card className="hover:shadow-xl transition-shadow border-2">
+            <CardHeader className="bg-gradient-to-br from-purple-50 to-white">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 bg-purple-600 rounded-lg">
+                  <FileText className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <CardTitle>PBQ 5: Log Analysis</CardTitle>
+                  <CardDescription>Digital Forensics & APT Detection</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <p className="text-slate-600 mb-4">
+                Investigate a sophisticated APT attack by analyzing system, security, and firewall logs. Identify Patient Zero, attack vectors, and compromised accounts.
+              </p>
+              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-4">
+                <span className="px-2 py-1 bg-slate-100 rounded">System Logs</span>
+                <span className="px-2 py-1 bg-slate-100 rounded">APT Analysis</span>
+                <span className="px-2 py-1 bg-slate-100 rounded">Kill Chain</span>
+              </div>
+              <Link href="/pbq/log-analysis">
+                <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                  Start PBQ 5
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+          {/* PBQ 6: Certificate Management */}
+          <Card className="hover:shadow-xl transition-shadow border-2">
+            <CardHeader className="bg-gradient-to-br from-teal-50 to-white">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 bg-teal-600 rounded-lg">
+                  <Shield className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <CardTitle>PBQ 6: Certificate Mgmt</CardTitle>
+                  <CardDescription>PKI & Certificate Lifecycle</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <p className="text-slate-600 mb-4">
+                Troubleshoot certificate issues across the enterprise. Identify expired, revoked, and misconfigured certificates and implement proper remediation actions.
+              </p>
+              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-4">
+                <span className="px-2 py-1 bg-slate-100 rounded">PKI</span>
+                <span className="px-2 py-1 bg-slate-100 rounded">Certificate Lifecycle</span>
+                <span className="px-2 py-1 bg-slate-100 rounded">Troubleshooting</span>
+              </div>
+              <Link href="/pbq/certificate-mgmt">
+                <Button className="w-full bg-teal-600 hover:bg-teal-700">
+                  Start PBQ 6
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Info Section */}
@@ -373,7 +433,7 @@ export default function HomePage() {
               <Shield className="h-12 w-12 text-blue-400 mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Vollständige Prüfungsvorbereitung</h3>
               <p className="text-slate-300 max-w-2xl mx-auto">
-                Bereite dich optimal auf die CompTIA Security+ SY0-701 Zertifizierung vor: Mit realistischen PBQs, einem 60-Fragen Exam und Akronym-Quiz. Übe so oft du willst und baue Selbstvertrauen auf!
+                Bereite dich optimal auf die CompTIA Security+ SY0-701 Zertifizierung vor: Mit 6 realistischen PBQs, einem 60-Fragen Exam und Akronym-Quiz. Übe so oft du willst und baue Selbstvertrauen auf!
               </p>
             </div>
           </CardContent>
@@ -384,7 +444,7 @@ export default function HomePage() {
       <footer className="border-t bg-white mt-12">
         <div className="container mx-auto px-4 py-6 max-w-6xl">
           <p className="text-center text-sm text-slate-600">
-            CompTIA Security+ SY0-701 Exam Preparation • PBQs • 60-Fragen Exam • Akronym-Quiz
+            CompTIA Security+ SY0-701 Exam Preparation • 6 PBQs • 60-Fragen Exam • Akronym-Quiz
           </p>
         </div>
       </footer>
