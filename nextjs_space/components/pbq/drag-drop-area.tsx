@@ -32,6 +32,7 @@ export function DragDropArea<T extends Item>({
   const [draggedFromAnswer, setDraggedFromAnswer] = useState(false)
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null)
 
+  // Update availableList when availableItems changes
   useEffect(() => {
     if (initialOrder?.length > 0) {
       const orderedItems = initialOrder
@@ -40,6 +41,11 @@ export function DragDropArea<T extends Item>({
       setAnswerList(orderedItems)
       const remaining = availableItems?.filter(item => !initialOrder?.includes(item?.id ?? '')) ?? []
       setAvailableList(remaining)
+    } else {
+      // Only update if answer list is empty (initial load)
+      if (answerList.length === 0) {
+        setAvailableList(availableItems)
+      }
     }
   }, [initialOrder, availableItems])
 
