@@ -1,20 +1,94 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Shield, Target, Network, AlertTriangle, Lock, Search, FileText, BookOpen } from 'lucide-react'
+import { Shield, Target, Network, AlertTriangle, Lock, Search, FileText, BookOpen, User, Edit2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 
 export default function HomePage() {
+  const [userName, setUserName] = useState('')
+  const [tempName, setTempName] = useState('')
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
+  // Load name from localStorage on mount
+  useEffect(() => {
+    const storedName = localStorage.getItem('examUserName')
+    if (storedName) {
+      setUserName(storedName)
+      setTempName(storedName)
+    } else {
+      // Show dialog if no name is stored
+      setIsDialogOpen(true)
+    }
+  }, [])
+
+  const handleSaveName = () => {
+    if (tempName.trim()) {
+      localStorage.setItem('examUserName', tempName.trim())
+      setUserName(tempName.trim())
+      setIsDialogOpen(false)
+    }
+  }
+
+  const handleEditName = () => {
+    setTempName(userName)
+    setIsDialogOpen(true)
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
+      {/* Name Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Willkommen zur Security+ Prüfungsvorbereitung!</DialogTitle>
+            <DialogDescription>
+              Bitte gib deinen Namen ein, um die Plattform zu personalisieren.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <Input
+              placeholder="Dein Name"
+              value={tempName}
+              onChange={(e) => setTempName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSaveName()}
+              className="text-lg"
+            />
+          </div>
+          <DialogFooter>
+            <Button onClick={handleSaveName} disabled={!tempName.trim()}>
+              Speichern
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 max-w-6xl">
-          <div className="flex items-center gap-3">
-            <Shield className="h-8 w-8 text-blue-600" />
-            <div>
-              <h1 className="text-2xl font-bold text-slate-900">CompTIA Security+ SY0-701</h1>
-              <p className="text-sm text-slate-600">Exam Preparation Platform</p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Shield className="h-8 w-8 text-blue-600" />
+              <div>
+                <h1 className="text-2xl font-bold text-slate-900">CompTIA Security+ SY0-701</h1>
+                <p className="text-sm text-slate-600">Exam Preparation Platform</p>
+              </div>
             </div>
+            {userName && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleEditName}
+                className="flex items-center gap-2"
+              >
+                <User className="h-4 w-4" />
+                <span className="hidden sm:inline">{userName}</span>
+                <Edit2 className="h-3 w-3" />
+              </Button>
+            )}
           </div>
         </div>
       </header>
@@ -30,6 +104,14 @@ export default function HomePage() {
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
             Security+ Prüfungsvorbereitung
           </h2>
+          {userName && (
+            <div className="mb-4">
+              <p className="text-2xl md:text-3xl font-semibold text-blue-600 flex items-center justify-center gap-2">
+                <User className="h-6 w-6 md:h-8 md:w-8" />
+                Willkommen zurück, {userName}!
+              </p>
+            </div>
+          )}
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
             Realistische PBQs, 60-Fragen Exam und Akronym-Quiz für die CompTIA Security+ SY0-701 Zertifizierung.
           </p>
