@@ -120,29 +120,29 @@ export default function HomePage() {
         {/* Exam Modes */}
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           {/* Full Exam */}
-          <Card className="hover:shadow-xl transition-shadow border-2 border-blue-300">
-            <CardHeader className="bg-gradient-to-br from-blue-100 to-white">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 bg-blue-600 rounded-lg">
-                  <FileText className="h-8 w-8 text-white" />
+          <Card className="hover:shadow-xl transition-shadow border-2 border-blue-300 flex flex-col">
+            <CardHeader className="bg-gradient-to-br from-blue-50 to-white pb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-blue-600 rounded-lg">
+                  <FileText className="h-7 w-7 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-2xl">60-Fragen Exam</CardTitle>
-                  <CardDescription>Vollständige Prüfungssimulation</CardDescription>
+                  <CardTitle className="text-2xl font-bold">60-Fragen Exam</CardTitle>
+                  <CardDescription className="text-base">Vollständige Prüfungssimulation</CardDescription>
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
-              <p className="text-slate-600 mb-4">
+            <CardContent className="pt-6 flex-1 flex flex-col">
+              <p className="text-slate-600 mb-6 leading-relaxed">
                 Komplette Prüfungssimulation mit 60 zufälligen Fragen aus allen Domains. 90 Minuten Zeit, 765+ Punkte zum Bestehen. Auswertung am Ende!
               </p>
-              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-4">
-                <span className="px-2 py-1 bg-slate-100 rounded">60 Fragen</span>
-                <span className="px-2 py-1 bg-slate-100 rounded">90 Minuten</span>
-                <span className="px-2 py-1 bg-slate-100 rounded">765+ zum Bestehen</span>
+              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-600 mb-6">
+                <span className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-md font-medium">60 Fragen</span>
+                <span className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-md font-medium">90 Minuten</span>
+                <span className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-md font-medium">765+ zum Bestehen</span>
               </div>
-              <Link href="/exam">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-6">
+              <Link href="/exam" className="mt-auto">
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold py-6 rounded-lg shadow-md hover:shadow-lg transition-all">
                   Exam starten
                 </Button>
               </Link>
@@ -150,29 +150,29 @@ export default function HomePage() {
           </Card>
 
           {/* Acronym Quiz */}
-          <Card className="hover:shadow-xl transition-shadow border-2 border-green-300">
-            <CardHeader className="bg-gradient-to-br from-green-100 to-white">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 bg-green-600 rounded-lg">
-                  <BookOpen className="h-8 w-8 text-white" />
+          <Card className="hover:shadow-xl transition-shadow border-2 border-green-300 flex flex-col">
+            <CardHeader className="bg-gradient-to-br from-green-50 to-white pb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-green-600 rounded-lg">
+                  <BookOpen className="h-7 w-7 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-2xl">Akronymen Quiz</CardTitle>
-                  <CardDescription>Lerne wichtige Begriffe</CardDescription>
+                  <CardTitle className="text-2xl font-bold">Akronymen Quiz</CardTitle>
+                  <CardDescription className="text-base">Lerne wichtige Begriffe</CardDescription>
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
-              <p className="text-slate-600 mb-4">
+            <CardContent className="pt-6 flex-1 flex flex-col">
+              <p className="text-slate-600 mb-6 leading-relaxed">
                 Teste dein Wissen über Security+ Akronyme! 40 Fragen mit sofortiger Rückmeldung und Erklärungen nach jeder Antwort.
               </p>
-              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-4">
-                <span className="px-2 py-1 bg-slate-100 rounded">40 Akronyme</span>
-                <span className="px-2 py-1 bg-slate-100 rounded">Sofortiges Feedback</span>
-                <span className="px-2 py-1 bg-slate-100 rounded">Mit Erklärungen</span>
+              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-600 mb-6">
+                <span className="px-3 py-1.5 bg-green-50 text-green-700 rounded-md font-medium">40 Akronyme</span>
+                <span className="px-3 py-1.5 bg-green-50 text-green-700 rounded-md font-medium">Sofortiges Feedback</span>
+                <span className="px-3 py-1.5 bg-green-50 text-green-700 rounded-md font-medium">Mit Erklärungen</span>
               </div>
-              <Link href="/acronym-quiz">
-                <Button className="w-full bg-green-600 hover:bg-green-700 text-lg py-6">
+              <Link href="/acronym-quiz" className="mt-auto">
+                <Button className="w-full bg-green-600 hover:bg-green-700 text-white text-lg font-semibold py-6 rounded-lg shadow-md hover:shadow-lg transition-all">
                   Quiz starten
                 </Button>
               </Link>
