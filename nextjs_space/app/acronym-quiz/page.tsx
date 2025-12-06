@@ -25,6 +25,7 @@ export default function AcronymQuizPage() {
   }, []);
 
   const handleAnswerSelect = (optionIndex: number) => {
+    // Only allow selection if feedback is not yet shown
     if (!showFeedback) {
       setSelectedOption(optionIndex);
       setShowFeedback(true);
@@ -179,9 +180,8 @@ export default function AcronymQuizPage() {
           </CardHeader>
           <CardContent className="space-y-6">
             <RadioGroup
-              value={selectedOption?.toString()}
+              value={selectedOption?.toString() ?? ""}
               onValueChange={(value) => handleAnswerSelect(parseInt(value))}
-              disabled={showFeedback}
             >
               <div className="space-y-3">
                 {questions[currentQuestion].options.map((option, index) => {
@@ -204,7 +204,6 @@ export default function AcronymQuizPage() {
                       <RadioGroupItem
                         value={index.toString()}
                         id={`option-${index}`}
-                        disabled={showFeedback}
                       />
                       <Label
                         htmlFor={`option-${index}`}

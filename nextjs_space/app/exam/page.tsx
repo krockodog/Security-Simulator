@@ -51,6 +51,7 @@ export default function ExamPage() {
 
   const handleStartExam = () => {
     setExamStarted(true);
+    setSelectedOption(null); // Ensure no option is pre-selected
   };
 
   const handleAnswerSelect = (optionIndex: number) => {
@@ -77,10 +78,11 @@ export default function ExamPage() {
 
       // Move to next question
       if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1);
-        // Load previous answer if exists
+        const nextQuestionIndex = currentQuestion + 1;
+        setCurrentQuestion(nextQuestionIndex);
+        // Load previous answer if exists for the NEXT question
         const nextAnswer = newAnswers.find(
-          (a) => a.questionId === questions[currentQuestion + 1].id
+          (a) => a.questionId === questions[nextQuestionIndex].id
         );
         setSelectedOption(nextAnswer?.selectedOption ?? null);
       }
@@ -89,10 +91,11 @@ export default function ExamPage() {
 
   const handlePreviousQuestion = () => {
     if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-      // Load previous answer
+      const prevQuestionIndex = currentQuestion - 1;
+      setCurrentQuestion(prevQuestionIndex);
+      // Load previous answer for the PREVIOUS question
       const prevAnswer = userAnswers.find(
-        (a) => a.questionId === questions[currentQuestion - 1].id
+        (a) => a.questionId === questions[prevQuestionIndex].id
       );
       setSelectedOption(prevAnswer?.selectedOption ?? null);
     }
@@ -360,7 +363,7 @@ export default function ExamPage() {
             </div>
 
             <RadioGroup
-              value={selectedOption?.toString()}
+              value={selectedOption !== null ? selectedOption.toString() : ""}
               onValueChange={(value) => handleAnswerSelect(parseInt(value))}
             >
               <div className="space-y-3">
