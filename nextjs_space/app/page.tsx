@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Shield, Target, Network, AlertTriangle } from 'lucide-react'
+import { Shield, Target, Network, AlertTriangle, Lock, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -51,11 +51,11 @@ export default function HomePage() {
                 <ul className="space-y-2 text-sm text-slate-600">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
-                    <span>2 Performance-Based Questions (PBQs)</span>
+                    <span>4 Performance-Based Questions (PBQs)</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
-                    <span>Drag-and-drop interface similar to actual exam</span>
+                    <span>Interactive interfaces similar to actual exam</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
@@ -76,11 +76,11 @@ export default function HomePage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
-                    <span>Drag items from the left panel to the answer area</span>
+                    <span>Follow the specific instructions for each PBQ type</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
-                    <span>Order matters - arrange items in correct sequence</span>
+                    <span>Complete all required fields before submitting</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-600 mt-0.5">•</span>
@@ -94,6 +94,7 @@ export default function HomePage() {
 
         {/* PBQ Cards */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
+          {/* PBQ 1: Firewall Rules */}
           <Card className="hover:shadow-xl transition-shadow border-2">
             <CardHeader className="bg-gradient-to-br from-blue-50 to-white">
               <div className="flex items-center gap-3 mb-2">
@@ -110,7 +111,7 @@ export default function HomePage() {
               <p className="text-slate-600 mb-4">
                 Configure firewall rules for a corporate network with DMZ. Apply proper rule ordering, implement security best practices, and follow the principle of least privilege.
               </p>
-              <div className="flex items-center gap-2 text-sm text-slate-500 mb-4">
+              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-4">
                 <span className="px-2 py-1 bg-slate-100 rounded">ACLs</span>
                 <span className="px-2 py-1 bg-slate-100 rounded">Network Segmentation</span>
                 <span className="px-2 py-1 bg-slate-100 rounded">Implicit Deny</span>
@@ -123,6 +124,7 @@ export default function HomePage() {
             </CardContent>
           </Card>
 
+          {/* PBQ 2: Incident Response */}
           <Card className="hover:shadow-xl transition-shadow border-2">
             <CardHeader className="bg-gradient-to-br from-red-50 to-white">
               <div className="flex items-center gap-3 mb-2">
@@ -139,7 +141,7 @@ export default function HomePage() {
               <p className="text-slate-600 mb-4">
                 Respond to a ransomware incident following the NIST incident response lifecycle. Properly sequence steps from detection through post-incident activities.
               </p>
-              <div className="flex items-center gap-2 text-sm text-slate-500 mb-4">
+              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-4">
                 <span className="px-2 py-1 bg-slate-100 rounded">NIST IR</span>
                 <span className="px-2 py-1 bg-slate-100 rounded">Containment</span>
                 <span className="px-2 py-1 bg-slate-100 rounded">Forensics</span>
@@ -147,6 +149,66 @@ export default function HomePage() {
               <Link href="/pbq/incident-response">
                 <Button className="w-full bg-red-600 hover:bg-red-700">
                   Start PBQ 2
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+          {/* PBQ 3: VPN Configuration */}
+          <Card className="hover:shadow-xl transition-shadow border-2">
+            <CardHeader className="bg-gradient-to-br from-indigo-50 to-white">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 bg-indigo-600 rounded-lg">
+                  <Lock className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <CardTitle>PBQ 3: VPN Configuration</CardTitle>
+                  <CardDescription>Cryptography & VPN</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <p className="text-slate-600 mb-4">
+                Configure a secure Site-to-Site IPsec VPN tunnel. Select appropriate encryption, hashing, DH group, and protocol to meet current security standards.
+              </p>
+              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-4">
+                <span className="px-2 py-1 bg-slate-100 rounded">IPsec</span>
+                <span className="px-2 py-1 bg-slate-100 rounded">Encryption</span>
+                <span className="px-2 py-1 bg-slate-100 rounded">VPN</span>
+              </div>
+              <Link href="/pbq/vpn-config">
+                <Button className="w-full bg-indigo-600 hover:bg-indigo-700">
+                  Start PBQ 3
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+          {/* PBQ 4: Threat Analysis */}
+          <Card className="hover:shadow-xl transition-shadow border-2">
+            <CardHeader className="bg-gradient-to-br from-orange-50 to-white">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 bg-orange-600 rounded-lg">
+                  <Search className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <CardTitle>PBQ 4: Threat Analysis</CardTitle>
+                  <CardDescription>Threat Intelligence & Forensics</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <p className="text-slate-600 mb-4">
+                Identify attack types and match them with appropriate remediation. Analyze server logs to determine Patient Zero in a malware outbreak scenario.
+              </p>
+              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-4">
+                <span className="px-2 py-1 bg-slate-100 rounded">Log Analysis</span>
+                <span className="px-2 py-1 bg-slate-100 rounded">Attack Types</span>
+                <span className="px-2 py-1 bg-slate-100 rounded">Forensics</span>
+              </div>
+              <Link href="/pbq/threat-analysis">
+                <Button className="w-full bg-orange-600 hover:bg-orange-700">
+                  Start PBQ 4
                 </Button>
               </Link>
             </CardContent>

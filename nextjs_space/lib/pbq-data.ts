@@ -17,6 +17,33 @@ export interface IncidentResponseStep {
   description: string;
 }
 
+// PBQ 3: VPN Configuration
+export interface VPNConfig {
+  encryption: string;
+  hashing: string;
+  dhGroup: string;
+  protocol: string;
+}
+
+export interface AttackScenario {
+  id: string;
+  description: string;
+  correctAnswer: string;
+}
+
+export interface ServerLog {
+  serverId: string;
+  serverIp: string;
+  logs: LogEntry[];
+  correctStatus: 'Clean' | 'Infected' | 'Origin';
+}
+
+export interface LogEntry {
+  timestamp: string;
+  type: 'Info' | 'Warn' | 'Error';
+  message: string;
+}
+
 // PBQ 1: Firewall Rules Configuration
 export const firewallScenario = {
   title: "Firewall Rules Configuration",
@@ -241,5 +268,275 @@ export const incidentResponseExplanation = {
     "Detection & Analysis: Identify and understand the scope of the incident",
     "Containment, Eradication & Recovery: Stop the spread, remove threats, restore operations",
     "Post-Incident Activity: Learn from the incident and improve future response"
+  ]
+};
+
+// PBQ 3: VPN Configuration
+export const vpnConfigScenario = {
+  title: "Secure Site-to-Site VPN Configuration",
+  scenario: `You are a network security engineer tasked with establishing a secure Site-to-Site IPsec VPN tunnel between the company's headquarters and a new branch office. The connection must use the strongest available cryptographic algorithms to protect sensitive corporate data transmitted between locations.\n\nNetwork Details:\n- HQ Gateway: 198.51.100.10\n- Branch Gateway: 203.0.113.50\n- Internal HQ Network: 10.10.0.0/16\n- Internal Branch Network: 10.20.0.0/16\n\nSecurity Requirements:\n- Use strongest encryption standard\n- Use strongest hashing algorithm\n- Use strongest Diffie-Hellman group for key exchange\n- Use protocol that provides both confidentiality and authentication\n\nThe VPN concentrator will reject any insecure cryptographic proposals and only accept configurations that meet current security best practices (as of 2024).`,
+  instructions: "Configure the VPN tunnel by selecting the appropriate cryptographic parameters. The tunnel will only establish if all four parameters meet current security standards."
+};
+
+export const vpnConfigOptions = {
+  encryption: ['DES', '3DES', 'AES-128', 'AES-256'],
+  hashing: ['MD5', 'SHA-1', 'SHA-256', 'SHA-512'],
+  dhGroup: ['Group 2 (1024-bit)', 'Group 5 (1536-bit)', 'Group 14 (2048-bit)', 'Group 20 (384-bit ECC)'],
+  protocol: ['AH (Authentication Header)', 'ESP (Encapsulating Security Payload)']
+};
+
+export const correctVPNConfig: VPNConfig = {
+  encryption: 'AES-256',
+  hashing: 'SHA-256',
+  dhGroup: 'Group 14 (2048-bit)',
+  protocol: 'ESP (Encapsulating Security Payload)'
+};
+
+export const vpnConfigExplanation = {
+  correctConfig: correctVPNConfig,
+  reasoning: {
+    encryption: "AES-256 is the strongest symmetric encryption algorithm available in this list. DES and 3DES are deprecated and considered insecure. While AES-128 is secure, AES-256 provides a higher security margin and is required for top-secret information by many standards.",
+    hashing: "SHA-256 is the minimum recommended hashing algorithm for modern VPNs. MD5 and SHA-1 are cryptographically broken and should never be used. SHA-256 provides strong collision resistance and is widely supported. (SHA-512 would also be acceptable in practice, but SHA-256 is the standard answer for Security+)",
+    dhGroup: "Group 14 (2048-bit) is the minimum recommended Diffie-Hellman group for modern implementations. Group 2 (1024-bit) is too weak and can be broken. Group 5 is better but still below current recommendations. Group 14 provides adequate security for key exchange.",
+    protocol: "ESP (Encapsulating Security Payload) provides both confidentiality (encryption) and authentication, making it superior to AH (Authentication Header), which only provides authentication without encryption. ESP is the standard choice for IPsec VPNs requiring data protection."
+  },
+  securityPrinciples: [
+    "Always use the strongest available encryption (AES-256 over AES-128, 3DES, or DES)",
+    "Never use deprecated algorithms (MD5, SHA-1, DES, 3DES)",
+    "Ensure Diffie-Hellman groups are at least 2048-bit for adequate security",
+    "Use ESP for VPNs that require both confidentiality and authentication",
+    "Follow current NIST and industry standards for cryptographic algorithm selection"
+  ]
+};
+
+// PBQ 4: Threat Analysis & Incident Response
+export const threatAnalysisScenario = {
+  title: "Threat Analysis & Forensic Investigation",
+  scenario: `You are a security analyst responding to multiple security incidents across your organization's network. Your tasks are:\n\n1. **Attack Identification**: Match each attack description to the correct attack type and recommend the best remediation action.\n\n2. **Patient Zero Analysis**: A malware outbreak has occurred on three servers. Review the antivirus logs for each server to identify which server was the origin of the infection (Patient Zero), which servers are currently infected, and which servers are clean.\n\nServer Information:\n- Server A: 192.168.10.22 (File Server)\n- Server B: 192.168.10.37 (Application Server)  \n- Server C: 192.168.10.41 (Database Server)\n\nYour goal is to correctly identify attack types, recommend appropriate remediation, and determine the infection status of each server based on log analysis.`,
+  instructions: "Part 1: Select the correct attack type and remediation for each scenario. Part 2: Review server logs and classify each server as Clean, Infected, or Origin (Patient Zero)."
+};
+
+export const attackScenarios: AttackScenario[] = [
+  {
+    id: 'attack1',
+    description: 'An attacker sends multiple SYN packets from multiple sources',
+    correctAnswer: 'Botnet/DDoS'
+  },
+  {
+    id: 'attack2',
+    description: 'The attack establishes a connection which allows remote commands to be executed',
+    correctAnswer: 'RAT (Remote Access Trojan)'
+  },
+  {
+    id: 'attack3',
+    description: 'The attack is self-propagating and compromises a SQL database using well-known credentials as it moves through the network',
+    correctAnswer: 'Worm'
+  },
+  {
+    id: 'attack4',
+    description: 'The attacker uses hardware to remotely monitor a user\'s input activity to harvest credentials',
+    correctAnswer: 'Keylogger'
+  },
+  {
+    id: 'attack5',
+    description: 'The attacker embeds hidden access in an internally developed application that bypasses account login',
+    correctAnswer: 'Backdoor'
+  }
+];
+
+export const attackOptions = [
+  'Botnet/DDoS',
+  'RAT (Remote Access Trojan)',
+  'Logic Bomb',
+  'Backdoor',
+  'Virus',
+  'Spyware',
+  'Worm',
+  'Adware',
+  'Ransomware',
+  'Keylogger',
+  'Phishing'
+];
+
+export const remediationOptions = [
+  'Enable DDoS protection',
+  'Implement a host-based IPS',
+  'Disable remote access services',
+  'Change the default application password',
+  'Implement 2FA using push notification',
+  'Conduct a code review',
+  'Patch vulnerable systems',
+  'Disable vulnerable services',
+  'Update cryptographic algorithms'
+];
+
+export const attackRemediationMap: { [key: string]: string } = {
+  'Botnet/DDoS': 'Enable DDoS protection',
+  'RAT (Remote Access Trojan)': 'Implement a host-based IPS',
+  'Worm': 'Change the default application password',
+  'Keylogger': 'Disable vulnerable services',
+  'Backdoor': 'Conduct a code review'
+};
+
+export const serverLogs: ServerLog[] = [
+  {
+    serverId: 'server1',
+    serverIp: '192.168.10.22',
+    logs: [
+      { timestamp: '4/17/2019 14:30', type: 'Info', message: 'Scheduled scan initiated' },
+      { timestamp: '4/17/2019 14:31', type: 'Info', message: 'Checking for update' },
+      { timestamp: '4/17/2019 14:32', type: 'Info', message: 'No update available' },
+      { timestamp: '4/17/2019 14:33', type: 'Info', message: 'Checking for definition update' },
+      { timestamp: '4/17/2019 14:34', type: 'Info', message: 'No definition update available' },
+      { timestamp: '4/17/2019 14:35', type: 'Info', message: 'Scan type = full' },
+      { timestamp: '4/17/2019 14:36', type: 'Info', message: 'Scan start' },
+      { timestamp: '4/17/2019 14:37', type: 'Info', message: 'Scanning system files' },
+      { timestamp: '4/17/2019 14:38', type: 'Info', message: 'Scanning temporary files' },
+      { timestamp: '4/17/2019 14:39', type: 'Info', message: 'Scanning services' },
+      { timestamp: '4/17/2019 14:40', type: 'Info', message: 'Scanning boot sector' },
+      { timestamp: '4/17/2019 14:41', type: 'Info', message: 'Scan complete' },
+      { timestamp: '4/17/2019 14:42', type: 'Info', message: 'Files removed: 0' },
+      { timestamp: '4/17/2019 14:43', type: 'Info', message: 'Files quarantined: 0' },
+      { timestamp: '4/17/2019 14:44', type: 'Info', message: 'Boot sector: clean' },
+      { timestamp: '4/17/2019 14:45', type: 'Info', message: 'Next scheduled scan: 4/18/2019 14:30' },
+      { timestamp: '4/18/2019 2:31', type: 'Warn', message: 'Scheduled scan disabled by process svchost.exe (PID: 4443)' },
+      { timestamp: '4/18/2019 2:32', type: 'Warn', message: 'Scheduled update disabled by process svchost.exe (PID: 4443)' },
+      { timestamp: '4/18/2019 2:33', type: 'Error', message: 'Antivirus service stopped unexpectedly' }
+    ],
+    correctStatus: 'Origin'
+  },
+  {
+    serverId: 'server2',
+    serverIp: '192.168.10.37',
+    logs: [
+      { timestamp: '4/17/2019 14:30', type: 'Info', message: 'Scheduled scan initiated' },
+      { timestamp: '4/17/2019 14:31', type: 'Info', message: 'Checking for update' },
+      { timestamp: '4/17/2019 14:32', type: 'Info', message: 'No update available' },
+      { timestamp: '4/17/2019 14:33', type: 'Info', message: 'Checking for definition update' },
+      { timestamp: '4/17/2019 14:34', type: 'Info', message: 'No definition update available' },
+      { timestamp: '4/17/2019 14:35', type: 'Info', message: 'Scan type = full' },
+      { timestamp: '4/17/2019 14:36', type: 'Info', message: 'Scan start' },
+      { timestamp: '4/17/2019 14:37', type: 'Info', message: 'Scanning system files' },
+      { timestamp: '4/17/2019 14:38', type: 'Info', message: 'Scanning temporary files' },
+      { timestamp: '4/17/2019 14:39', type: 'Info', message: 'Scanning services' },
+      { timestamp: '4/17/2019 14:40', type: 'Info', message: 'Scanning boot sector' },
+      { timestamp: '4/17/2019 14:41', type: 'Info', message: 'Scan complete' },
+      { timestamp: '4/17/2019 14:42', type: 'Info', message: 'Files removed: 0' },
+      { timestamp: '4/17/2019 14:43', type: 'Info', message: 'Files quarantined: 0' },
+      { timestamp: '4/17/2019 14:44', type: 'Info', message: 'Boot sector: clean' },
+      { timestamp: '4/17/2019 14:45', type: 'Info', message: 'Next scheduled scan: 4/18/2019 14:30' },
+      { timestamp: '4/18/2019 14:30', type: 'Info', message: 'Scheduled scan initiated' },
+      { timestamp: '4/18/2019 14:31', type: 'Info', message: 'Checking for update' },
+      { timestamp: '4/18/2019 14:32', type: 'Info', message: 'No update available' },
+      { timestamp: '4/18/2019 14:33', type: 'Info', message: 'Checking for definition update' },
+      { timestamp: '4/18/2019 14:34', type: 'Info', message: 'Update available v18.2.3.4440' },
+      { timestamp: '4/18/2019 14:33', type: 'Info', message: 'Downloading update' },
+      { timestamp: '4/18/2019 14:35', type: 'Info', message: 'Definition update complete' },
+      { timestamp: '4/18/2019 14:35', type: 'Info', message: 'Scan type = full' },
+      { timestamp: '4/18/2019 14:36', type: 'Info', message: 'Scan start' },
+      { timestamp: '4/18/2019 14:37', type: 'Info', message: 'Scanning system files' },
+      { timestamp: '4/18/2019 14:37', type: 'Warn', message: 'Threat detected: svchost.exe - Matches definition v18.2.3.4440' },
+      { timestamp: '4/18/2019 14:37', type: 'Info', message: 'File quarantined: svchost.exe' },
+      { timestamp: '4/18/2019 14:38', type: 'Info', message: 'Threat successfully removed' },
+      { timestamp: '4/18/2019 14:39', type: 'Info', message: 'Scan complete - System clean' }
+    ],
+    correctStatus: 'Clean'
+  },
+  {
+    serverId: 'server3',
+    serverIp: '192.168.10.41',
+    logs: [
+      { timestamp: '4/17/2019 14:30', type: 'Info', message: 'Scheduled scan initiated' },
+      { timestamp: '4/17/2019 14:31', type: 'Info', message: 'Checking for update' },
+      { timestamp: '4/17/2019 14:32', type: 'Info', message: 'No update available' },
+      { timestamp: '4/17/2019 14:33', type: 'Info', message: 'Checking for definition update' },
+      { timestamp: '4/17/2019 14:34', type: 'Info', message: 'No definition update available' },
+      { timestamp: '4/17/2019 14:35', type: 'Info', message: 'Scan type = full' },
+      { timestamp: '4/17/2019 14:36', type: 'Info', message: 'Scan start' },
+      { timestamp: '4/17/2019 14:37', type: 'Info', message: 'Scanning system files' },
+      { timestamp: '4/17/2019 14:38', type: 'Info', message: 'Scanning temporary files' },
+      { timestamp: '4/17/2019 14:39', type: 'Info', message: 'Scanning services' },
+      { timestamp: '4/17/2019 14:40', type: 'Info', message: 'Scanning boot sector' },
+      { timestamp: '4/17/2019 14:41', type: 'Info', message: 'Scan complete' },
+      { timestamp: '4/17/2019 14:42', type: 'Info', message: 'Files removed: 0' },
+      { timestamp: '4/17/2019 14:43', type: 'Info', message: 'Files quarantined: 0' },
+      { timestamp: '4/17/2019 14:44', type: 'Info', message: 'Boot sector: clean' },
+      { timestamp: '4/17/2019 14:45', type: 'Info', message: 'Next scheduled scan: 4/18/2019 14:30' },
+      { timestamp: '4/18/2019 14:30', type: 'Info', message: 'Scheduled scan initiated' },
+      { timestamp: '4/18/2019 14:31', type: 'Info', message: 'Checking for update' },
+      { timestamp: '4/18/2019 14:32', type: 'Error', message: 'Update server unreachable - Connection timeout' },
+      { timestamp: '4/18/2019 14:33', type: 'Error', message: 'Failed to download definition updates' },
+      { timestamp: '4/18/2019 14:34', type: 'Info', message: 'Proceeding with existing definitions' },
+      { timestamp: '4/18/2019 14:35', type: 'Info', message: 'Scan type = full' },
+      { timestamp: '4/18/2019 14:36', type: 'Info', message: 'Scan start' },
+      { timestamp: '4/18/2019 14:37', type: 'Info', message: 'Scanning system files' },
+      { timestamp: '4/18/2019 14:38', type: 'Info', message: 'Scanning complete - No threats detected' },
+      { timestamp: '4/18/2019 14:39', type: 'Warn', message: 'Scan completed with outdated definitions' }
+    ],
+    correctStatus: 'Infected'
+  }
+];
+
+export const threatAnalysisExplanation = {
+  attackExplanations: {
+    'Botnet/DDoS': {
+      reasoning: "Multiple SYN packets from multiple sources is the signature of a SYN flood attack, typically executed by a botnet for DDoS purposes. The attacker uses many compromised systems to overwhelm the target with connection requests.",
+      remediation: "DDoS protection services can detect and filter malicious traffic patterns, rate-limit connections, and use challenge-response mechanisms to distinguish legitimate users from bot traffic."
+    },
+    'RAT (Remote Access Trojan)': {
+      reasoning: "A connection that allows remote command execution is characteristic of a Remote Access Trojan, which gives attackers persistent backdoor access to execute arbitrary commands on the compromised system.",
+      remediation: "Host-based IPS can detect and block malicious command execution patterns, unauthorized process creation, and suspicious network communications typical of RAT behavior."
+    },
+    'Worm': {
+      reasoning: "Self-propagating malware that spreads through a network using well-known credentials is a worm. Worms automatically replicate and spread without user interaction, often exploiting weak passwords.",
+      remediation: "Changing default passwords prevents worms from using credential-based propagation. Default credentials are one of the most common attack vectors for worms."
+    },
+    'Keylogger': {
+      reasoning: "Hardware that monitors user input to harvest credentials is a keylogger. Hardware keyloggers are physical devices placed between keyboards and computers to intercept keystrokes.",
+      remediation: "Disabling unnecessary physical ports (USB, PS/2) and implementing port security can prevent hardware keylogger attachment. Physical security controls are also essential."
+    },
+    'Backdoor': {
+      reasoning: "Hidden access in an application that bypasses authentication is a backdoor. Backdoors are often embedded by malicious insiders or through supply chain compromises in internally developed software.",
+      remediation: "Code reviews can identify backdoors by examining source code for unauthorized authentication bypasses, hidden admin accounts, or suspicious logic that circumvents security controls."
+    }
+  },
+  serverAnalysis: {
+    '192.168.10.22': {
+      status: 'Origin (Patient Zero)',
+      reasoning: "Server 192.168.10.22 is Patient Zero based on several indicators: (1) The malicious svchost.exe process (PID 4443) disabled scheduled scans and updates at 2:31-2:32 AM on 4/18, indicating active malware infection. (2) The antivirus service was stopped, preventing detection and removal. (3) The timeline shows this occurred BEFORE other servers detected the malware, making it the origin of the outbreak. (4) No remediation was successfully performed on this server.",
+      criticalIndicators: [
+        "Scheduled scan disabled by suspicious process",
+        "Antivirus service stopped",
+        "Earliest infection timestamp",
+        "No successful remediation"
+      ]
+    },
+    '192.168.10.37': {
+      status: 'Clean',
+      reasoning: "Server 192.168.10.37 successfully detected and removed the threat: (1) It downloaded updated virus definitions (v18.2.3.4440) at 14:34. (2) The malicious svchost.exe was immediately detected at 14:37 during the scan. (3) The file was successfully quarantined. (4) The scan completed with confirmation that the threat was removed and the system is clean. (5) The updated definitions allowed detection of the malware that Patient Zero couldn't detect.",
+      criticalIndicators: [
+        "Successfully downloaded definition updates",
+        "Threat detected immediately after update",
+        "File successfully quarantined",
+        "System confirmed clean after remediation"
+      ]
+    },
+    '192.168.10.41': {
+      status: 'Infected',
+      reasoning: "Server 192.168.10.41 remains infected but undetected: (1) It failed to connect to the update server at 14:32, preventing it from downloading new virus definitions. (2) The scan proceeded with outdated definitions that don't include signatures for the malware. (3) The scan reported 'No threats detected' but this is a false negative due to outdated definitions. (4) The warning at 14:39 confirms the scan used outdated definitions, meaning any new malware would not be detected. (5) Given the malware spread from .22 and .37 detected it after updating, .41 is almost certainly infected but unable to detect it.",
+      criticalIndicators: [
+        "Failed to download definition updates",
+        "Scan used outdated definitions",
+        "Update server unreachable (possibly blocked by malware)",
+        "False negative due to missing signatures"
+      ]
+    }
+  },
+  forensicPrinciples: [
+    "Timeline Analysis: Establish the sequence of events to identify Patient Zero",
+    "Indicator Analysis: Look for behavioral indicators (disabled AV, stopped services)",
+    "Update Status: Servers with current definitions can detect threats that outdated ones miss",
+    "Network Propagation: Malware often spreads from one origin to multiple targets",
+    "False Negatives: Clean scan results don't guarantee cleanliness if definitions are outdated"
   ]
 };
