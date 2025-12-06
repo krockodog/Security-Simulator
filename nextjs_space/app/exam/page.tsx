@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { CheckCircle2, XCircle, Home, RotateCcw, List, AlertCircle } from 'lucide-react';
@@ -21,7 +20,7 @@ import {
 
 interface UserAnswer {
   questionId: string;
-  selectedOptions: number[]; // Changed to support multiple selections
+  selectedOption: number;
 }
 
 export default function ExamPage() {
@@ -29,7 +28,7 @@ export default function ExamPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
   const [showResults, setShowResults] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState<number[]>([]); // Changed to array
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [timeRemaining, setTimeRemaining] = useState(90 * 60); // 90 minutes in seconds
   const [examStarted, setExamStarted] = useState(false);
   const [showOverview, setShowOverview] = useState(false);
@@ -61,33 +60,15 @@ export default function ExamPage() {
 
   const handleStartExam = () => {
     setExamStarted(true);
-    setSelectedOptions([]); // Ensure no options are pre-selected
+    setSelectedOption(null);
   };
 
-  const handleAnswerSelect = (optionIndex: number) => {
-    const currentQ = questions[currentQuestion];
-    
-    if (currentQ.isMultipleChoice) {
-      // Toggle selection for multiple choice
-      setSelectedOptions(prev => {
-        if (prev.includes(optionIndex)) {
-          return prev.filter(i => i !== optionIndex);
-        } else {
-          // Only allow up to requiredSelections
-          if (prev.length < (currentQ.requiredSelections || 2)) {
-            return [...prev, optionIndex];
-          }
-          return prev;
-        }
-      });
-    } else {
-      // Single selection for radio
-      setSelectedOptions([optionIndex]);
-    }
+  const handleAnswerSelect = (optionIndex: string) => {
+    setSelectedOption(parseInt(optionIndex));
   };
 
   const handleNextQuestion = () => {
-    if (selectedOptions.length > 0) {
+    if (selectedOption !== null) {
       // Save answer
       const newAnswers = [...userAnswers];
       const existingAnswerIndex = newAnswers.findIndex(
@@ -95,86 +76,126 @@ export default function ExamPage() {
       );
       
       if (existingAnswerIndex !== -1) {
-        newAnswers[existingAnswerIndex].selectedOptions = selectedOptions;
+        newAnswers[existingAnswerIndex].selectedOption = selectedOption;
       } else {
         newAnswers.push({
           questionId: questions[currentQuestion].id,
-          selectedOptions: [...selectedOptions],
+          selectedOption: selectedOption,
         });
       }
       setUserAnswers(newAnswers);
+    }
 
-      // Move to next question
-      if (currentQuestion < questions.length - 1) {
-        const nextQuestionIndex = currentQuestion + 1;
-        setCurrentQuestion(nextQuestionIndex);
-        // Load previous answer if exists for the NEXT question
-        const nextAnswer = newAnswers.find(
-          (a) => a.questionId === questions[nextQuestionIndex].id
-        );
-        setSelectedOptions(nextAnswer?.selectedOptions ?? []);
-      }
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      // Load previously selected answer if exists
+      const previousAnswer = userAnswers.find(
+        (a) => a.questionId === questions[currentQuestion + 1].id
+      );
+      setSelectedOption(previousAnswer?.selectedOption ?? null);
     }
   };
 
   const handlePreviousQuestion = () => {
     if (currentQuestion > 0) {
-      const prevQuestionIndex = currentQuestion - 1;
-      setCurrentQuestion(prevQuestionIndex);
-      // Load previous answer for the PREVIOUS question
-      const prevAnswer = userAnswers.find(
-        (a) => a.questionId === questions[prevQuestionIndex].id
+      // Save current answer if any
+      if (selectedOption !== null) {
+        const newAnswers = [...userAnswers];
+        const existingAnswerIndex = newAnswers.findIndex(
+          (a) => a.questionId === questions[currentQuestion].id
+        );
+        
+        if (existingAnswerIndex !== -1) {
+          newAnswers[existingAnswerIndex].selectedOption = selectedOption;
+        } else {
+          newAnswers.push({
+            questionId: questions[currentQuestion].id,
+            selectedOption: selectedOption,
+          });
+        }
+        setUserAnswers(newAnswers);
+      }
+
+      setCurrentQuestion(currentQuestion - 1);
+      // Load previous answer
+      const previousAnswer = userAnswers.find(
+        (a) => a.questionId === questions[currentQuestion - 1].id
       );
-      setSelectedOptions(prevAnswer?.selectedOptions ?? []);
+      setSelectedOption(previousAnswer?.selectedOption ?? null);
     }
   };
 
   const jumpToQuestion = (index: number) => {
+    // Save current answer if any
+    if (selectedOption !== null) {
+      const newAnswers = [...userAnswers];
+      const existingAnswerIndex = newAnswers.findIndex(
+        (a) => a.questionId === questions[currentQuestion].id
+      );
+      
+      if (existingAnswerIndex !== -1) {
+        newAnswers[existingAnswerIndex].selectedOption = selectedOption;
+      } else {
+        newAnswers.push({
+          questionId: questions[currentQuestion].id,
+          selectedOption: selectedOption,
+        });
+      }
+      setUserAnswers(newAnswers);
+    }
+
     setCurrentQuestion(index);
+    // Load selected answer if exists
     const answer = userAnswers.find(
       (a) => a.questionId === questions[index].id
     );
-    setSelectedOptions(answer?.selectedOptions ?? []);
+    setSelectedOption(answer?.selectedOption ?? null);
     setShowOverview(false);
   };
 
+  const isQuestionAnswered = (questionId: string) => {
+    return userAnswers.some(a => a.questionId === questionId);
+  };
+
   const handleSubmitExam = () => {
+    // Save current answer before submit
+    if (selectedOption !== null) {
+      const newAnswers = [...userAnswers];
+      const existingAnswerIndex = newAnswers.findIndex(
+        (a) => a.questionId === questions[currentQuestion].id
+      );
+      
+      if (existingAnswerIndex !== -1) {
+        newAnswers[existingAnswerIndex].selectedOption = selectedOption;
+      } else {
+        newAnswers.push({
+          questionId: questions[currentQuestion].id,
+          selectedOption: selectedOption,
+        });
+      }
+      setUserAnswers(newAnswers);
+    }
     setShowResults(true);
   };
 
   const calculateScore = () => {
-    let correct = 0;
+    let correctCount = 0;
     userAnswers.forEach((answer) => {
       const question = questions.find((q) => q.id === answer.questionId);
-      if (question) {
-        if (question.isMultipleChoice && question.correctAnswers) {
-          // Check if all correct answers are selected and no incorrect ones
-          const sortedUserAnswers = [...answer.selectedOptions].sort();
-          const sortedCorrectAnswers = [...question.correctAnswers].sort();
-          
-          if (
-            sortedUserAnswers.length === sortedCorrectAnswers.length &&
-            sortedUserAnswers.every((val, index) => val === sortedCorrectAnswers[index])
-          ) {
-            correct++;
-          }
-        } else {
-          // Single choice question
-          if (answer.selectedOptions.length === 1 && 
-              question.correctAnswer === answer.selectedOptions[0]) {
-            correct++;
-          }
-        }
+      if (question && answer.selectedOption === question.correctAnswer) {
+        correctCount++;
       }
     });
-    // CompTIA uses scaled scoring: 100-900, passing is 750
-    // Simulate: (correct / total) * 800 + 100
-    const percentage = userAnswers.length > 0 ? correct / questions.length : 0;
-    return Math.round(percentage * 800 + 100);
+    return correctCount;
   };
 
-  const getAnsweredCount = () => {
-    return userAnswers.length;
+  const getScaledScore = () => {
+    const correctCount = calculateScore();
+    const totalQuestions = questions.length;
+    const percentage = (correctCount / totalQuestions) * 100;
+    // Scale from 100-900 based on percentage
+    const scaledScore = Math.round(100 + (percentage / 100) * 800);
+    return scaledScore;
   };
 
   const handleRestart = () => {
@@ -183,227 +204,72 @@ export default function ExamPage() {
     setCurrentQuestion(0);
     setUserAnswers([]);
     setShowResults(false);
-    setSelectedOptions([]);
+    setSelectedOption(null);
     setTimeRemaining(90 * 60);
     setExamStarted(false);
     setShowOverview(false);
   };
 
-  const isQuestionAnswered = (questionId: string) => {
-    return userAnswers.some((a) => a.questionId === questionId);
-  };
-
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
-        <Card className="w-full max-w-2xl">
-          <CardHeader>
-            <CardTitle>Loading Exam...</CardTitle>
-          </CardHeader>
-        </Card>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Laden der Prüfungsfragen...</p>
+        </div>
       </div>
     );
   }
 
   if (!examStarted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4">
-        <Card className="w-full max-w-2xl">
-          <CardHeader>
-            <CardTitle className="text-3xl">CompTIA Security+ SY0-701 Exam</CardTitle>
-            <CardDescription>60 Fragen - 90 Minuten - 765 Punkte zum Bestehen</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="prose dark:prose-invert max-w-none">
-              <h3>Prüfungshinweise:</h3>
-              <ul>
-                <li>Du hast <strong>90 Minuten</strong> Zeit für 60 Fragen</li>
-                <li>Du kannst zwischen den Fragen vor und zurück navigieren</li>
-                <li>Die Antworten werden gespeichert, wenn du zur nächsten Frage gehst</li>
-                <li>Am Ende werden alle Antworten ausgewertet</li>
-                <li>Du brauchst <strong>765 von 900 Punkten</strong> zum Bestehen</li>
-                <li>Keine direkte Rückmeldung während der Prüfung - nur am Ende!</li>
-              </ul>
-            </div>
-            <div className="flex gap-4">
-              <Button onClick={handleStartExam} size="lg" className="flex-1">
-                Prüfung starten
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link href="/">
-                  <Home className="mr-2 h-4 w-4" />
-                  Zurück
-                </Link>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  if (showResults) {
-    const score = calculateScore();
-    const passed = score >= 765;
-    const correctCount = userAnswers.filter((answer) => {
-      const question = questions.find((q) => q.id === answer.questionId);
-      if (!question) return false;
-      
-      if (question.isMultipleChoice && question.correctAnswers) {
-        const sortedUserAnswers = [...answer.selectedOptions].sort();
-        const sortedCorrectAnswers = [...question.correctAnswers].sort();
-        return (
-          sortedUserAnswers.length === sortedCorrectAnswers.length &&
-          sortedUserAnswers.every((val, index) => val === sortedCorrectAnswers[index])
-        );
-      } else {
-        return answer.selectedOptions.length === 1 && 
-               question.correctAnswer === answer.selectedOptions[0];
-      }
-    }).length;
-
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
-        <div className="max-w-6xl mx-auto space-y-6">
-          <Card className={passed ? 'border-green-500' : 'border-red-500'}>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-3xl">
-                {passed ? (
-                  <>
-                    <CheckCircle2 className="h-8 w-8 text-green-500" />
-                    Bestanden!
-                  </>
-                ) : (
-                  <>
-                    <XCircle className="h-8 w-8 text-red-500" />
-                    Nicht bestanden
-                  </>
-                )}
-              </CardTitle>
-              <CardDescription>
-                Deine Punktzahl: {score} / 900 (Mindestens 765 erforderlich)
-              </CardDescription>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
+        <div className="max-w-3xl mx-auto">
+          <Card className="shadow-2xl">
+            <CardHeader className="text-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-t-lg">
+              <CardTitle className="text-3xl mb-2">CompTIA Security+ SY0-701</CardTitle>
+              <CardDescription className="text-blue-100">Prüfungssimulator</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4 text-center">
-                <div className="p-4 bg-muted rounded-lg">
-                  <div className="text-3xl font-bold">{correctCount}</div>
-                  <div className="text-sm text-muted-foreground">Richtig beantwortet</div>
-                </div>
-                <div className="p-4 bg-muted rounded-lg">
-                  <div className="text-3xl font-bold">{userAnswers.length - correctCount}</div>
-                  <div className="text-sm text-muted-foreground">Falsch beantwortet</div>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <Button onClick={handleRestart} size="lg" className="flex-1">
-                  <RotateCcw className="mr-2 h-4 w-4" />
-                  Neue Prüfung starten
-                </Button>
-                <Button variant="outline" size="lg" asChild>
-                  <Link href="/">
-                    <Home className="mr-2 h-4 w-4" />
-                    Zur Startseite
-                  </Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Detaillierte Antworten</CardTitle>
-              <CardDescription>Hier siehst du alle Fragen mit Erklärungen</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {questions.map((question, index) => {
-                const userAnswer = userAnswers.find((a) => a.questionId === question.id);
-                const wasAnswered = userAnswer !== undefined;
-                
-                let isCorrect = false;
-                if (userAnswer && question.isMultipleChoice && question.correctAnswers) {
-                  const sortedUserAnswers = [...userAnswer.selectedOptions].sort();
-                  const sortedCorrectAnswers = [...question.correctAnswers].sort();
-                  isCorrect = (
-                    sortedUserAnswers.length === sortedCorrectAnswers.length &&
-                    sortedUserAnswers.every((val, idx) => val === sortedCorrectAnswers[idx])
-                  );
-                } else if (userAnswer) {
-                  isCorrect = userAnswer.selectedOptions.length === 1 && 
-                             question.correctAnswer === userAnswer.selectedOptions[0];
-                }
-
-                return (
-                  <div key={question.id} className="border-b pb-6 last:border-b-0">
-                    <div className="flex items-start gap-2 mb-4">
-                      {wasAnswered ? (
-                        isCorrect ? (
-                          <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-1" />
-                        ) : (
-                          <XCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-1" />
-                        )
-                      ) : (
-                        <div className="h-5 w-5 flex-shrink-0 mt-1" />
-                      )}
-                      <div className="flex-1">
-                        <div className="font-semibold mb-2">
-                          Frage {index + 1}: {question.question}
-                          {question.isMultipleChoice && (
-                            <span className="ml-2 text-sm text-purple-600 dark:text-purple-400">
-                              (Multiple Choice - {question.requiredSelections || 2} Antworten)
-                            </span>
-                          )}
-                        </div>
-                        <div className="text-sm text-muted-foreground mb-3">
-                          Domain: {question.domain}
-                        </div>
-                        <div className="space-y-2">
-                          {question.options.map((option, optionIndex) => {
-                            const isUserAnswer = userAnswer?.selectedOptions.includes(optionIndex);
-                            const isCorrectAnswer = question.isMultipleChoice 
-                              ? question.correctAnswers?.includes(optionIndex)
-                              : question.correctAnswer === optionIndex;
-
-                            return (
-                              <div
-                                key={optionIndex}
-                                className={`p-3 rounded-lg border-2 ${
-                                  isCorrectAnswer
-                                    ? 'bg-green-50 dark:bg-green-950 border-green-500'
-                                    : isUserAnswer
-                                    ? 'bg-red-50 dark:bg-red-950 border-red-500'
-                                    : 'border-transparent bg-muted'
-                                }`}
-                              >
-                                <div className="flex items-center gap-2">
-                                  <span className="font-medium">
-                                    {String.fromCharCode(65 + optionIndex)}.
-                                  </span>
-                                  <span>{option}</span>
-                                  {isCorrectAnswer && (
-                                    <CheckCircle2 className="h-4 w-4 text-green-500 ml-auto" />
-                                  )}
-                                  {isUserAnswer && !isCorrectAnswer && (
-                                    <XCircle className="h-4 w-4 text-red-500 ml-auto" />
-                                  )}
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                        <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                          <div className="font-semibold mb-1 text-blue-900 dark:text-blue-100">
-                            Erklärung:
-                          </div>
-                          <div className="text-sm text-blue-800 dark:text-blue-200">
-                            {question.explanation}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+            <CardContent className="p-8 space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-start space-x-3">
+                  <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-lg">60 Fragen</h3>
+                    <p className="text-muted-foreground">Zufällig ausgewählte Fragen aus dem Fragenpool</p>
                   </div>
-                );
-              })}
+                </div>
+                <div className="flex items-start space-x-3">
+                  <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-lg">90 Minuten Prüfungszeit</h3>
+                    <p className="text-muted-foreground">Timer läuft nach Start der Prüfung</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-lg">Punktebereich 100-900</h3>
+                    <p className="text-muted-foreground">Bestanden: 765 oder höher</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-lg">Keine sofortige Auswertung</h3>
+                    <p className="text-muted-foreground">Ergebnisse erst nach Abgabe der Prüfung</p>
+                  </div>
+                </div>
+              </div>
+              <div className="border-t pt-6">
+                <Button 
+                  onClick={handleStartExam} 
+                  className="w-full py-6 text-lg shadow-lg hover:shadow-xl transition-all"
+                  size="lg"
+                >
+                  Prüfung starten
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -411,203 +277,300 @@ export default function ExamPage() {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
-      <div className="max-w-4xl mx-auto space-y-6">
-        {/* Timer and Progress */}
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <div className="text-sm text-muted-foreground">Fortschritt</div>
-                <div className="text-lg font-semibold">
-                  Frage {currentQuestion + 1} von {questions.length}
+  if (showResults) {
+    const correctCount = calculateScore();
+    const scaledScore = getScaledScore();
+    const passed = scaledScore >= 765;
+    const percentage = (correctCount / questions.length) * 100;
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
+        <div className="max-w-4xl mx-auto">
+          <Card className="shadow-2xl mb-6">
+            <CardHeader className={`text-center rounded-t-lg ${
+              passed 
+                ? 'bg-gradient-to-r from-green-600 to-emerald-600' 
+                : 'bg-gradient-to-r from-red-600 to-rose-600'
+            } text-white`}>
+              <div className="flex justify-center mb-4">
+                {passed ? (
+                  <CheckCircle2 className="h-20 w-20" />
+                ) : (
+                  <XCircle className="h-20 w-20" />
+                )}
+              </div>
+              <CardTitle className="text-3xl mb-2">
+                {passed ? 'Bestanden!' : 'Nicht Bestanden'}
+              </CardTitle>
+              <CardDescription className="text-white/90 text-xl">
+                Ihre Punktzahl: {scaledScore}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="text-center p-4 bg-blue-50 dark:bg-gray-800 rounded-lg">
+                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{correctCount}/{questions.length}</div>
+                  <div className="text-sm text-muted-foreground mt-1">Richtige Antworten</div>
+                </div>
+                <div className="text-center p-4 bg-blue-50 dark:bg-gray-800 rounded-lg">
+                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{percentage.toFixed(1)}%</div>
+                  <div className="text-sm text-muted-foreground mt-1">Prozent korrekt</div>
+                </div>
+                <div className="text-center p-4 bg-blue-50 dark:bg-gray-800 rounded-lg">
+                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{scaledScore}</div>
+                  <div className="text-sm text-muted-foreground mt-1">Punkte (765 erforderlich)</div>
                 </div>
               </div>
-              <div>
-                <div className="text-sm text-muted-foreground">Verbleibende Zeit</div>
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                  {formatTime(timeRemaining)}
-                </div>
-              </div>
-              <div>
-                <div className="text-sm text-muted-foreground">Beantwortet</div>
-                <div className="text-lg font-semibold">
-                  {getAnsweredCount()} / {questions.length}
-                </div>
-              </div>
-              <Sheet open={showOverview} onOpenChange={setShowOverview}>
-                <SheetTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <List className="h-4 w-4 mr-2" />
-                    Übersicht
-                  </Button>
-                </SheetTrigger>
-                <SheetContent className="w-full sm:max-w-md overflow-y-auto">
-                  <SheetHeader>
-                    <SheetTitle>Fragenübersicht</SheetTitle>
-                    <SheetDescription>
-                      {getAnsweredCount()} von {questions.length} Fragen beantwortet
-                    </SheetDescription>
-                  </SheetHeader>
-                  <div className="mt-6 grid grid-cols-5 gap-2">
-                    {questions.map((q, idx) => {
-                      const answered = isQuestionAnswered(q.id);
-                      return (
-                        <Button
-                          key={q.id}
-                          variant={idx === currentQuestion ? "default" : answered ? "secondary" : "outline"}
-                          size="sm"
-                          onClick={() => jumpToQuestion(idx)}
-                          className={`h-12 ${!answered ? 'border-amber-500 text-amber-600 hover:text-amber-700' : ''}`}
-                        >
-                          {idx + 1}
-                          {!answered && (
-                            <AlertCircle className="h-3 w-3 ml-1 text-amber-600" />
+
+              <div className="space-y-4 mb-8">
+                <h3 className="text-xl font-semibold mb-4">Detaillierte Ergebnisse</h3>
+                {questions.map((question, index) => {
+                  const userAnswer = userAnswers.find((a) => a.questionId === question.id);
+                  const isCorrect = userAnswer?.selectedOption === question.correctAnswer;
+                  
+                  return (
+                    <Card key={question.id} className={`border-l-4 ${
+                      isCorrect ? 'border-l-green-500' : 'border-l-red-500'
+                    }`}>
+                      <CardHeader>
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <CardTitle className="text-base mb-2">
+                              Frage {index + 1}
+                            </CardTitle>
+                            <p className="text-sm">{question.question}</p>
+                          </div>
+                          {isCorrect ? (
+                            <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 ml-4" />
+                          ) : (
+                            <XCircle className="h-6 w-6 text-red-600 flex-shrink-0 ml-4" />
                           )}
-                        </Button>
-                      );
-                    })}
-                  </div>
-                  <div className="mt-6 space-y-2 text-sm">
-                    <div className="flex items-center gap-2">
-                      <div className="h-8 w-8 rounded bg-primary" />
-                      <span>Aktuelle Frage</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="h-8 w-8 rounded bg-secondary" />
-                      <span>Beantwortet</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="h-8 w-8 rounded border-2 border-amber-500" />
-                      <span>Nicht beantwortet</span>
-                    </div>
-                  </div>
-                </SheetContent>
-              </Sheet>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-2">
+                          {question.options.map((option, optionIndex) => {
+                            const isUserAnswer = userAnswer?.selectedOption === optionIndex;
+                            const isCorrectAnswer = question.correctAnswer === optionIndex;
+                            
+                            return (
+                              <div
+                                key={optionIndex}
+                                className={`p-3 rounded-lg ${
+                                  isCorrectAnswer
+                                    ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
+                                    : isUserAnswer
+                                    ? 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
+                                    : 'bg-gray-50 dark:bg-gray-800'
+                                }`}
+                              >
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm">{option}</span>
+                                  {isCorrectAnswer && (
+                                    <span className="text-xs font-semibold text-green-700 dark:text-green-400">
+                                      Richtig
+                                    </span>
+                                  )}
+                                  {isUserAnswer && !isCorrectAnswer && (
+                                    <span className="text-xs font-semibold text-red-700 dark:text-red-400">
+                                      Ihre Antwort
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                          <p className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-1">
+                            Erklärung:
+                          </p>
+                          <p className="text-sm text-blue-800 dark:text-blue-200">
+                            {question.explanation}
+                          </p>
+                          <p className="text-xs text-blue-600 dark:text-blue-400 mt-2">
+                            Domain: {question.domain}
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+
+              <div className="flex gap-4">
+                <Button onClick={handleRestart} className="flex-1" size="lg">
+                  <RotateCcw className="mr-2 h-5 w-5" />
+                  Neue Prüfung starten
+                </Button>
+                <Link href="/" className="flex-1">
+                  <Button variant="outline" className="w-full" size="lg">
+                    <Home className="mr-2 h-5 w-5" />
+                    Zurück zur Startseite
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Header with Timer and Progress */}
+        <div className="mb-6 flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-bold">Security+ SY0-701 Prüfung</h1>
+            <p className="text-sm text-muted-foreground">
+              Frage {currentQuestion + 1} von {questions.length}
+            </p>
+          </div>
+          <div className="text-right">
+            <div className={`text-2xl font-bold ${
+              timeRemaining < 300 ? 'text-red-600' : 'text-primary'
+            }`}>
+              {formatTime(timeRemaining)}
             </div>
-            <Progress value={((currentQuestion + 1) / questions.length) * 100} />
-          </CardContent>
-        </Card>
+            <p className="text-sm text-muted-foreground">Verbleibende Zeit</p>
+          </div>
+        </div>
+
+        <Progress value={progress} className="mb-6" />
 
         {/* Question Card */}
-        <Card>
+        <Card className="shadow-lg mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="text-xl">
               Frage {currentQuestion + 1}
-              {questions[currentQuestion].isMultipleChoice && (
-                <span className="text-sm font-normal text-purple-600 dark:text-purple-400">
-                  (Wähle {questions[currentQuestion].requiredSelections || 2} Antworten)
-                </span>
-              )}
             </CardTitle>
-            <CardDescription>{questions[currentQuestion].domain}</CardDescription>
+            <CardDescription className="text-base mt-3">
+              {questions[currentQuestion].question}
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="prose dark:prose-invert max-w-none">
-              <p className="text-lg">{questions[currentQuestion].question}</p>
-            </div>
-
-            {questions[currentQuestion].isMultipleChoice ? (
-              // Multiple Choice - use Checkboxes
+          <CardContent>
+            <RadioGroup
+              value={selectedOption !== null ? selectedOption.toString() : undefined}
+              onValueChange={handleAnswerSelect}
+            >
               <div className="space-y-3">
                 {questions[currentQuestion].options.map((option, index) => (
                   <div
                     key={index}
-                    className={`flex items-center space-x-3 p-4 rounded-lg border-2 transition-colors cursor-pointer ${
-                      selectedOptions.includes(index) 
-                        ? 'border-primary bg-primary/5' 
-                        : 'hover:border-primary'
-                    }`}
-                    onClick={() => handleAnswerSelect(index)}
+                    className="flex items-center space-x-3 p-4 rounded-lg border hover:bg-accent transition-colors"
                   >
-                    <Checkbox
-                      id={`option-${index}`}
-                      checked={selectedOptions.includes(index)}
-                      onCheckedChange={() => handleAnswerSelect(index)}
-                    />
-                    <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer">
-                      <span className="font-medium mr-2">
-                        {String.fromCharCode(65 + index)}.
-                      </span>
+                    <RadioGroupItem value={index.toString()} id={`option-${index}`} />
+                    <Label
+                      htmlFor={`option-${index}`}
+                      className="flex-1 cursor-pointer text-base"
+                    >
                       {option}
                     </Label>
                   </div>
                 ))}
               </div>
-            ) : (
-              // Single Choice - use Radio buttons
-              <RadioGroup
-                value={selectedOptions.length > 0 ? selectedOptions[0].toString() : ""}
-                onValueChange={(value) => handleAnswerSelect(parseInt(value))}
-              >
-                <div className="space-y-3">
-                  {questions[currentQuestion].options.map((option, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center space-x-3 p-4 rounded-lg border-2 hover:border-primary transition-colors cursor-pointer"
-                    >
-                      <RadioGroupItem value={index.toString()} id={`option-${index}`} />
-                      <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer">
-                        <span className="font-medium mr-2">
-                          {String.fromCharCode(65 + index)}.
-                        </span>
-                        {option}
-                      </Label>
-                    </div>
-                  ))}
-                </div>
-              </RadioGroup>
-            )}
-
-            {/* Warning for multiple choice */}
-            {questions[currentQuestion].isMultipleChoice && (
-              <div className="text-sm text-purple-600 dark:text-purple-400 flex items-center gap-2">
-                <AlertCircle className="h-4 w-4" />
-                <span>
-                  {selectedOptions.length} von {questions[currentQuestion].requiredSelections || 2} Antworten ausgewählt
-                </span>
-              </div>
-            )}
-
-            <div className="flex gap-4">
-              <Button
-                onClick={handlePreviousQuestion}
-                disabled={currentQuestion === 0}
-                variant="outline"
-              >
-                Zurück
-              </Button>
-              {currentQuestion < questions.length - 1 ? (
-                <Button
-                  onClick={handleNextQuestion}
-                  disabled={selectedOptions.length === 0}
-                  className="flex-1"
-                >
-                  Nächste Frage
-                </Button>
-              ) : (
-                <Button
-                  onClick={handleSubmitExam}
-                  disabled={getAnsweredCount() < questions.length}
-                  className="flex-1"
-                >
-                  Prüfung abgeben
-                </Button>
-              )}
-            </div>
-
-            {getAnsweredCount() < questions.length && currentQuestion === questions.length - 1 && (
-              <div className="text-sm text-amber-600 dark:text-amber-400 text-center flex items-center justify-center gap-2">
-                <AlertCircle className="h-4 w-4" />
-                <span>
-                  Bitte beantworte alle Fragen, bevor du die Prüfung abgibst.
-                  Klicke auf "Übersicht" um zu sehen, welche Fragen noch fehlen.
-                </span>
-              </div>
-            )}
+            </RadioGroup>
           </CardContent>
         </Card>
+
+        {/* Warning message on last question */}
+        {currentQuestion === questions.length - 1 && selectedOption !== null && (
+          <Card className="mb-6 border-orange-200 dark:border-orange-800">
+            <CardContent className="pt-6">
+              <div className="flex items-start space-x-3">
+                <AlertCircle className="h-5 w-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-orange-900 dark:text-orange-100">
+                    Dies ist die letzte Frage. Überprüfen Sie Ihre Antworten in der Übersicht, bevor Sie die Prüfung abgeben.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Navigation */}
+        <div className="flex justify-between items-center gap-4">
+          <Button
+            onClick={handlePreviousQuestion}
+            disabled={currentQuestion === 0}
+            variant="outline"
+          >
+            Zurück
+          </Button>
+
+          <Sheet open={showOverview} onOpenChange={setShowOverview}>
+            <SheetTrigger asChild>
+              <Button variant="outline">
+                <List className="mr-2 h-4 w-4" />
+                Übersicht
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto">
+              <SheetHeader>
+                <SheetTitle>Fragenübersicht</SheetTitle>
+                <SheetDescription>
+                  Klicken Sie auf eine Frage, um direkt dorthin zu springen
+                </SheetDescription>
+              </SheetHeader>
+              <div className="mt-6">
+                <div className="grid grid-cols-5 gap-2">
+                  {questions.map((q, index) => {
+                    const isAnswered = isQuestionAnswered(q.id);
+                    const isCurrent = index === currentQuestion;
+                    
+                    return (
+                      <Button
+                        key={q.id}
+                        variant={isCurrent ? "default" : isAnswered ? "secondary" : "outline"}
+                        className={`h-12 ${
+                          !isAnswered && !isCurrent ? 'border-orange-500 border-2' : ''
+                        }`}
+                        onClick={() => jumpToQuestion(index)}
+                      >
+                        {!isAnswered && !isCurrent && (
+                          <AlertCircle className="h-4 w-4 text-orange-500 mr-1" />
+                        )}
+                        {index + 1}
+                      </Button>
+                    );
+                  })}
+                </div>
+                <div className="mt-6 space-y-2 text-sm">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 bg-primary rounded"></div>
+                    <span>Aktuelle Frage</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 bg-secondary rounded"></div>
+                    <span>Beantwortet</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 border-2 border-orange-500 rounded"></div>
+                    <span>Unbeantwortet</span>
+                  </div>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+
+          {currentQuestion < questions.length - 1 ? (
+            <Button onClick={handleNextQuestion}>
+              Weiter
+            </Button>
+          ) : (
+            <Button 
+              onClick={handleSubmitExam}
+              className="bg-green-600 hover:bg-green-700"
+            >
+              Prüfung abgeben
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -4,10 +4,7 @@ export interface ExamQuestion {
   id: string;
   question: string;
   options: string[];
-  correctAnswer: number; // 0-based index (for single-choice questions)
-  correctAnswers?: number[]; // For multiple-choice questions
-  isMultipleChoice?: boolean; // If true, user must select multiple answers
-  requiredSelections?: number; // Number of answers to select (e.g., 2 for "Choose TWO")
+  correctAnswer: number; // 0-based index
   explanation: string;
   domain: string;
 }
@@ -575,93 +572,68 @@ export const examQuestionBank: ExamQuestion[] = [
   },
   {
     id: "q61",
-    question: "Ein Sicherheitsingenieur implementiert FDE für alle Laptops in einem Unternehmen. Welche der folgenden Punkte sind für den Ingenieur im Rahmen der Planung am wichtigsten zu berücksichtigen? (Wählen Sie ZWEI aus)",
+    question: "Welcher der folgenden Bedrohungsakteure wird am ehesten von einer ausländischen Regierung angeheuert, um kritische Systeme in anderen Ländern anzugreifen?",
     options: [
-      "Schlüsseltreuhhand",
-      "TPM- Präsenz",
-      "Digitale Signaturen",
-      "Datenokenisierung",
-      "Verwaltung öffentlicher Schlüssel",
-      "Verknüpfung mit Zertifizierungsstellen"
+      "Hacktivist",
+      "Whistleblower",
+      "Organisierte Kriminalität",
+      "Ungeschulter Angreifer"
     ],
-    correctAnswers: [0, 1],
-    isMultipleChoice: true,
-    requiredSelections: 2,
-    explanation: "Bei der Implementierung von Full Disk Encryption (FDE) sind Schlüsseltreuhhand (Key Escrow) und TPM-Präsenz (Trusted Platform Module) am wichtigsten. Key Escrow ermöglicht die Wiederherstellung von Daten bei Verlust des Schlüssels, während TPM sichere Hardwareunterstützung für Verschlüsselungsschlüssel bietet.",
-    domain: "3.3 Cryptographic Solutions",
-    correctAnswer: 0 // Fallback for old code
+    correctAnswer: 2,
+    explanation: "Organisierte Kriminalität ist eine Art von Bedrohungsakteur, der durch finanziellen Gewinn motiviert ist und oft grenzüberschreitend operiert. Organisierte Kriminalitätsgruppen können von ausländischen Regierungen für Cyberangriffe angeheuert werden.",
+    domain: "2.1 Threat Actors and Attack Vectors"
   },
   {
     id: "q62",
-    question: "An employee receives a text message that appears to have been sent by the payroll department and is asking for credential verification. Which of the following social engineering techniques are being attempted? (Choose TWO)",
+    question: "Ein Sicherheitsanalyst erstellt eine eingehende Firewall-Regel, um die IP-Adresse 10.1.4.9 vom Zugriff auf das Netzwerk der Organisation zu blockieren. Welche der folgenden Regeln erfüllt diese Anforderung?",
     options: [
-      "Typosquatting",
-      "Phishing",
-      "Impersonation",
-      "Vishing",
-      "Smishing",
-      "Misinformation"
+      "access-list inbound deny ip source 0.0.0.0/0 destination 10.1.4.9/32",
+      "access-list inbound deny ip source 10.1.4.9/32 destination 0.0.0.0/0",
+      "access-list inbound permit ip source 10.1.4.9/32 destination 0.0.0.0/0",
+      "access-list inbound permit ip source 0.0.0.0/0 destination 10.1.4.9/32"
     ],
-    correctAnswers: [1, 4],
-    isMultipleChoice: true,
-    requiredSelections: 2,
-    explanation: "Phishing ist der Oberbegriff für betrügerische Nachrichten, die sensible Informationen stehlen sollen. Smishing ist speziell Phishing via SMS/Textnachrichten. Da die Nachricht per Text kam und nach Anmeldedaten fragt, sind beide Techniken zutreffend.",
-    domain: "2.2 Threats, Vulnerabilities, and Mitigations",
-    correctAnswer: 1 // Fallback for old code
+    correctAnswer: 1,
+    explanation: "Um eingehenden Verkehr von einer bestimmten IP-Adresse zu blockieren, muss die Firewall-Regel die Quell-IP (source) als 10.1.4.9/32 und die Aktion als 'deny' definieren. Die Regel blockiert alle Pakete, die von dieser IP-Adresse kommen.",
+    domain: "4.1 Network Security and Firewall Configuration"
   },
   {
     id: "q63",
-    question: "A company wants to implement a backup strategy that allows for the fastest recovery time. Which TWO backup types should be combined to achieve this goal? (Choose TWO)",
+    question: "Welche der folgenden Schwachstellen ist hardwarespezifisch?",
     options: [
-      "Full backup",
-      "Incremental backup",
-      "Differential backup",
-      "Snapshot",
-      "Continuous data protection",
-      "Archive backup"
+      "Firmware-Version",
+      "Buffer Overflow",
+      "SQL Injection",
+      "Cross-Site Scripting"
     ],
-    correctAnswers: [0, 2],
-    isMultipleChoice: true,
-    requiredSelections: 2,
-    explanation: "Eine Kombination aus Full Backup und Differential Backup bietet die schnellste Wiederherstellungszeit. Man benötigt nur das letzte Full Backup und das letzte Differential Backup, im Gegensatz zu Incremental, wo alle Incremental Backups seit dem letzten Full Backup wiederhergestellt werden müssen.",
-    domain: "4.2 Resilience and Recovery",
-    correctAnswer: 0 // Fallback for old code
+    correctAnswer: 0,
+    explanation: "Firmware ist eine Art Software, die in ein Hardwaregerät eingebettet ist, wie z.B. einen Router, Drucker oder BIOS-Chip. Firmware steuert die grundlegenden Funktionen des Geräts und kann aktualisiert werden. Veraltete Firmware-Versionen stellen hardwarespezifische Schwachstellen dar.",
+    domain: "2.3 Vulnerabilities and Patch Management"
   },
   {
     id: "q64",
-    question: "Which of the following are characteristics of a properly implemented zero trust security model? (Choose TWO)",
+    question: "Eine Organisation baut ein neues Backup-Rechenzentrum auf, wobei das Kosten-Nutzen-Verhältnis die Hauptanforderung ist und RTO- und RPO-Werte von etwa zwei Tagen akzeptabel sind. Welcher der folgenden Standorttypen ist für dieses Szenario am besten geeignet?",
     options: [
-      "Implicit trust for internal users",
-      "Continuous verification of user identity",
-      "Network perimeter as primary defense",
-      "Least privilege access",
-      "Static security policies",
-      "Trust based on network location"
+      "Real-time Recovery",
+      "Hot Site",
+      "Cold Site",
+      "Warm Site"
     ],
-    correctAnswers: [1, 3],
-    isMultipleChoice: true,
-    requiredSelections: 2,
-    explanation: "Zero Trust basiert auf zwei Hauptprinzipien: Continuous Verification (ständige Überprüfung der Identität) und Least Privilege Access (minimale Zugriffsrechte). Zero Trust geht davon aus, dass es keine vertrauenswürdige Netzwerkzone gibt und jede Anfrage verifiziert werden muss.",
-    domain: "4.1 Security Architecture",
-    correctAnswer: 1 // Fallback for old code
+    correctAnswer: 2,
+    explanation: "Eine Cold Site ist ein Backup-Rechenzentrum mit der notwendigen Infrastruktur zur Unterstützung des IT-Betriebs, aber ohne vorkonfigurierte Hardware oder Software. Cold Sites sind die kostengünstigste Option und eignen sich für Szenarien mit längeren RTO/RPO-Anforderungen von mehreren Tagen.",
+    domain: "4.2 Business Continuity and Disaster Recovery"
   },
   {
     id: "q65",
-    question: "A security analyst is implementing controls to protect against SQL injection attacks. Which TWO methods are most effective? (Choose TWO)",
+    question: "Welches der folgenden Tools kann dabei helfen, einen Mitarbeiter zu erkennen, der versehentlich eine Datei mit personenbezogenen Daten (PII) eines Kunden per E-Mail versendet hat?",
     options: [
-      "Input validation",
-      "Disabling JavaScript",
-      "Parameterized queries",
-      "Installing antivirus",
-      "Using HTTPS",
-      "Network segmentation"
+      "SCAP",
+      "NetFlow",
+      "Antivirus",
+      "DLP"
     ],
-    correctAnswers: [0, 2],
-    isMultipleChoice: true,
-    requiredSelections: 2,
-    explanation: "Input Validation und Parameterized Queries (Prepared Statements) sind die effektivsten Methoden gegen SQL Injection. Input Validation filtert bösartige Eingaben, während Parameterized Queries SQL-Code von Daten trennen und die Ausführung von eingeschleustem Code verhindern.",
-    domain: "2.2 Threats, Vulnerabilities, and Mitigations",
-    correctAnswer: 0 // Fallback for old code
+    correctAnswer: 3,
+    explanation: "DLP (Data Loss Prevention) ist ein Tool, das bei der Erkennung und Verhinderung der unbefugten Übertragung oder des Verlusts sensibler Daten wie personenbezogener Daten (PII) hilft. DLP-Systeme überwachen ausgehende Kommunikation und können Datenlecks verhindern.",
+    domain: "5.1 Data Protection and Privacy"
   }
 ];
 
