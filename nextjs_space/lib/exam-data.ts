@@ -1167,8 +1167,21 @@ export function getRandomQuestions(count: number = 60): ExamQuestion[] {
   return shuffled.slice(0, Math.min(count, examQuestionBank.length));
 }
 
-// Utility function to get random acronyms
+// Utility function to get random acronyms with shuffled options
 export function getRandomAcronyms(count: number = 40): AcronymQuestion[] {
   const shuffled = [...acronymQuestions].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, Math.min(count, acronymQuestions.length));
+  const selected = shuffled.slice(0, Math.min(count, acronymQuestions.length));
+  
+  // Shuffle the options for each question to randomize correct answer position
+  return selected.map(question => {
+    const correctOption = question.options[question.correctAnswer];
+    const shuffledOptions = [...question.options].sort(() => 0.5 - Math.random());
+    const newCorrectIndex = shuffledOptions.indexOf(correctOption);
+    
+    return {
+      ...question,
+      options: shuffledOptions,
+      correctAnswer: newCorrectIndex
+    };
+  });
 }
