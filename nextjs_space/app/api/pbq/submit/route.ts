@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
         sessionId: sessionId ?? '',
         pbqNumber: pbqNumber ?? 0,
         pbqType: pbqType ?? '',
-        userAnswer: userAnswer ?? '',
+        userAnswer: JSON.stringify(userAnswer ?? {}),
         score: score ?? 0,
         isCorrect: isCorrect ?? false
       }
