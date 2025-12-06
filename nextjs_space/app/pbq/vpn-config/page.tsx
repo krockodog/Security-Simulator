@@ -16,12 +16,7 @@ import {
 } from '@/lib/pbq-data';
 
 export default function VPNConfigPBQ() {
-  const [config, setConfig] = useState<VPNConfig>({
-    encryption: '',
-    hashing: '',
-    dhGroup: '',
-    protocol: ''
-  });
+  const [config, setConfig] = useState<Partial<VPNConfig>>({});
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
@@ -52,12 +47,7 @@ export default function VPNConfigPBQ() {
   };
 
   const handleReset = () => {
-    setConfig({
-      encryption: '',
-      hashing: '',
-      dhGroup: '',
-      protocol: ''
-    });
+    setConfig({});
     setSubmitted(false);
     setScore(null);
     setShowExplanation(false);
@@ -148,7 +138,7 @@ export default function VPNConfigPBQ() {
                   Encryption Algorithm *
                 </label>
                 <Select 
-                  value={config.encryption || undefined} 
+                  value={config.encryption} 
                   onValueChange={(value) => setConfig({...config, encryption: value})}
                   disabled={submitted}
                 >
@@ -177,7 +167,7 @@ export default function VPNConfigPBQ() {
                   Hashing Algorithm *
                 </label>
                 <Select 
-                  value={config.hashing || undefined} 
+                  value={config.hashing} 
                   onValueChange={(value) => setConfig({...config, hashing: value})}
                   disabled={submitted}
                 >
@@ -206,7 +196,7 @@ export default function VPNConfigPBQ() {
                   Diffie-Hellman Group *
                 </label>
                 <Select 
-                  value={config.dhGroup || undefined} 
+                  value={config.dhGroup} 
                   onValueChange={(value) => setConfig({...config, dhGroup: value})}
                   disabled={submitted}
                 >
@@ -235,7 +225,7 @@ export default function VPNConfigPBQ() {
                   IPsec Protocol *
                 </label>
                 <Select 
-                  value={config.protocol || undefined} 
+                  value={config.protocol} 
                   onValueChange={(value) => setConfig({...config, protocol: value})}
                   disabled={submitted}
                 >

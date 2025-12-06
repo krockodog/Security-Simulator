@@ -30,18 +30,14 @@ interface ServerStatus {
 }
 
 export default function ThreatAnalysisPBQ() {
-  const [attackAnswers, setAttackAnswers] = useState<{ [key: string]: AttackAnswer }>({
-    attack1: { attackType: '', remediation: '' },
-    attack2: { attackType: '', remediation: '' },
-    attack3: { attackType: '', remediation: '' },
-    attack4: { attackType: '', remediation: '' },
-    attack5: { attackType: '', remediation: '' }
+  const [attackAnswers, setAttackAnswers] = useState<{ [key: string]: Partial<AttackAnswer> }>({
+    attack1: {},
+    attack2: {},
+    attack3: {},
+    attack4: {},
+    attack5: {}
   });
-  const [serverStatus, setServerStatus] = useState<ServerStatus>({
-    server1: '',
-    server2: '',
-    server3: ''
-  });
+  const [serverStatus, setServerStatus] = useState<Partial<ServerStatus>>({});
   const [selectedServer, setSelectedServer] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState<number | null>(null);
@@ -105,17 +101,13 @@ export default function ThreatAnalysisPBQ() {
 
   const handleReset = () => {
     setAttackAnswers({
-      attack1: { attackType: '', remediation: '' },
-      attack2: { attackType: '', remediation: '' },
-      attack3: { attackType: '', remediation: '' },
-      attack4: { attackType: '', remediation: '' },
-      attack5: { attackType: '', remediation: '' }
+      attack1: {},
+      attack2: {},
+      attack3: {},
+      attack4: {},
+      attack5: {}
     });
-    setServerStatus({
-      server1: '',
-      server2: '',
-      server3: ''
-    });
+    setServerStatus({});
     setSubmitted(false);
     setScore(null);
     setShowExplanation(false);
@@ -204,7 +196,7 @@ export default function ThreatAnalysisPBQ() {
                         Attack Type *
                       </label>
                       <Select
-                        value={userAnswer.attackType || undefined}
+                        value={userAnswer.attackType}
                         onValueChange={(value) => handleAttackTypeChange(attack.id, value)}
                         disabled={submitted}
                       >
@@ -234,7 +226,7 @@ export default function ThreatAnalysisPBQ() {
                         Best Remediation *
                       </label>
                       <Select
-                        value={userAnswer.remediation || undefined}
+                        value={userAnswer.remediation}
                         onValueChange={(value) => handleRemediationChange(attack.id, value)}
                         disabled={submitted}
                       >
@@ -300,7 +292,7 @@ export default function ThreatAnalysisPBQ() {
 
                     {/* Status Selection */}
                     <Select
-                      value={status || undefined}
+                      value={status}
                       onValueChange={(value) => handleServerStatusChange(server.serverId, value)}
                       disabled={submitted}
                     >

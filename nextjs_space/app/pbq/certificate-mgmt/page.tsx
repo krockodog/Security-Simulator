@@ -249,7 +249,7 @@ export default function CertificateManagementPBQ() {
                           Select Remediation Action:
                         </Label>
                         <Select
-                          value={userActions[issue.id] || ''}
+                          value={userActions[issue.id]}
                           onValueChange={(value) => handleActionChange(issue.id, value)}
                           disabled={showResults}
                         >
