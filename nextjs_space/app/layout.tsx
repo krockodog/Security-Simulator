@@ -6,15 +6,15 @@ import { ThemeProvider } from '@/components/theme-provider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'CompTIA Security+ SY0-701 PBQ Simulator',
-  description: 'Realistic Performance-Based Question practice for CompTIA Security+ certification exam',
+  title: 'Course Begleiter - IT-Zertifizierung',
+  description: 'Interaktive Prüfungsvorbereitung für CompTIA Security+, PenTest+, Network+, Linux+ und LPI Zertifizierungen mit realistischen PBQs und Examens-Simulationen',
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
   },
   openGraph: {
-    title: 'CompTIA Security+ SY0-701 PBQ Simulator',
-    description: 'Realistic Performance-Based Question practice for CompTIA Security+ certification exam',
+    title: 'Course Begleiter - IT-Zertifizierung',
+    description: 'Interaktive Prüfungsvorbereitung für CompTIA Security+, PenTest+, Network+, Linux+ und LPI',
     images: ['/og-image.png'],
   },
 }
