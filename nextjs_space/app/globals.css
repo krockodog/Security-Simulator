@@ -19,8 +19,12 @@
     --cyber-error: 220 40 90;
   }
   
+  html {
+    @apply bg-black;
+  }
+  
   body {
-    @apply bg-[rgb(var(--cyber-bg))] text-[rgb(var(--cyber-text))];
+    @apply bg-black text-[rgb(var(--cyber-text))];
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 }

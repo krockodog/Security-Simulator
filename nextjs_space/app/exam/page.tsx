@@ -212,7 +212,7 @@ export default function ExamPage() {
 
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-black cyber-grid flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-muted-foreground">Laden der Prüfungsfragen...</p>
@@ -223,7 +223,7 @@ export default function ExamPage() {
 
   if (!examStarted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
+      <div className="min-h-screen bg-black cyber-grid">
         <div className="max-w-3xl mx-auto">
           <Card className="shadow-2xl">
             <CardHeader className="text-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-t-lg">
@@ -284,7 +284,7 @@ export default function ExamPage() {
     const percentage = (correctCount / questions.length) * 100;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
+      <div className="min-h-screen bg-black cyber-grid">
         <div className="max-w-4xl mx-auto">
           <Card className="shadow-2xl mb-6">
             <CardHeader className={`text-center rounded-t-lg ${
@@ -420,7 +420,7 @@ export default function ExamPage() {
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
+    <div className="min-h-screen bg-black cyber-grid">
       <div className="max-w-4xl mx-auto">
         {/* Header with Timer and Progress */}
         <div className="mb-6 flex justify-between items-center">

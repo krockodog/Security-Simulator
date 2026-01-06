@@ -71,7 +71,7 @@ export default function CertificateManagementPBQ() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50 py-8">
+    <div className="min-h-screen bg-black cyber-grid">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="mb-8">

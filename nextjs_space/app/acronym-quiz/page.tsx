@@ -57,7 +57,7 @@ export default function AcronymQuizPage() {
 
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-black cyber-grid">
         <Card className="w-full max-w-2xl">
           <CardHeader>
             <CardTitle>Loading Quiz...</CardTitle>
@@ -74,7 +74,7 @@ export default function AcronymQuizPage() {
     const passed = scaledScore >= 765;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4 flex items-center justify-center">
+      <div className="min-h-screen bg-black cyber-grid">
         <Card className={`w-full max-w-2xl ${passed ? 'border-green-500' : 'border-red-500'}`}>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-3xl">
@@ -145,7 +145,7 @@ export default function AcronymQuizPage() {
   const isCorrect = selectedOption === questions[currentQuestion].correctAnswer;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
+    <div className="min-h-screen bg-black cyber-grid">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Progress */}
         <Card>
