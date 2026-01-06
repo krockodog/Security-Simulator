@@ -1396,6 +1396,479 @@ export const pt003MultipleChoiceQuestions: MultipleChoiceQuestion[] = [
     explanationDE: 'Executive Summary bietet hochrangigen Überblick über Ergebnisse, Geschäftsauswirkungen und Empfehlungen ohne technischen Jargon.'
   },
   // Add remaining 13 questions for Reporting domain...
+  // REPORTING DOMAIN - Additional 13 questions (mc42-mc54)
+  {
+    id: 'mc42',
+    domain: 'Reporting',
+    questionEN: 'What CVSS score indicates a critical vulnerability requiring immediate remediation?',
+    questionDE: 'Welcher CVSS-Score zeigt eine kritische Schwachstelle an, die sofortige Behebung erfordert?',
+    options: ['4.0-6.9', '7.0-8.9', '9.0-10.0', '0.1-3.9'],
+    correctAnswer: 2,
+    explanationEN: 'CVSS scores 9.0-10.0 are Critical severity, 7.0-8.9 High, 4.0-6.9 Medium, 0.1-3.9 Low. Critical findings demand immediate attention.',
+    explanationDE: 'CVSS-Scores 9.0-10.0 sind kritischer Schweregrad, erfordern sofortige Aufmerksamkeit.'
+  },
+  {
+    id: 'mc43',
+    domain: 'Reporting',
+    questionEN: 'In a pentest report, which metric best communicates risk to executives?',
+    questionDE: 'Welche Metrik kommuniziert Risiko am besten an Führungskräfte in einem Pentest-Bericht?',
+    options: ['Number of ports open', 'Business impact assessment', 'List of tools used', 'Technical exploit details'],
+    correctAnswer: 1,
+    explanationEN: 'Business impact shows how vulnerabilities affect operations, revenue, compliance. Executives need business context, not technical details.',
+    explanationDE: 'Geschäftsauswirkungen zeigen, wie Schwachstellen Betrieb, Umsatz, Compliance beeinflussen.'
+  },
+  {
+    id: 'mc44',
+    domain: 'Reporting',
+    questionEN: 'What should be included in the remediation timeline section?',
+    questionDE: 'Was sollte im Abschnitt Behebungszeitplan enthalten sein?',
+    options: ['Exploit code', 'Prioritized action items with deadlines', 'Penetration test methodology', 'Password hashes'],
+    correctAnswer: 1,
+    explanationEN: 'Remediation timeline prioritizes fixes (Critical→High→Medium→Low) with realistic deadlines based on severity and complexity.',
+    explanationDE: 'Behebungszeitplan priorisiert Fixes mit realistischen Fristen basierend auf Schweregrad.'
+  },
+  {
+    id: 'mc45',
+    domain: 'Reporting',
+    questionEN: 'Which documentation practice ensures report integrity and non-repudiation?',
+    questionDE: 'Welche Dokumentationspraxis gewährleistet Berichtsintegrität und Nichtabstreitbarkeit?',
+    options: ['Using spell check', 'Digital signatures and timestamps', 'Color coding findings', 'Including screenshots only'],
+    correctAnswer: 1,
+    explanationEN: 'Digital signatures verify report authenticity and prevent tampering. Timestamps prove when activities occurred.',
+    explanationDE: 'Digitale Signaturen verifizieren Berichtsauthentizität und verhindern Manipulation.'
+  },
+  {
+    id: 'mc46',
+    domain: 'Reporting',
+    questionEN: 'A report contains PII collected during testing. What is the proper handling?',
+    questionDE: 'Ein Bericht enthält PII, die während des Tests gesammelt wurden. Was ist die richtige Handhabung?',
+    options: ['Share report publicly', 'Mark as confidential, encrypt, limit access', 'Post on social media', 'Email without encryption'],
+    correctAnswer: 1,
+    explanationEN: 'PII (Personally Identifiable Information) requires confidential handling, encryption at rest/transit, access controls. GDPR/HIPAA compliance mandatory.',
+    explanationDE: 'PII erfordert vertrauliche Handhabung, Verschlüsselung, Zugriffskontrollen. GDPR/HIPAA-Konformität obligatorisch.'
+  },
+  {
+    id: 'mc47',
+    domain: 'Reporting',
+    questionEN: 'What is the purpose of including attack narrative in technical findings?',
+    questionDE: 'Was ist der Zweck der Einbeziehung von Angriffsschilderung in technischen Ergebnissen?',
+    options: ['Make report longer', 'Demonstrate exploitation path and methodology', 'Show off technical skills', 'Confuse readers'],
+    correctAnswer: 1,
+    explanationEN: 'Attack narrative documents step-by-step exploitation process, helping IT teams understand and reproduce findings for validation.',
+    explanationDE: 'Angriffsschilderung dokumentiert schrittweisen Exploitation-Prozess, hilft IT-Teams Ergebnisse zu verstehen.'
+  },
+  {
+    id: 'mc48',
+    domain: 'Reporting',
+    questionEN: 'Which finding severity classification considers both likelihood and impact?',
+    questionDE: 'Welche Schweregradbewertung berücksichtigt sowohl Wahrscheinlichkeit als auch Auswirkung?',
+    options: ['CVSS only', 'Risk rating (Likelihood × Impact)', 'Port count', 'Number of vulnerabilities'],
+    correctAnswer: 1,
+    explanationEN: 'Risk = Likelihood × Impact. High likelihood + High impact = Critical risk. Low likelihood + High impact = Medium risk. Provides business-relevant prioritization.',
+    explanationDE: 'Risiko = Wahrscheinlichkeit × Auswirkung. Bietet geschäftsrelevante Priorisierung.'
+  },
+  {
+    id: 'mc49',
+    domain: 'Reporting',
+    questionEN: 'What information must be included in the scope statement of a report?',
+    questionDE: 'Welche Informationen müssen in der Scope-Erklärung eines Berichts enthalten sein?',
+    options: ['Marketing materials', 'IP ranges, domains, test duration, limitations', 'Competitor analysis', 'Stock prices'],
+    correctAnswer: 1,
+    explanationEN: 'Scope defines what was tested (IP ranges, domains), when (dates/duration), and limitations (black/white box, excluded systems).',
+    explanationDE: 'Scope definiert, was getestet wurde, wann und Einschränkungen.'
+  },
+  {
+    id: 'mc50',
+    domain: 'Reporting',
+    questionEN: 'How should false positives be handled in the final report?',
+    questionDE: 'Wie sollten False Positives im Endbericht behandelt werden?',
+    options: ['Include all unverified', 'Exclude after validation, document in methodology', 'Ignore completely', 'Mark as critical'],
+    correctAnswer: 1,
+    explanationEN: 'Validate findings, exclude false positives from final report, document validation process in methodology section to maintain credibility.',
+    explanationDE: 'Validiere Ergebnisse, schließe False Positives aus, dokumentiere Validierungsprozess.'
+  },
+  {
+    id: 'mc51',
+    domain: 'Reporting',
+    questionEN: 'What is the recommended format for vulnerability evidence?',
+    questionDE: 'Was ist das empfohlene Format für Schwachstellennachweise?',
+    options: ['Text description only', 'Screenshots + command output + timestamps', 'Verbal explanation', 'No evidence needed'],
+    correctAnswer: 1,
+    explanationEN: 'Comprehensive evidence includes screenshots, command outputs, timestamps, HTTP requests/responses. Proves vulnerability existence and helps IT reproduce.',
+    explanationDE: 'Umfassende Nachweise umfassen Screenshots, Befehlsausgaben, Zeitstempel. Beweist Schwachstellenexistenz.'
+  },
+  {
+    id: 'mc52',
+    domain: 'Reporting',
+    questionEN: 'Which metric demonstrates testing coverage to stakeholders?',
+    questionDE: 'Welche Metrik zeigt Testabdeckung den Stakeholdern?',
+    options: ['Number of exploits', 'Percentage of scope tested (hosts scanned/total)', 'Tool versions', 'Tester experience'],
+    correctAnswer: 1,
+    explanationEN: 'Coverage metrics show extent of testing: hosts scanned/total, services tested, attack vectors attempted. Demonstrates thoroughness.',
+    explanationDE: 'Abdeckungsmetriken zeigen Testumfang: gescannte Hosts/Gesamt, getestete Dienste.'
+  },
+  {
+    id: 'mc53',
+    domain: 'Reporting',
+    questionEN: 'What should be documented when a critical vulnerability cannot be exploited?',
+    questionDE: 'Was sollte dokumentiert werden, wenn eine kritische Schwachstelle nicht ausgenutzt werden kann?',
+    options: ['Nothing', 'Mitigating controls, compensating factors, risk acceptance', 'Remove from report', 'Mark as low severity'],
+    correctAnswer: 1,
+    explanationEN: 'Document why exploitation failed: network segmentation, IDS/IPS, WAF, patching. Shows defense-in-depth effectiveness.',
+    explanationDE: 'Dokumentiere, warum Exploitation fehlschlug: Netzwerksegmentierung, IDS/IPS, WAF.'
+  },
+  {
+    id: 'mc54',
+    domain: 'Reporting',
+    questionEN: 'How long should pentest reports be retained per compliance requirements?',
+    questionDE: 'Wie lange sollten Pentest-Berichte gemäß Compliance-Anforderungen aufbewahrt werden?',
+    options: ['1 week', '1 month', '1-7 years depending on regulation', 'Forever'],
+    correctAnswer: 2,
+    explanationEN: 'PCI DSS: 1 year, HIPAA: 6 years, SOX: 7 years. Retention policies vary by industry regulation and legal requirements.',
+    explanationDE: 'PCI DSS: 1 Jahr, HIPAA: 6 Jahre, SOX: 7 Jahre. Aufbewahrungsrichtlinien variieren.'
+  },
+  // ATTACKS DOMAIN - Additional questions (mc55-mc66)
+  {
+    id: 'mc55',
+    domain: 'Attacks',
+    questionEN: 'Which attack allows an attacker to intercept and modify traffic between client and server?',
+    questionDE: 'Welcher Angriff ermöglicht es einem Angreifer, Datenverkehr zwischen Client und Server abzufangen und zu modifizieren?',
+    options: ['DoS', 'Man-in-the-Middle (MitM)', 'SQL Injection', 'Buffer Overflow'],
+    correctAnswer: 1,
+    explanationEN: 'MitM attack intercepts communication, allows eavesdropping and tampering. Common techniques: ARP spoofing, DNS spoofing, SSL stripping.',
+    explanationDE: 'MitM-Angriff fängt Kommunikation ab, ermöglicht Abhören und Manipulation.'
+  },
+  {
+    id: 'mc56',
+    domain: 'Attacks',
+    questionEN: 'What is the purpose of a reverse shell in post-exploitation?',
+    questionDE: 'Was ist der Zweck einer Reverse Shell in der Post-Exploitation?',
+    options: ['Scan ports', 'Establish persistent command and control from target to attacker', 'Crack passwords', 'Enumerate services'],
+    correctAnswer: 1,
+    explanationEN: 'Reverse shell connects from target to attacker, bypassing firewall rules that block incoming connections. Maintains remote access.',
+    explanationDE: 'Reverse Shell verbindet vom Ziel zum Angreifer, umgeht Firewall-Regeln.'
+  },
+  {
+    id: 'mc57',
+    domain: 'Attacks',
+    questionEN: 'Which technique escalates privileges by exploiting misconfigured SUID binaries in Linux?',
+    questionDE: 'Welche Technik eskaliert Rechte durch Ausnutzung falsch konfigurierter SUID-Binaries in Linux?',
+    options: ['Phishing', 'SUID binary abuse', 'Port scanning', 'SQL injection'],
+    correctAnswer: 1,
+    explanationEN: 'SUID binaries run with owner privileges. Misconfigured SUID root binaries allow privilege escalation. Check with: find / -perm -4000',
+    explanationDE: 'SUID-Binaries laufen mit Besitzerrechten. Falsch konfigurierte erlauben Rechteeskalation.'
+  },
+  {
+    id: 'mc58',
+    domain: 'Attacks',
+    questionEN: 'A tester uses Responder to capture NetNTLMv2 hashes. What is the next step?',
+    questionDE: 'Ein Tester verwendet Responder, um NetNTLMv2-Hashes zu erfassen. Was ist der nächste Schritt?',
+    options: ['Delete hashes', 'Crack with hashcat or relay with ntlmrelayx', 'Email to client', 'Ignore'],
+    correctAnswer: 1,
+    explanationEN: 'NetNTLMv2 hashes can be cracked offline (hashcat -m 5600) or relayed to other services (ntlmrelayx) for authentication.',
+    explanationDE: 'NetNTLMv2-Hashes können offline geknackt oder an andere Dienste weitergeleitet werden.'
+  },
+  {
+    id: 'mc59',
+    domain: 'Attacks',
+    questionEN: 'What is Kerberoasting and which accounts are vulnerable?',
+    questionDE: 'Was ist Kerberoasting und welche Konten sind anfällig?',
+    options: ['Attacks SSH', 'Targets service accounts with SPNs in Active Directory', 'Exploits web servers', 'Attacks databases'],
+    correctAnswer: 1,
+    explanationEN: 'Kerberoasting requests Kerberos service tickets (TGS) for accounts with SPNs, extracts encrypted tickets, cracks offline to recover passwords.',
+    explanationDE: 'Kerberoasting fordert Kerberos-Service-Tickets für Konten mit SPNs an, extrahiert verschlüsselte Tickets, knackt offline.'
+  },
+  {
+    id: 'mc60',
+    domain: 'Attacks',
+    questionEN: 'Which command performs a Pass-the-Hash attack using crackmapexec?',
+    questionDE: 'Welcher Befehl führt einen Pass-the-Hash-Angriff mit crackmapexec aus?',
+    options: ['cme smb 10.0.0.1 -u admin -p password', 'cme smb 10.0.0.1 -u admin -H NTLM_HASH', 'cme ftp 10.0.0.1', 'cme http 10.0.0.1'],
+    correctAnswer: 1,
+    explanationEN: 'Pass-the-Hash uses NTLM hash directly for authentication without cracking. Syntax: -H <NTLM hash>. Requires SMB or WMI access.',
+    explanationDE: 'Pass-the-Hash verwendet NTLM-Hash direkt zur Authentifizierung ohne Knacken.'
+  },
+  {
+    id: 'mc61',
+    domain: 'Attacks',
+    questionEN: 'A web app reflects user input without encoding. What attack is possible?',
+    questionDE: 'Eine Web-App spiegelt Benutzereingaben ohne Kodierung wider. Welcher Angriff ist möglich?',
+    options: ['Buffer Overflow', 'Cross-Site Scripting (XSS)', 'ARP Spoofing', 'Port Scanning'],
+    correctAnswer: 1,
+    explanationEN: 'XSS injects malicious JavaScript via unvalidated input. Reflected XSS executes immediately. Test with: <script>alert(1)</script>',
+    explanationDE: 'XSS injiziert bösartiges JavaScript über unvalidierte Eingabe.'
+  },
+  {
+    id: 'mc62',
+    domain: 'Attacks',
+    questionEN: 'Which technique bypasses application whitelisting in Windows?',
+    questionDE: 'Welche Technik umgeht Application Whitelisting in Windows?',
+    options: ['Phishing', 'Living off the Land (LoLBins)', 'Port scanning', 'ARP spoofing'],
+    correctAnswer: 1,
+    explanationEN: 'LoLBins use legitimate Windows binaries (regsvr32, mshta, rundll32) to execute malicious code, bypassing AppLocker/WDAC.',
+    explanationDE: 'LoLBins verwenden legitime Windows-Binaries, um bösartigen Code auszuführen.'
+  },
+  {
+    id: 'mc63',
+    domain: 'Attacks',
+    questionEN: 'What is the primary goal of lateral movement in a network?',
+    questionDE: 'Was ist das Hauptziel der lateralen Bewegung in einem Netzwerk?',
+    options: ['External scanning', 'Access additional systems and escalate privileges', 'Delete logs', 'Install antivirus'],
+    correctAnswer: 1,
+    explanationEN: 'Lateral movement spreads access from initial foothold to critical systems. Techniques: Pass-the-Hash, RDP, PsExec, WMI.',
+    explanationDE: 'Laterale Bewegung verbreitet Zugriff von initialem Foothold zu kritischen Systemen.'
+  },
+  {
+    id: 'mc64',
+    domain: 'Attacks',
+    questionEN: 'A tester discovers MongoDB without authentication. What is the immediate risk?',
+    questionDE: 'Ein Tester entdeckt MongoDB ohne Authentifizierung. Was ist das unmittelbare Risiko?',
+    options: ['No risk', 'Complete database access, data theft/modification', 'Slow performance', 'Better security'],
+    correctAnswer: 1,
+    explanationEN: 'Unauthenticated MongoDB allows full database access. Attackers can read, modify, delete data. Check with: mongo --host TARGET',
+    explanationDE: 'Nicht authentifiziertes MongoDB erlaubt vollen Datenbankzugriff.'
+  },
+  {
+    id: 'mc66',
+    domain: 'Attacks',
+    questionEN: 'Which Windows privilege escalation technique exploits unquoted service paths?',
+    questionDE: 'Welche Windows-Rechteeskalationstechnik nutzt unquoted Service-Pfade aus?',
+    options: ['SQL injection', 'Path hijacking', 'XSS', 'DDoS'],
+    correctAnswer: 1,
+    explanationEN: 'Unquoted paths with spaces allow binary planting. Example: C:\\Program Files\\App\\service.exe tries C:\\Program.exe first.',
+    explanationDE: 'Unquoted Pfade mit Leerzeichen erlauben Binary-Planting.'
+  },
+  // TOOLS DOMAIN - Additional questions (mc67-mc78, mc80-mc90)
+  {
+    id: 'mc67',
+    domain: 'Tools',
+    questionEN: 'Which tool automates SQL injection attacks?',
+    questionDE: 'Welches Tool automatisiert SQL-Injection-Angriffe?',
+    options: ['Nmap', 'sqlmap', 'Wireshark', 'Hydra'],
+    correctAnswer: 1,
+    explanationEN: 'sqlmap detects and exploits SQL injection vulnerabilities, extracts database contents, provides OS shell access. Supports multiple DBMS.',
+    explanationDE: 'sqlmap erkennt und nutzt SQL-Injection-Schwachstellen aus, extrahiert Datenbankinhalte.'
+  },
+  {
+    id: 'mc68',
+    domain: 'Tools',
+    questionEN: 'What is the purpose of Gobuster?',
+    questionDE: 'Was ist der Zweck von Gobuster?',
+    options: ['Password cracking', 'Directory and DNS subdomain enumeration', 'Packet capture', 'Port scanning'],
+    correctAnswer: 1,
+    explanationEN: 'Gobuster brute-forces directories, files, subdomains. Faster than DirBuster. Modes: dir (directories), dns (subdomains), vhost (virtual hosts).',
+    explanationDE: 'Gobuster erzwingt Verzeichnisse, Dateien, Subdomains brutal.'
+  },
+  {
+    id: 'mc69',
+    domain: 'Tools',
+    questionEN: 'Which tool cracks password hashes using GPU acceleration?',
+    questionDE: 'Welches Tool knackt Passwort-Hashes mit GPU-Beschleunigung?',
+    options: ['Nmap', 'Hashcat', 'Metasploit', 'Burp Suite'],
+    correctAnswer: 1,
+    explanationEN: 'Hashcat uses GPU for massive parallel hash cracking. Supports 300+ hash types. Modes: dictionary, brute-force, hybrid, rule-based.',
+    explanationDE: 'Hashcat verwendet GPU für massiv paralleles Hash-Cracking.'
+  },
+  {
+    id: 'mc70',
+    domain: 'Tools',
+    questionEN: 'What is Metasploit Framework primarily used for?',
+    questionDE: 'Wofür wird Metasploit Framework hauptsächlich verwendet?',
+    options: ['Email client', 'Exploitation framework with exploits, payloads, post-exploitation', 'Web browser', 'Antivirus'],
+    correctAnswer: 1,
+    explanationEN: 'Metasploit provides exploits, payloads (Meterpreter), post-exploitation modules, auxiliary scanners. Industry-standard pentesting tool.',
+    explanationDE: 'Metasploit bietet Exploits, Payloads, Post-Exploitation-Module.'
+  },
+  {
+    id: 'mc71',
+    domain: 'Tools',
+    questionEN: 'Which tool intercepts and modifies HTTP/HTTPS requests?',
+    questionDE: 'Welches Tool fängt HTTP/HTTPS-Anfragen ab und modifiziert sie?',
+    options: ['Nmap', 'Burp Suite', 'John the Ripper', 'Responder'],
+    correctAnswer: 1,
+    explanationEN: 'Burp Suite proxy intercepts web traffic, allows tampering, fuzzing, scanning. Essential for web app pentesting.',
+    explanationDE: 'Burp Suite Proxy fängt Webverkehr ab, erlaubt Manipulation, Fuzzing.'
+  },
+  {
+    id: 'mc72',
+    domain: 'Tools',
+    questionEN: 'What does Wireshark analyze?',
+    questionDE: 'Was analysiert Wireshark?',
+    options: ['Source code', 'Network packets', 'File systems', 'Registry'],
+    correctAnswer: 1,
+    explanationEN: 'Wireshark captures and analyzes network packets. Displays protocols, payloads, helps identify cleartext credentials, malware traffic.',
+    explanationDE: 'Wireshark erfasst und analysiert Netzwerkpakete.'
+  },
+  {
+    id: 'mc73',
+    domain: 'Tools',
+    questionEN: 'Which command uses Hydra for SSH brute-force?',
+    questionDE: 'Welcher Befehl verwendet Hydra für SSH-Brute-Force?',
+    options: ['hydra -L users.txt -P pass.txt ssh://10.0.0.1', 'nmap -sS 10.0.0.1', 'sqlmap -u http://site.com', 'msfconsole'],
+    correctAnswer: 0,
+    explanationEN: 'Hydra brute-forces network services. Syntax: hydra -L <userlist> -P <passlist> <service>://<target>',
+    explanationDE: 'Hydra erzwingt Netzwerkdienste brutal.'
+  },
+  {
+    id: 'mc74',
+    domain: 'Tools',
+    questionEN: 'What is the purpose of John the Ripper?',
+    questionDE: 'Was ist der Zweck von John the Ripper?',
+    options: ['Network scanning', 'Password hash cracking', 'Web application testing', 'Packet analysis'],
+    correctAnswer: 1,
+    explanationEN: 'John cracks password hashes from /etc/shadow, Windows SAM, etc. Supports wordlists, rules, incremental mode.',
+    explanationDE: 'John knackt Passwort-Hashes von /etc/shadow, Windows SAM.'
+  },
+  {
+    id: 'mc75',
+    domain: 'Tools',
+    questionEN: 'Which tool enumerates SMB shares on Windows networks?',
+    questionDE: 'Welches Tool enumeriert SMB-Freigaben in Windows-Netzwerken?',
+    options: ['sqlmap', 'enum4linux', 'Gobuster', 'Hashcat'],
+    correctAnswer: 1,
+    explanationEN: 'enum4linux extracts user lists, shares, groups, password policies from Windows/Samba. Wrapper for rpcclient, smbclient, nmblookup.',
+    explanationDE: 'enum4linux extrahiert Benutzerlisten, Freigaben, Gruppen von Windows/Samba.'
+  },
+  {
+    id: 'mc76',
+    domain: 'Tools',
+    questionEN: 'What does the -A flag do in Nmap?',
+    questionDE: 'Was macht das -A-Flag in Nmap?',
+    options: ['Scan all ports', 'Enable OS detection, version detection, script scanning, traceroute', 'UDP scan', 'Disable ping'],
+    correctAnswer: 1,
+    explanationEN: '-A enables aggressive scan with OS detection, version detection, script scanning, traceroute. Comprehensive but noisy.',
+    explanationDE: '-A aktiviert aggressiven Scan mit OS-Erkennung, Versionserkennung, Skript-Scanning.'
+  },
+  {
+    id: 'mc77',
+    domain: 'Tools',
+    questionEN: 'Which tool performs wireless network auditing?',
+    questionDE: 'Welches Tool führt drahtlose Netzwerkaudits durch?',
+    options: ['Nmap', 'Aircrack-ng suite', 'Burp Suite', 'Metasploit'],
+    correctAnswer: 1,
+    explanationEN: 'Aircrack-ng suite: airodump-ng (capture), aireplay-ng (inject), aircrack-ng (crack WEP/WPA). Essential for WiFi pentesting.',
+    explanationDE: 'Aircrack-ng Suite: airodump-ng (erfassen), aireplay-ng (injizieren), aircrack-ng (knacken).'
+  },
+  {
+    id: 'mc78',
+    domain: 'Tools',
+    questionEN: 'What is Responder used for in pentesting?',
+    questionDE: 'Wofür wird Responder beim Pentesting verwendet?',
+    options: ['Port scanning', 'LLMNR/NBT-NS poisoning to capture hashes', 'Web application testing', 'Wireless auditing'],
+    correctAnswer: 1,
+    explanationEN: 'Responder poisons LLMNR/NBT-NS requests, captures NetNTLM hashes when clients authenticate. Run: responder -I eth0',
+    explanationDE: 'Responder vergiftet LLMNR/NBT-NS-Anfragen, erfasst NetNTLM-Hashes.'
+  },
+  {
+    id: 'mc80',
+    domain: 'Tools',
+    questionEN: 'Which Metasploit payload provides interactive shell with advanced features?',
+    questionDE: 'Welcher Metasploit-Payload bietet interaktive Shell mit erweiterten Funktionen?',
+    options: ['cmd/windows/shell', 'windows/meterpreter/reverse_tcp', 'generic/shell_bind_tcp', 'payload/single/linux'],
+    correctAnswer: 1,
+    explanationEN: 'Meterpreter provides advanced post-exploitation: file transfer, keylogging, screenshot, pivoting, privilege escalation modules.',
+    explanationDE: 'Meterpreter bietet erweiterte Post-Exploitation: Dateiübertragung, Keylogging, Screenshot.'
+  },
+  {
+    id: 'mc81',
+    domain: 'Tools',
+    questionEN: 'What is the purpose of Impacket tools in pentesting?',
+    questionDE: 'Was ist der Zweck von Impacket-Tools beim Pentesting?',
+    options: ['Web scanning', 'Network protocol manipulation for Windows/AD attacks', 'Password cracking', 'Wireless auditing'],
+    correctAnswer: 1,
+    explanationEN: 'Impacket provides tools for SMB, RPC, Kerberos attacks: psexec, secretsdump, GetNPUsers, GetUserSPNs.',
+    explanationDE: 'Impacket bietet Tools für SMB-, RPC-, Kerberos-Angriffe.'
+  },
+  {
+    id: 'mc82',
+    domain: 'Tools',
+    questionEN: 'Which tool automates subdomain enumeration?',
+    questionDE: 'Welches Tool automatisiert Subdomain-Enumeration?',
+    options: ['Nmap', 'Sublist3r / Amass', 'Metasploit', 'Wireshark'],
+    correctAnswer: 1,
+    explanationEN: 'Sublist3r and Amass enumerate subdomains via search engines, DNS records, Certificate Transparency logs.',
+    explanationDE: 'Sublist3r und Amass enumerieren Subdomains über Suchmaschinen, DNS-Records.'
+  },
+  {
+    id: 'mc83',
+    domain: 'Tools',
+    questionEN: 'What does the -oA flag do in Nmap?',
+    questionDE: 'Was macht das -oA-Flag in Nmap?',
+    options: ['Scan all protocols', 'Output results in all formats (normal, XML, grepable)', 'Aggressive scan', 'Disable host discovery'],
+    correctAnswer: 1,
+    explanationEN: '-oA <basename> saves scan results in 3 formats: .nmap (normal), .xml (XML), .gnmap (grepable). Essential for reporting.',
+    explanationDE: '-oA speichert Scan-Ergebnisse in 3 Formaten.'
+  },
+  {
+    id: 'mc84',
+    domain: 'Tools',
+    questionEN: 'Which tool performs automated vulnerability scanning on web applications?',
+    questionDE: 'Welches Tool führt automatisiertes Schwachstellen-Scanning bei Webanwendungen durch?',
+    options: ['Nmap', 'OWASP ZAP / Nikto', 'Hashcat', 'Responder'],
+    correctAnswer: 1,
+    explanationEN: 'OWASP ZAP and Nikto automatically scan web apps for common vulnerabilities: XSS, SQLi, misconfigurations.',
+    explanationDE: 'OWASP ZAP und Nikto scannen Web-Apps automatisch auf häufige Schwachstellen.'
+  },
+  {
+    id: 'mc85',
+    domain: 'Tools',
+    questionEN: 'What is CrackMapExec used for?',
+    questionDE: 'Wofür wird CrackMapExec verwendet?',
+    options: ['Web testing', 'Post-exploitation tool for Windows/AD enumeration and exploitation', 'Port scanning', 'Wireless auditing'],
+    correctAnswer: 1,
+    explanationEN: 'CrackMapExec performs authentication testing, hash dumping, command execution across Windows networks via SMB/WMI/WinRM.',
+    explanationDE: 'CrackMapExec führt Authentifizierungstests, Hash-Dumping, Befehlsausführung über Windows-Netzwerke durch.'
+  },
+  {
+    id: 'mc86',
+    domain: 'Tools',
+    questionEN: 'Which tool extracts credentials from memory on Windows?',
+    questionDE: 'Welches Tool extrahiert Credentials aus dem Speicher auf Windows?',
+    options: ['Nmap', 'Mimikatz', 'Gobuster', 'Nikto'],
+    correctAnswer: 1,
+    explanationEN: 'Mimikatz extracts plaintext passwords, hashes, Kerberos tickets from LSASS memory. Requires admin/SYSTEM privileges.',
+    explanationDE: 'Mimikatz extrahiert Klartext-Passwörter, Hashes, Kerberos-Tickets aus LSASS-Speicher.'
+  },
+  {
+    id: 'mc87',
+    domain: 'Tools',
+    questionEN: 'What does Bloodhound visualize?',
+    questionDE: 'Was visualisiert Bloodhound?',
+    options: ['Network topology', 'Active Directory attack paths and relationships', 'Web application structure', 'Wireless networks'],
+    correctAnswer: 1,
+    explanationEN: 'Bloodhound maps AD relationships, identifies privilege escalation paths, shows quickest route to Domain Admins.',
+    explanationDE: 'Bloodhound kartiert AD-Beziehungen, identifiziert Privilege-Escalation-Pfade.'
+  },
+  {
+    id: 'mc88',
+    domain: 'Tools',
+    questionEN: 'Which command runs a stealth SYN scan with Nmap?',
+    questionDE: 'Welcher Befehl führt einen Stealth-SYN-Scan mit Nmap aus?',
+    options: ['nmap -sT target', 'nmap -sS target', 'nmap -sU target', 'nmap -sA target'],
+    correctAnswer: 1,
+    explanationEN: '-sS performs SYN scan (half-open), stealthier than full TCP connect (-sT). Requires root. -sU=UDP, -sA=ACK.',
+    explanationDE: '-sS führt SYN-Scan durch, heimlicher als vollständiger TCP-Connect.'
+  },
+  {
+    id: 'mc89',
+    domain: 'Tools',
+    questionEN: 'What is the purpose of PowerShell Empire?',
+    questionDE: 'Was ist der Zweck von PowerShell Empire?',
+    options: ['Network scanning', 'Post-exploitation framework using PowerShell', 'Web application testing', 'Password cracking'],
+    correctAnswer: 1,
+    explanationEN: 'Empire provides PowerShell agents for post-exploitation, lateral movement, credential harvesting on Windows. Fileless attacks.',
+    explanationDE: 'Empire bietet PowerShell-Agenten für Post-Exploitation, laterale Bewegung.'
+  },
+  {
+    id: 'mc90',
+    domain: 'Tools',
+    questionEN: 'Which tool performs automated exploit searching?',
+    questionDE: 'Welches Tool führt automatisierte Exploit-Suche durch?',
+    options: ['searchsploit (Exploit-DB)', 'Nmap', 'Wireshark', 'Hashcat'],
+    correctAnswer: 0,
+    explanationEN: 'searchsploit searches Exploit-DB database offline for exploits matching service/version. Example: searchsploit apache 2.4',
+    explanationDE: 'searchsploit durchsucht Exploit-DB-Datenbank offline nach passenden Exploits.'
+  },
 
   // DOMAIN 5: TOOLS & CODE ANALYSIS (20% - 18 questions)
   {
