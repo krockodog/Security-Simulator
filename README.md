@@ -1,120 +1,103 @@
-# Course Begleiter - IT-Zertifizierungsplattform
+# CompTIA Certification PBQ Simulator
 
-## Übersicht
+> **Live Demo:** [https://trygit.me](https://trygit.me)
 
-Der **Course Begleiter** ist eine umfassende, interaktive Lernplattform zur Vorbereitung auf verschiedene IT-Zertifizierungen. Die Anwendung bietet realistische Performance-Based Questions (PBQs), Prüfungssimulationen und detaillierte Erklärungen.
+Ein interaktiver Performance-Based Questions (PBQ) Simulator für CompTIA Security+ (SY0-701) und PenTest+ (PT0-003) Zertifizierungen.
 
-## Verfügbare Kurse
+## 🎯 Features
 
-### ✅ Vollständig Implementiert
+### Security+ SY0-701
+- **6 PBQ-Simulationen:**
+  - Firewall Rule Ordering (Drag & Drop)
+  - Incident Response Workflow
+  - Threat Analysis & Remediation
+  - Log Analysis
+  - Certificate Management
+  - VPN Configuration
+- **60 Multiple-Choice Fragen** aus allen Domains
+- **46 Akronym-Quiz Fragen** (randomisierte Antwortpositionen)
 
-#### 1. CompTIA Security+ (SY0-701)
-- **6 PBQs** mit Drag & Drop:
-  - Firewall-Regeln
-  - Incident Response
-  - VPN-Konfiguration
-  - Log-Analyse
-  - Threat Analysis
-  - Zertifikat-Management
-- **60-Fragen-Examen** mit 90-Minuten-Timer
-- **Akronym-Quiz** mit 40 randomisierten Fragen
-- Detaillierte Erklärungen und Feedback
+### PenTest+ PT0-003
+- **10 interaktive PBQ-Simulationen:**
+  1. Nmap Command Construction
+  2. Web Vulnerability Analysis
+  3. Certificate/TLS Testing
+  4. Python Exploit Scripting
+  5. Container Escape (Docker Privilege Escalation)
+  6. DNS Reconnaissance & WHOIS
+  7. Robots.txt Vulnerability Analysis
+  8. DOM-based XSS Exploitation
+  9. AWS S3 Bucket Security
+  10. Wireless Penetration Testing
 
-#### 2. CompTIA PenTest+ (PT0-003)
-- **Datenstruktur vollständig** (`lib/pt003-data.ts`):
-  - 10 PBQ-Szenarien (Web Vulnerabilities, Nmap, DNS, AWS S3, Docker, etc.)
-  - 10 Tool Commander Challenges (Nmap, SQLmap, Metasploit, Hydra, etc.)
-  - 34 Multiple-Choice-Fragen (Domains 1 & 2 vollständig)
-  - Bilingual EN/DE Support
-- **UI-Integration ausstehend**
+- **Tool Commander:** 10 CLI-Challenges für:
+  - Nmap, SQLmap, Hydra, Gobuster
+  - Hashcat, Metasploit, Nikto
+  - Wireshark/tshark, John the Ripper
 
-### 🔜 In Vorbereitung
+- **91 Multiple-Choice Fragen:**
+  | Domain | Fragen | Gewichtung |
+  |--------|--------|------------|
+  | Planning & Scoping | 14 | 15% |
+  | Information Gathering | 19 | 21% |
+  | Attacks & Exploits | 19 | 35% |
+  | Reporting | 14 | 15% |
+  | Tools & Code Analysis | 24 | 20% |
 
-3. **CompTIA Network+ (N10-009)** - Coming Soon
-4. **CompTIA Linux+ (XK0-005)** - Coming Soon
-5. **LPI Level 1 (LPIC-1)** - Coming Soon
-
-## Projektstruktur
-
-```
-security_plus_pbq_simulator/
-├── nextjs_space/
-│   ├── app/
-│   │   ├── page.tsx                    # Haupt-Kursauswahl
-│   │   ├── security-plus/
-│   │   │   └── page.tsx                # Security+ Dashboard
-│   │   ├── pentest-plus/
-│   │   │   └── page.tsx                # PenTest+ Dashboard
-│   │   ├── network-plus/
-│   │   │   └── page.tsx                # Network+ (Coming Soon)
-│   │   ├── linux-plus/
-│   │   │   └── page.tsx                # Linux+ (Coming Soon)
-│   │   ├── lpi-1/
-│   │   │   └── page.tsx                # LPI-1 (Coming Soon)
-│   │   ├── exam/
-│   │   │   └── page.tsx                # 60-Fragen Security+ Examen
-│   │   ├── acronym-quiz/
-│   │   │   └── page.tsx                # Akronym-Quiz
-│   │   └── pbq/
-│   │       ├── firewall/
-│   │       ├── incident-response/
-│   │       ├── vpn-config/
-│   │       ├── log-analysis/
-│   │       ├── threat-analysis/
-│   │       └── certificate-mgmt/
-│   ├── lib/
-│   │   ├── pbq-data.ts                 # Security+ PBQ Daten
-│   │   ├── pt003-data.ts               # PenTest+ Daten (vollständig)
-│   │   └── exam-data.ts                # Prüfungsfragen
-│   └── components/
-│       ├── pbq/
-│       │   └── drag-drop-area.tsx      # Wiederverwendbare Drag & Drop
-│       └── ui/                         # shadcn/ui Komponenten
-└── README.md
-```
-
-## Technologie-Stack
+## 🛠️ Tech Stack
 
 - **Framework:** Next.js 14 (App Router)
-- **Sprache:** TypeScript
-- **Styling:** Tailwind CSS
-- **UI-Komponenten:** shadcn/ui (Radix UI)
-- **Datenbank:** PostgreSQL (via Prisma)
-- **Icons:** Lucide React
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS + Radix UI
+- **Database:** PostgreSQL + Prisma ORM
+- **Theme:** Dark "Cyber" Design (Pure Black + Cyan/Magenta Accents)
 
-## Features
+## 📁 Projektstruktur
 
-### Kursauswahl-System
-- Übersichtliche Landing Page mit allen verfügbaren Kursen
-- Visuell ansprechende Kurs-Karten mit Status-Badges
-- Farbkodierte Gradienten pro Zertifizierung
-- Deaktivierte Kurse mit "Coming Soon" Status
+```
+nextjs_space/
+├── app/
+│   ├── page.tsx                 # Landing Page
+│   ├── security-plus/           # Security+ Dashboard
+│   ├── pentest-plus/            # PenTest+ Dashboard
+│   ├── exam/                    # Security+ MCQ Exam
+│   ├── pentest-exam/            # PenTest+ MCQ Exam
+│   ├── acronym-quiz/            # Akronym-Quiz
+│   ├── tool-commander/          # CLI Tool Challenges
+│   ├── pbq/                     # Security+ PBQs
+│   │   ├── firewall/
+│   │   ├── incident-response/
+│   │   ├── threat-analysis/
+│   │   ├── log-analysis/
+│   │   ├── certificate-mgmt/
+│   │   └── vpn-config/
+│   └── pentest-pbq/             # PenTest+ PBQs
+│       ├── nmap-command/
+│       ├── web-vulns/
+│       ├── certificate/
+│       ├── python-script/
+│       ├── container-escape/
+│       ├── dns-recon/
+│       ├── robots-txt/
+│       ├── dom-xss/
+│       ├── cloud-s3/
+│       └── wireless/
+├── lib/
+│   ├── exam-data.ts             # Security+ Fragen
+│   ├── pt003-data.ts            # PenTest+ Fragen (91 MCQ + 10 PBQ)
+│   └── pbq-data.ts              # Security+ PBQ Content
+└── components/
+    ├── ui/                      # Radix UI Components
+    ├── pbq/                     # PBQ-spezifische Components
+    └── cookie-consent.tsx       # DSGVO-Banner
+```
 
-### Security+ Features
-- ✅ 6 realistische PBQs mit Drag & Drop
-- ✅ 60-Fragen-Examen mit Timer
-- ✅ Akronym-Quiz mit randomisierten Antworten
-- ✅ Detaillierte Erklärungen und Lernmaterialien
-- ✅ Session-basiertes Tracking
-- ✅ Responsive Design für alle Geräte
-
-### PenTest+ Features (In Entwicklung)
-- ⏳ 10 PBQ-Szenarien (Daten fertig)
-- ⏳ Tool Commander Mode (Daten fertig)
-- ⏳ 90 Multiple-Choice-Fragen (34/90 fertig)
-- ⏳ Bilingual EN/DE Interface
-
-## Installation & Entwicklung
-
-### Voraussetzungen
-- Node.js 18+
-- PostgreSQL
-- Yarn
-
-### Setup
+## 🚀 Installation
 
 ```bash
-cd /home/ubuntu/security_plus_pbq_simulator/nextjs_space
+# Repository klonen
+git clone https://github.com/yourusername/security-plus-pbq-simulator.git
+cd security-plus-pbq-simulator/nextjs_space
 
 # Dependencies installieren
 yarn install
@@ -122,65 +105,39 @@ yarn install
 # Prisma Client generieren
 yarn prisma generate
 
-# Datenbank initialisieren (falls noch nicht geschehen)
-yarn prisma db push
-
 # Development Server starten
 yarn dev
 ```
 
-Die Anwendung ist dann verfügbar unter: `http://localhost:3000`
+## 📊 Implementierungsstatus
 
-## Deployment
+| Zertifizierung | PBQs | MCQs | Status |
+|----------------|------|------|--------|
+| Security+ SY0-701 | 6/6 | 60/60 | ✅ Vollständig |
+| PenTest+ PT0-003 | 10/10 | 91/91 | ✅ Vollständig |
+| Network+ N10-009 | - | - | 🔜 Coming Soon |
+| Linux+ XK0-005 | - | - | 🔜 Coming Soon |
+| LPI-1 (101/102) | - | - | 🔜 Coming Soon |
 
-Das Projekt ist bereits für Deployment auf Abacus.AI vorbereitet:
+## 🎨 Design
 
-```bash
-# Build für Produktion
-yarn build
+- **Theme:** Minimalistisches "Cyber" Dark Mode
+- **Hintergrund:** Pure Black (`#000000`)
+- **Akzentfarben:** Cyan (`#00FFFF`) + Magenta (`#FF00FF`)
+- **Borders:** 1px subtle mit `border-cyan-500/30`
+- **Komponenten:** shadcn/ui basiert auf Radix Primitives
 
-# Produktions-Server starten
-yarn start
-```
+## 📝 DSGVO-Konformität
 
-**Aktuelles Deployment:** `trygit.me`
+- Cookie-Consent Banner mit expliziter Zustimmung
+- Keine Third-Party Tracking-Scripts
+- LocalStorage nur für Benutzereinstellungen
 
-## Nächste Schritte
+## 📜 Lizenz
 
-### Kurzfristig
-1. ✅ Multi-Kurs-Auswahl-System implementiert
-2. ⏳ PenTest+ UI-Komponenten implementieren
-3. ⏳ Restliche 56 PenTest+ MC-Fragen erstellen
-4. ⏳ Tool Commander interaktive Challenges
-
-### Mittelfristig
-5. ⏳ Network+ Inhalte und PBQs
-6. ⏳ Linux+ Command-Line-Simulationen
-7. ⏳ LPI-1 Prüfungsinhalt
-
-### Langfristig
-- Benutzer-Authentifizierung
-- Fortschritts-Tracking über Kurse hinweg
-- Detaillierte Analytics pro Kurs
-- Export von Lernergebnissen
-
-## Datenquellen
-
-### Security+
-- Professor Messer's Security+ SY0-701 Course Notes
-- Pass4Success Practice Exams
-- ExamTopics Community Questions
-
-### PenTest+
-- 8 PBQ PDFs (ET63, ET56, ET11, ET48, ET267, ET337, etc.)
-- CompTIA PT0-003 Study Guide
-- CompTIA PT0-003 Official Exam Questions
-
-## Lizenz & Verwendung
-
-Dieses Projekt wurde entwickelt für **persönliche Prüfungsvorbereitung**. 
-Alle Inhalte basieren auf öffentlich verfügbaren Studienmaterialien und offiziellen CompTIA-Prüfungszielen.
+Dieses Projekt ist für **Bildungszwecke** konzipiert.
 
 ---
 
-**Entwickelt mit ❤️ für IT-Professionals | 2025**
+**© 2025 CompTIA - Zertifikation - als Unterstützung | Entwickelt für IT - Studenten**  
+**Copyright by [trygit.me](https://trygit.me)**
