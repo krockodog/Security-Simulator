@@ -273,7 +273,8 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-readable-dim border-t border-[rgb(var(--cyber-border))]">
-        <p>© 2025 CompTIA - Zertifikation - Begleiter | Entwickelt für IT-Professionals</p>
+        <p className="mb-2">© 2025 CompTIA - Zertifikation - als Unterstützung | Entwickelt für IT - Studenten die erfolgreich die Zertifizierung machen wollen</p>
+        <p className="text-sm">Copyright by trygit.me</p>
       </footer>
     </div>
   )
