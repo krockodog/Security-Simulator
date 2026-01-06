@@ -8,44 +8,46 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 export default function LinuxPlusPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-slate-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen cyber-grid py-12 px-4 sm:px-6 lg:px-8">
+      <div className="scanline" />
+      
       <div className="max-w-4xl mx-auto">
-        <Link href="/" className="inline-flex items-center text-purple-600 hover:text-purple-700 mb-6 transition-colors">
+        <Link href="/" className="inline-flex items-center text-[rgb(var(--cyber-yellow))] hover:text-[rgb(var(--cyber-cyan))] mb-6 transition-colors">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Zurück zur Kursauswahl
         </Link>
 
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl shadow-xl">
-              <Server className="h-16 w-16 text-white" />
+            <div className="p-4 bg-[rgb(var(--cyber-surface))] rounded-2xl neon-magenta">
+              <Server className="h-16 w-16 text-[rgb(var(--cyber-yellow))]" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-purple-800 mb-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-readable neon-text-cyan mb-4">
             CompTIA Linux+ XK0-005
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-readable-dim">
             Linux-Administration und System-Management
           </p>
         </div>
 
-        <Alert className="mb-8 border-purple-200 bg-purple-50">
-          <Construction className="h-5 w-5 text-purple-600" />
-          <AlertTitle className="text-purple-900 text-lg">In Vorbereitung</AlertTitle>
-          <AlertDescription className="text-purple-800">
+        <Alert className="mb-8 border-2 border-[rgb(var(--cyber-yellow))] bg-[rgba(255,255,0,0.05)]">
+          <Construction className="h-5 w-5 text-[rgb(var(--cyber-yellow))]" />
+          <AlertTitle className="text-readable text-lg">In Vorbereitung</AlertTitle>
+          <AlertDescription className="text-readable-dim">
             Dieser Kurs befindet sich derzeit in der Entwicklung. Inhalte werden in Kürze verfügbar sein.
           </AlertDescription>
         </Alert>
 
-        <Card>
+        <Card className="cyber-card">
           <CardHeader>
-            <CardTitle className="text-2xl">Was erwartet dich?</CardTitle>
-            <CardDescription>Geplante Inhalte für Linux+</CardDescription>
+            <CardTitle className="text-2xl text-readable">Was erwartet dich?</CardTitle>
+            <CardDescription className="text-readable-dim">Geplante Inhalte für Linux+</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <h3 className="font-semibold text-lg mb-2">Themenbereiche</h3>
-              <ul className="space-y-2 text-gray-600">
+              <h3 className="font-semibold text-lg mb-2 text-readable">Themenbereiche</h3>
+              <ul className="space-y-2 text-readable-dim">
                 <li>• Linux-Installation und Paket-Management</li>
                 <li>• Dateisystem-Hierarchie und Berechtigungen</li>
                 <li>• Shell-Scripting (Bash)</li>
@@ -57,8 +59,8 @@ export default function LinuxPlusPage() {
             </div>
 
             <div>
-              <h3 className="font-semibold text-lg mb-2">Geplante Features</h3>
-              <ul className="space-y-2 text-gray-600">
+              <h3 className="font-semibold text-lg mb-2 text-readable">Geplante Features</h3>
+              <ul className="space-y-2 text-readable-dim">
                 <li>• Interaktive Kommandozeilen-Simulationen</li>
                 <li>• Bash-Scripting-Challenges</li>
                 <li>• Dateisystem-Berechtigungs-PBQs</li>
@@ -68,7 +70,7 @@ export default function LinuxPlusPage() {
             </div>
 
             <div className="pt-4">
-              <div className="flex items-center gap-2 text-sm text-gray-500">
+              <div className="flex items-center gap-2 text-sm text-readable-dim">
                 <Clock className="h-4 w-4" />
                 <span>Voraussichtliche Verfügbarkeit: TBD</span>
               </div>
@@ -78,7 +80,7 @@ export default function LinuxPlusPage() {
 
         <div className="mt-8 text-center">
           <Link href="/">
-            <Button size="lg" variant="outline">
+            <Button size="lg" className="cyber-button neon-border-cyan bg-[rgb(var(--cyber-surface-elevated))] text-readable">
               Zu verfügbaren Kursen zurückkehren
             </Button>
           </Link>

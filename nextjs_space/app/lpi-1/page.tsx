@@ -8,52 +8,54 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 export default function LPI1Page() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-slate-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen cyber-grid py-12 px-4 sm:px-6 lg:px-8">
+      <div className="scanline" />
+      
       <div className="max-w-4xl mx-auto">
-        <Link href="/" className="inline-flex items-center text-orange-600 hover:text-orange-700 mb-6 transition-colors">
+        <Link href="/" className="inline-flex items-center text-[rgb(var(--cyber-cyan))] hover:text-[rgb(var(--cyber-magenta))] mb-6 transition-colors">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Zurück zur Kursauswahl
         </Link>
 
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-gradient-to-br from-orange-600 to-orange-800 rounded-2xl shadow-xl">
-              <BookOpen className="h-16 w-16 text-white" />
+            <div className="p-4 bg-[rgb(var(--cyber-surface))] rounded-2xl neon-cyan">
+              <BookOpen className="h-16 w-16 text-[rgb(var(--cyber-cyan))]" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-orange-800 mb-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-readable neon-text-cyan mb-4">
             LPI Level 1 (LPIC-1)
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-readable-dim">
             Linux Professional Institute Zertifizierung
           </p>
         </div>
 
-        <Alert className="mb-8 border-orange-200 bg-orange-50">
-          <Construction className="h-5 w-5 text-orange-600" />
-          <AlertTitle className="text-orange-900 text-lg">In Vorbereitung</AlertTitle>
-          <AlertDescription className="text-orange-800">
+        <Alert className="mb-8 border-2 border-[rgb(var(--cyber-yellow))] bg-[rgba(255,255,0,0.05)]">
+          <Construction className="h-5 w-5 text-[rgb(var(--cyber-yellow))]" />
+          <AlertTitle className="text-readable text-lg">In Vorbereitung</AlertTitle>
+          <AlertDescription className="text-readable-dim">
             Dieser Kurs befindet sich derzeit in der Entwicklung. Inhalte werden in Kürze verfügbar sein.
           </AlertDescription>
         </Alert>
 
-        <Card>
+        <Card className="cyber-card">
           <CardHeader>
-            <CardTitle className="text-2xl">Was erwartet dich?</CardTitle>
-            <CardDescription>Geplante Inhalte für LPIC-1</CardDescription>
+            <CardTitle className="text-2xl text-readable">Was erwartet dich?</CardTitle>
+            <CardDescription className="text-readable-dim">Geplante Inhalte für LPIC-1</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <h3 className="font-semibold text-lg mb-2">Prüfungen</h3>
-              <ul className="space-y-2 text-gray-600">
+              <h3 className="font-semibold text-lg mb-2 text-readable">Prüfungen</h3>
+              <ul className="space-y-2 text-readable-dim">
                 <li>• <strong>101-500:</strong> System Architecture, Linux Installation, GNU & Unix Commands, Devices & Filesystems</li>
                 <li>• <strong>102-500:</strong> Shells & Scripting, User Interfaces, Administrative Tasks, Essential System Services, Networking, Security</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold text-lg mb-2">Themenbereiche</h3>
-              <ul className="space-y-2 text-gray-600">
+              <h3 className="font-semibold text-lg mb-2 text-readable">Themenbereiche</h3>
+              <ul className="space-y-2 text-readable-dim">
                 <li>• System-Architektur und Bootloader</li>
                 <li>• Paket-Management (dpkg, rpm, apt, yum)</li>
                 <li>• GNU- und Unix-Kommandos</li>
@@ -66,8 +68,8 @@ export default function LPI1Page() {
             </div>
 
             <div>
-              <h3 className="font-semibold text-lg mb-2">Geplante Features</h3>
-              <ul className="space-y-2 text-gray-600">
+              <h3 className="font-semibold text-lg mb-2 text-readable">Geplante Features</h3>
+              <ul className="space-y-2 text-readable-dim">
                 <li>• Getrennte Übungen für 101-500 und 102-500</li>
                 <li>• Kommandozeilen-Simulationen</li>
                 <li>• Realistische Troubleshooting-Szenarien</li>
@@ -77,7 +79,7 @@ export default function LPI1Page() {
             </div>
 
             <div className="pt-4">
-              <div className="flex items-center gap-2 text-sm text-gray-500">
+              <div className="flex items-center gap-2 text-sm text-readable-dim">
                 <Clock className="h-4 w-4" />
                 <span>Voraussichtliche Verfügbarkeit: TBD</span>
               </div>
@@ -87,7 +89,7 @@ export default function LPI1Page() {
 
         <div className="mt-8 text-center">
           <Link href="/">
-            <Button size="lg" variant="outline">
+            <Button size="lg" className="cyber-button neon-border-cyan bg-[rgb(var(--cyber-surface-elevated))] text-readable">
               Zu verfügbaren Kursen zurückkehren
             </Button>
           </Link>

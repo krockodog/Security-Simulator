@@ -6,15 +6,31 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { 
-  Shield, 
   Terminal, 
   Network, 
   Server, 
   BookOpen,
-  Lock,
   CheckCircle2,
   Clock
 } from 'lucide-react'
+
+// Anonymous Mask SVG Component
+const AnonymousMask = ({ className = "h-12 w-12" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="currentColor" opacity="0.3"/>
+    <path d="M12 4C7.58 4 4 7.58 4 12s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm-3 13v-1c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2v1h-6zm6.5-6.5c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm-7 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5z" fill="currentColor"/>
+    <path d="M9 14h6v3H9z" fill="currentColor" opacity="0.5"/>
+  </svg>
+)
+
+// Defensive Shield SVG Component  
+const DefensiveShield = ({ className = "h-12 w-12" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z" fill="currentColor" opacity="0.3"/>
+    <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm6 9.09c0 4-2.55 7.7-6 8.83-3.45-1.13-6-4.82-6-8.83V6.31l6-2.12 6 2.12v4.78z" fill="currentColor"/>
+    <path d="M10.5 13.5l-2-2 1.41-1.41L11.5 11.67l3.59-3.58L16.5 9.5z" fill="currentColor" opacity="0.8"/>
+  </svg>
+)
 
 interface Course {
   id: string
@@ -22,7 +38,7 @@ interface Course {
   subtitle: string
   icon: React.ReactNode
   color: string
-  gradient: string
+  neonClass: string
   available: boolean
   pbqCount?: number
   questionsCount?: number
@@ -35,9 +51,9 @@ const courses: Course[] = [
     id: 'security-plus',
     title: 'CompTIA Security+',
     subtitle: 'SY0-701',
-    icon: <Shield className="h-12 w-12" />,
-    color: 'text-blue-600',
-    gradient: 'from-blue-500 to-blue-700',
+    icon: <DefensiveShield className="h-12 w-12" />,
+    color: 'text-[rgb(var(--cyber-blue))]',
+    neonClass: 'neon-border-blue',
     available: true,
     pbqCount: 6,
     questionsCount: 60,
@@ -48,9 +64,9 @@ const courses: Course[] = [
     id: 'pentest-plus',
     title: 'CompTIA PenTest+',
     subtitle: 'PT0-003',
-    icon: <Terminal className="h-12 w-12" />,
-    color: 'text-red-600',
-    gradient: 'from-red-500 to-red-700',
+    icon: <AnonymousMask className="h-12 w-12" />,
+    color: 'text-[rgb(var(--cyber-magenta))]',
+    neonClass: 'neon-border-magenta',
     available: true,
     pbqCount: 10,
     questionsCount: 90,
@@ -62,8 +78,8 @@ const courses: Course[] = [
     title: 'CompTIA Network+',
     subtitle: 'N10-009',
     icon: <Network className="h-12 w-12" />,
-    color: 'text-green-600',
-    gradient: 'from-green-500 to-green-700',
+    color: 'text-[rgb(var(--cyber-success))]',
+    neonClass: 'neon-border-cyan',
     available: false,
     href: '/network-plus',
     description: 'Netzwerk-Topologien, Protokolle, Troubleshooting'
@@ -73,8 +89,8 @@ const courses: Course[] = [
     title: 'CompTIA Linux+',
     subtitle: 'XK0-005',
     icon: <Server className="h-12 w-12" />,
-    color: 'text-purple-600',
-    gradient: 'from-purple-500 to-purple-700',
+    color: 'text-[rgb(var(--cyber-yellow))]',
+    neonClass: 'neon-border-cyan',
     available: false,
     href: '/linux-plus',
     description: 'Linux-Administration, Shell-Scripting, System-Management'
@@ -84,8 +100,8 @@ const courses: Course[] = [
     title: 'LPI Level 1',
     subtitle: 'LPIC-1',
     icon: <BookOpen className="h-12 w-12" />,
-    color: 'text-orange-600',
-    gradient: 'from-orange-500 to-orange-700',
+    color: 'text-[rgb(var(--cyber-cyan))]',
+    neonClass: 'neon-border-cyan',
     available: false,
     href: '/lpi-1',
     description: 'Linux Professional Institute Zertifizierung Level 1'
@@ -101,30 +117,33 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
+    <div className="min-h-screen cyber-grid relative">
+      {/* Scanline Effect */}
+      <div className="scanline" />
+      
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-purple-600/10 to-red-600/10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[rgba(0,255,255,0.05)] via-transparent to-[rgba(255,0,255,0.05)]" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
           <div className="text-center space-y-6">
             <div className="flex justify-center mb-6">
-              <div className="p-4 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl shadow-xl">
-                <Lock className="h-16 w-16 text-white" />
+              <div className="p-4 bg-[rgb(var(--cyber-surface))] rounded-2xl neon-cyan">
+                <Terminal className="h-16 w-16 text-[rgb(var(--cyber-cyan))]" />
               </div>
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-red-600">
-              Course Begleiter
+            <h1 className="text-5xl md:text-6xl font-extrabold text-[rgb(var(--cyber-text))] neon-text-cyan glitch">
+              CompTIA - Zertifikation - Begleiter
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-readable-dim max-w-3xl mx-auto">
               Interaktive Prüfungsvorbereitung für IT-Zertifizierungen
             </p>
             
             {userName && (
-              <div className="inline-flex items-center gap-2 px-6 py-3 bg-white rounded-full shadow-lg">
-                <CheckCircle2 className="h-5 w-5 text-green-500" />
-                <span className="text-gray-700">Willkommen zurück, <span className="font-semibold">{userName}</span></span>
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-[rgb(var(--cyber-surface))] rounded-full neon-border-cyan">
+                <CheckCircle2 className="h-5 w-5 text-[rgb(var(--cyber-success))]" />
+                <span className="text-readable">Willkommen zurück, <span className="font-semibold text-[rgb(var(--cyber-cyan))]">{userName}</span></span>
               </div>
             )}
           </div>
@@ -134,63 +153,63 @@ export default function HomePage() {
       {/* Course Selection */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-12 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Wähle deinen Kurs</h2>
-          <p className="text-gray-600 text-lg">Beginne mit der Prüfungsvorbereitung für deine gewünschte Zertifizierung</p>
+          <h2 className="text-3xl font-bold text-readable mb-4">Wähle deinen Kurs</h2>
+          <p className="text-readable-dim text-lg">Beginne mit der Prüfungsvorbereitung für deine gewünschte Zertifizierung</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course) => (
             <Card 
               key={course.id}
-              className={`relative overflow-hidden transition-all duration-300 ${
+              className={`cyber-card relative ${
                 course.available 
-                  ? 'hover:shadow-2xl hover:scale-105 cursor-pointer' 
+                  ? 'hover:shadow-2xl cursor-pointer' 
                   : 'opacity-60 cursor-not-allowed'
               }`}
             >
-              {/* Gradient Header */}
-              <div className={`h-3 bg-gradient-to-r ${course.gradient}`} />
+              {/* Neon Top Border */}
+              <div className={`h-1 ${course.neonClass}`} />
               
               <CardHeader className="space-y-4">
                 <div className="flex items-start justify-between">
-                  <div className={`${course.color}`}>
+                  <div className={course.color}>
                     {course.icon}
                   </div>
                   {course.available ? (
-                    <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+                    <Badge className="cyber-badge cyber-badge-available">
                       Verfügbar
                     </Badge>
                   ) : (
-                    <Badge variant="secondary">
+                    <Badge className="cyber-badge cyber-badge-soon">
                       Demnächst
                     </Badge>
                   )}
                 </div>
                 
                 <div>
-                  <CardTitle className="text-2xl mb-2">{course.title}</CardTitle>
-                  <Badge variant="outline" className="font-mono">
+                  <CardTitle className="text-2xl mb-2 text-readable">{course.title}</CardTitle>
+                  <Badge variant="outline" className="font-mono border-[rgb(var(--cyber-border))] text-[rgb(var(--cyber-cyan))]">
                     {course.subtitle}
                   </Badge>
                 </div>
               </CardHeader>
 
               <CardContent className="space-y-4">
-                <CardDescription className="text-base">
+                <CardDescription className="text-base text-readable-dim">
                   {course.description}
                 </CardDescription>
 
                 {course.available && (
-                  <div className="flex flex-wrap gap-3 text-sm text-gray-600">
+                  <div className="flex flex-wrap gap-3 text-sm text-readable-dim">
                     {course.pbqCount && (
                       <div className="flex items-center gap-1">
-                        <Terminal className="h-4 w-4" />
+                        <Terminal className="h-4 w-4 text-[rgb(var(--cyber-cyan))]" />
                         <span>{course.pbqCount} PBQs</span>
                       </div>
                     )}
                     {course.questionsCount && (
                       <div className="flex items-center gap-1">
-                        <CheckCircle2 className="h-4 w-4" />
+                        <CheckCircle2 className="h-4 w-4 text-[rgb(var(--cyber-success))]" />
                         <span>{course.questionsCount} Fragen</span>
                       </div>
                     )}
@@ -200,7 +219,7 @@ export default function HomePage() {
                 {course.available ? (
                   <Link href={course.href} className="block mt-6">
                     <Button 
-                      className={`w-full bg-gradient-to-r ${course.gradient} hover:opacity-90 transition-all`}
+                      className={`w-full cyber-button bg-[rgb(var(--cyber-surface-elevated))] ${course.neonClass} text-readable hover:bg-[rgb(var(--cyber-surface))]`}
                       size="lg"
                     >
                       Kurs starten
@@ -209,9 +228,8 @@ export default function HomePage() {
                 ) : (
                   <Button 
                     disabled 
-                    className="w-full mt-6"
+                    className="w-full mt-6 bg-[rgb(var(--cyber-surface))] border border-[rgb(var(--cyber-border))] text-readable-dim"
                     size="lg"
-                    variant="outline"
                   >
                     <Clock className="h-4 w-4 mr-2" />
                     In Vorbereitung
@@ -225,40 +243,40 @@ export default function HomePage() {
 
       {/* Features Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Was bietet der Course Begleiter?</h3>
+        <div className="cyber-card p-8 md:p-12">
+          <h3 className="text-2xl font-bold text-readable mb-8 text-center">Was bietet der CompTIA - Zertifikation - Begleiter?</h3>
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center space-y-3">
-              <div className="inline-flex p-4 bg-blue-100 rounded-full">
-                <Terminal className="h-8 w-8 text-blue-600" />
+              <div className="inline-flex p-4 bg-[rgb(var(--cyber-surface-elevated))] rounded-full neon-cyan">
+                <Terminal className="h-8 w-8 text-[rgb(var(--cyber-cyan))]" />
               </div>
-              <h4 className="font-semibold text-lg">Realistische PBQs</h4>
-              <p className="text-gray-600">Performance-Based Questions mit Drag & Drop wie in der echten Prüfung</p>
+              <h4 className="font-semibold text-lg text-readable">Realistische PBQs</h4>
+              <p className="text-readable-dim">Performance-Based Questions mit Drag & Drop wie in der echten Prüfung</p>
             </div>
             
             <div className="text-center space-y-3">
-              <div className="inline-flex p-4 bg-purple-100 rounded-full">
-                <CheckCircle2 className="h-8 w-8 text-purple-600" />
+              <div className="inline-flex p-4 bg-[rgb(var(--cyber-surface-elevated))] rounded-full neon-magenta">
+                <CheckCircle2 className="h-8 w-8 text-[rgb(var(--cyber-magenta))]" />
               </div>
-              <h4 className="font-semibold text-lg">Praxis-Fragen</h4>
-              <p className="text-gray-600">Hunderte von Prüfungsfragen mit detaillierten Erklärungen</p>
+              <h4 className="font-semibold text-lg text-readable">Praxis-Fragen</h4>
+              <p className="text-readable-dim">Hunderte von Prüfungsfragen mit detaillierten Erklärungen</p>
             </div>
             
             <div className="text-center space-y-3">
-              <div className="inline-flex p-4 bg-red-100 rounded-full">
-                <Clock className="h-8 w-8 text-red-600" />
+              <div className="inline-flex p-4 bg-[rgb(var(--cyber-surface-elevated))] rounded-full neon-blue">
+                <Clock className="h-8 w-8 text-[rgb(var(--cyber-blue))]" />
               </div>
-              <h4 className="font-semibold text-lg">Examen-Modus</h4>
-              <p className="text-gray-600">Zeitgesteuerte Prüfungssimulationen für optimale Vorbereitung</p>
+              <h4 className="font-semibold text-lg text-readable">Examen-Modus</h4>
+              <p className="text-readable-dim">Zeitgesteuerte Prüfungssimulationen für optimale Vorbereitung</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-600">
-        <p>© 2025 Course Begleiter | Entwickelt für IT-Professionals</p>
+      <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-readable-dim border-t border-[rgb(var(--cyber-border))]">
+        <p>© 2025 CompTIA - Zertifikation - Begleiter | Entwickelt für IT-Professionals</p>
       </footer>
     </div>
   )
