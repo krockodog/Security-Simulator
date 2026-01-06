@@ -111,6 +111,7 @@ const toolChallenges: ToolChallenge[] = [
 ]
 
 export default function ToolCommanderPage() {
+  // Initialize with empty answers (user can fill them out)
   const [answers, setAnswers] = useState<{[key: string]: string}>({})
   const [submitted, setSubmitted] = useState(false)
 
