@@ -119,7 +119,6 @@ export default function HomePage() {
   return (
     <div className="min-h-screen cyber-grid relative">
       {/* Scanline Effect */}
-      <div className="scanline" />
       
       {/* Hero Section */}
       <div className="relative overflow-hidden">

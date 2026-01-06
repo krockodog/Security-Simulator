@@ -2,21 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Cyberpunk Theme */
+/* Dark Minimalist Theme */
 @layer base {
   :root {
-    --cyber-bg: 10 10 15;
-    --cyber-surface: 20 20 30;
-    --cyber-surface-elevated: 30 30 45;
-    --cyber-cyan: 0 255 255;
-    --cyber-magenta: 255 0 255;
-    --cyber-yellow: 255 255 0;
-    --cyber-blue: 0 150 255;
-    --cyber-text: 240 240 255;
-    --cyber-text-dim: 180 180 200;
-    --cyber-border: 80 80 100;
-    --cyber-success: 0 255 157;
-    --cyber-error: 255 50 100;
+    --cyber-bg: 0 0 0;
+    --cyber-surface: 15 15 18;
+    --cyber-surface-elevated: 25 25 30;
+    --cyber-cyan: 0 220 220;
+    --cyber-magenta: 220 0 220;
+    --cyber-yellow: 220 220 0;
+    --cyber-blue: 0 130 230;
+    --cyber-text: 250 250 255;
+    --cyber-text-dim: 160 160 180;
+    --cyber-border: 50 50 60;
+    --cyber-success: 0 220 140;
+    --cyber-error: 220 40 90;
   }
   
   body {
@@ -25,53 +25,45 @@
   }
 }
 
-/* Neon Glow Effects */
+/* Minimal Glow Effects */
 .neon-cyan {
-  box-shadow: 0 0 5px rgba(0, 255, 255, 0.5),
-              0 0 10px rgba(0, 255, 255, 0.3),
-              0 0 20px rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 3px rgba(0, 220, 220, 0.3),
+              0 0 6px rgba(0, 220, 220, 0.15);
 }
 
 .neon-magenta {
-  box-shadow: 0 0 5px rgba(255, 0, 255, 0.5),
-              0 0 10px rgba(255, 0, 255, 0.3),
-              0 0 20px rgba(255, 0, 255, 0.2);
+  box-shadow: 0 0 3px rgba(220, 0, 220, 0.3),
+              0 0 6px rgba(220, 0, 220, 0.15);
 }
 
 .neon-blue {
-  box-shadow: 0 0 5px rgba(0, 150, 255, 0.5),
-              0 0 10px rgba(0, 150, 255, 0.3),
-              0 0 20px rgba(0, 150, 255, 0.2);
+  box-shadow: 0 0 3px rgba(0, 130, 230, 0.3),
+              0 0 6px rgba(0, 130, 230, 0.15);
 }
 
 .neon-text-cyan {
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8),
-               0 0 20px rgba(0, 255, 255, 0.5),
-               0 0 30px rgba(0, 255, 255, 0.3);
+  text-shadow: 0 0 8px rgba(0, 220, 220, 0.4),
+               0 0 15px rgba(0, 220, 220, 0.2);
 }
 
 .neon-text-magenta {
-  text-shadow: 0 0 10px rgba(255, 0, 255, 0.8),
-               0 0 20px rgba(255, 0, 255, 0.5),
-               0 0 30px rgba(255, 0, 255, 0.3);
+  text-shadow: 0 0 8px rgba(220, 0, 220, 0.4),
+               0 0 15px rgba(220, 0, 220, 0.2);
 }
 
 .neon-border-cyan {
-  border: 2px solid rgb(var(--cyber-cyan));
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3),
-              inset 0 0 10px rgba(0, 255, 255, 0.1);
+  border: 1px solid rgb(var(--cyber-cyan));
+  box-shadow: 0 0 5px rgba(0, 220, 220, 0.2);
 }
 
 .neon-border-magenta {
-  border: 2px solid rgb(var(--cyber-magenta));
-  box-shadow: 0 0 10px rgba(255, 0, 255, 0.3),
-              inset 0 0 10px rgba(255, 0, 255, 0.1);
+  border: 1px solid rgb(var(--cyber-magenta));
+  box-shadow: 0 0 5px rgba(220, 0, 220, 0.2);
 }
 
 .neon-border-blue {
-  border: 2px solid rgb(var(--cyber-blue));
-  box-shadow: 0 0 10px rgba(0, 150, 255, 0.3),
-              inset 0 0 10px rgba(0, 150, 255, 0.1);
+  border: 1px solid rgb(var(--cyber-blue));
+  box-shadow: 0 0 5px rgba(0, 130, 230, 0.2);
 }
 
 /* Cyberpunk Cards */
@@ -159,12 +151,12 @@
   z-index: 9999;
 }
 
-/* Grid Background */
+/* Minimal Grid Background */
 .cyber-grid {
   background-image: 
-    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
+    linear-gradient(rgba(0, 220, 220, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 220, 220, 0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
 }
 
 /* High Contrast Text */

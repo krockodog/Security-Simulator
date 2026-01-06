@@ -9,7 +9,6 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 export default function NetworkPlusPage() {
   return (
     <div className="min-h-screen cyber-grid py-12 px-4 sm:px-6 lg:px-8">
-      <div className="scanline" />
       
       <div className="max-w-4xl mx-auto">
         <Link href="/" className="inline-flex items-center text-[rgb(var(--cyber-success))] hover:text-[rgb(var(--cyber-cyan))] mb-6 transition-colors">
