@@ -1,0 +1,11 @@
+/opt/hostedapp/node/root/instrument-logger.js:4
+  if (args.length == 1 && args[0].trim().startsWith("digest:")) return;
+                                  ^
+
+TypeError: args[0].trim is not a function
+    at console.error (/opt/hostedapp/node/root/instrument-logger.js:4:35)
+    at process.exception (/opt/hostedapp/node/root/app/node_modules/next/dist/server/lib/start-server.js:234:29)
+    at process.emit (node:events:530:35)
+    at process._fatalException (node:internal/process/execution:154:25)
+
+Node.js v22.14.0

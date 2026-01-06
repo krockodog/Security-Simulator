@@ -1,0 +1,39 @@
+  ▲ Next.js 14.2.28
+  - Local:        http://localhost:3000
+  - Environments: .env
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+ ✓ Starting...
+ ✓ Ready in 1419ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1585ms (549 modules)
+ GET / 200 in 1979ms
+ ✓ Compiled in 441ms (281 modules)
+ GET / 200 in 84ms
+ ○ Compiling /security-plus ...
+ ✓ Compiled /security-plus in 961ms (685 modules)
+ GET /security-plus 200 in 1113ms
+ GET /pentest-plus 200 in 1121ms
+ ○ Compiling /pentest-pbq/container-escape ...
+ ✓ Compiled /pentest-pbq/container-escape in 1599ms (939 modules)
+ GET /exam 200 in 2498ms
+ GET /pentest-exam 200 in 2526ms
+ GET /pentest-pbq/nmap-command 200 in 2539ms
+ GET /pbq/threat-analysis 200 in 2536ms
+ GET /pentest-pbq/certificate 200 in 2536ms
+ GET /pentest-pbq/web-vulns 200 in 2540ms
+ GET /pentest-pbq/robots-txt 200 in 2537ms
+ GET /pbq/log-analysis 200 in 2542ms
+ GET /pentest-pbq/wireless 200 in 2514ms
+ GET /pentest-pbq/python-script 200 in 2539ms
+ GET /pbq/certificate-mgmt 200 in 2546ms
+ GET /pentest-pbq/dns-recon 200 in 2518ms
+ GET /pentest-pbq/dom-xss 200 in 2512ms
+ GET /pbq/incident-response 200 in 2377ms
+ GET /pentest-pbq/cloud-s3 200 in 2525ms
+ GET /acronym-quiz 200 in 2361ms
+ GET /pbq/vpn-config 200 in 2384ms
+ GET /pentest-pbq/container-escape 200 in 2372ms
+ GET /pbq/firewall 200 in 2578ms
+[?25h

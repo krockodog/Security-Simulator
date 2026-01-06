@@ -1,0 +1,22 @@
+  ▲ Next.js 14.2.28
+  - Local:        http://localhost:3000
+  - Environments: .env
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+ ✓ Starting...
+ ✓ Ready in 1336ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1299ms (527 modules)
+ GET / 200 in 1505ms
+ ✓ Compiled in 265ms (258 modules)
+ GET / 200 in 41ms
+ ○ Compiling /pbq/threat-analysis ...
+ ✓ Compiled /pbq/threat-analysis in 1334ms (815 modules)
+ GET /pbq/incident-response 200 in 1614ms
+ GET /pbq/threat-analysis 200 in 1607ms
+ GET /pbq/firewall 200 in 1617ms
+ GET /exam 200 in 1635ms
+ GET /acronym-quiz 200 in 1620ms
+ GET /pbq/vpn-config 200 in 1615ms
+[?25h

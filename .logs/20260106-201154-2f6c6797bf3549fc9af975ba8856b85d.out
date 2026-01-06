@@ -1,0 +1,51 @@
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+  ▲ Next.js 14.2.28
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/19) ...
+   Generating static pages (4/19) 
+   Generating static pages (9/19) 
+   Generating static pages (14/19) 
+ ✓ Generating static pages (19/19)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    4.05 kB         108 kB
+├ ○ /_not-found                          873 B            88 kB
+├ ○ /acronym-quiz                        2.95 kB         130 kB
+├ ƒ /api/pbq/submit                      0 B                0 B
+├ ○ /exam                                7.49 kB         142 kB
+├ ○ /linux-plus                          2.72 kB         106 kB
+├ ○ /lpi-1                               2.95 kB         107 kB
+├ ○ /network-plus                        2.71 kB         106 kB
+├ ○ /pbq/certificate-mgmt                4.72 kB         147 kB
+├ ○ /pbq/firewall                        4.43 kB         121 kB
+├ ○ /pbq/incident-response               4.63 kB         121 kB
+├ ○ /pbq/log-analysis                    3.76 kB         131 kB
+├ ○ /pbq/threat-analysis                 5 kB            155 kB
+├ ○ /pbq/vpn-config                      3.89 kB         146 kB
+├ ○ /pentest-pbq/nmap-command            6.18 kB         125 kB
+├ ○ /pentest-pbq/web-vulns               2.94 kB         148 kB
+├ ○ /pentest-plus                        4.36 kB         108 kB
+└ ○ /security-plus                       5.72 kB         120 kB
++ First Load JS shared by all            87.1 kB
+  ├ chunks/117-c3d3dc8c766243ed.js       31.6 kB
+  ├ chunks/fd9d1056-b6bd4111191f2b98.js  53.6 kB
+  └ other shared chunks (total)          1.9 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+Successfully built app artifact

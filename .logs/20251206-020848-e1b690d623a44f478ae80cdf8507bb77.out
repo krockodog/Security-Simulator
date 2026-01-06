@@ -1,0 +1,44 @@
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+  ▲ Next.js 14.2.28
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/12) ...
+   Generating static pages (3/12) 
+   Generating static pages (6/12) 
+   Generating static pages (9/12) 
+ ✓ Generating static pages (12/12)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    7.44 kB         122 kB
+├ ○ /_not-found                          873 B            88 kB
+├ ○ /acronym-quiz                        2.1 kB          129 kB
+├ ƒ /api/pbq/submit                      0 B                0 B
+├ ○ /exam                                2.77 kB         130 kB
+├ ○ /pbq/certificate-mgmt                4.6 kB          147 kB
+├ ○ /pbq/firewall                        4.42 kB         121 kB
+├ ○ /pbq/incident-response               4.62 kB         121 kB
+├ ○ /pbq/log-analysis                    3.77 kB         131 kB
+├ ○ /pbq/threat-analysis                 4.93 kB         155 kB
+└ ○ /pbq/vpn-config                      3.84 kB         147 kB
++ First Load JS shared by all            87.1 kB
+  ├ chunks/117-c3d3dc8c766243ed.js       31.6 kB
+  ├ chunks/fd9d1056-b6bd4111191f2b98.js  53.6 kB
+  └ other shared chunks (total)          1.9 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+Successfully built app artifact

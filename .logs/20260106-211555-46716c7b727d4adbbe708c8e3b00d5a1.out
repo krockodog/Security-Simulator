@@ -1,0 +1,4 @@
+[master 7dddc53] Cookie-Consent-Banner hinzugefügt
+ 3 files changed, 62 insertions(+), 1 deletion(-)
+ create mode 100644 nextjs_space/components/cookie-consent.tsx
+###7dddc5351476eb98bcac58486ef297b859fa0a96###

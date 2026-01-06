@@ -1,0 +1,7 @@
+app/pbq/firewall/page.tsx(144,15): error TS2322: Type '(rule: FirewallRule) => JSX.Element' is not assignable to type '(item: Item) => ReactNode'.
+  Types of parameters 'rule' and 'item' are incompatible.
+    Type 'Item' is missing the following properties from type 'FirewallRule': sourceIp, destinationIp, port, protocol, and 2 more.
+app/pbq/incident-response/page.tsx(170,15): error TS2322: Type '(step: IncidentResponseStep) => JSX.Element' is not assignable to type '(item: Item) => ReactNode'.
+  Types of parameters 'step' and 'item' are incompatible.
+    Type 'Item' is missing the following properties from type 'IncidentResponseStep': phase, step, description
+exit_code=2

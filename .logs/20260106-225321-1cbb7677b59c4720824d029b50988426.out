@@ -1,0 +1,10 @@
+app/pentest-pbq/container-escape/page.tsx(104,30): error TS2339: Property 'options' does not exist on type 'ContainerEscapePhase'.
+app/pentest-pbq/container-escape/page.tsx(104,43): error TS7006: Parameter 'option' implicitly has an 'any' type.
+app/pentest-pbq/container-escape/page.tsx(182,49): error TS2551: Property 'recommendations' does not exist on type '{ vulnerabilities: string[]; remediations: string[]; }'. Did you mean 'remediations'?
+app/pentest-pbq/container-escape/page.tsx(182,70): error TS7006: Parameter 'rec' implicitly has an 'any' type.
+app/pentest-pbq/container-escape/page.tsx(182,75): error TS7006: Parameter 'idx' implicitly has an 'any' type.
+app/pentest-pbq/dns-recon/page.tsx(175,43): error TS2339: Property 'map' does not exist on type 'string | (string | string[])[]'.
+  Property 'map' does not exist on type 'string'.
+app/pentest-pbq/dns-recon/page.tsx(175,48): error TS7006: Parameter 'ans' implicitly has an 'any' type.
+app/pentest-pbq/dns-recon/page.tsx(175,53): error TS7006: Parameter 'i' implicitly has an 'any' type.
+exit_code=2

@@ -1,0 +1,7 @@
+app/pbq/certificate-mgmt/page.tsx(287,69): error TS2339: Property 'problem' does not exist on type 'string[] | { problem: string; solution: string; bestPractice: string; } | { problem: string; solution: string; bestPractice: string; } | { problem: string; solution: string; bestPractice: string; } | { ...; } | { ...; }'.
+  Property 'problem' does not exist on type 'string[]'.
+app/pbq/certificate-mgmt/page.tsx(293,69): error TS2339: Property 'solution' does not exist on type 'string[] | { problem: string; solution: string; bestPractice: string; } | { problem: string; solution: string; bestPractice: string; } | { problem: string; solution: string; bestPractice: string; } | { ...; } | { ...; }'.
+  Property 'solution' does not exist on type 'string[]'.
+app/pbq/certificate-mgmt/page.tsx(299,69): error TS2339: Property 'bestPractice' does not exist on type 'string[] | { problem: string; solution: string; bestPractice: string; } | { problem: string; solution: string; bestPractice: string; } | { problem: string; solution: string; bestPractice: string; } | { ...; } | { ...; }'.
+  Property 'bestPractice' does not exist on type 'string[]'.
+exit_code=2

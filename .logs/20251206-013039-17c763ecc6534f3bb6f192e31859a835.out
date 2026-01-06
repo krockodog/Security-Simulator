@@ -1,0 +1,57 @@
+  ▲ Next.js 14.2.28
+  - Local:        http://localhost:3000
+  - Environments: .env
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+ ✓ Starting...
+ ✓ Ready in 1414ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1740ms (673 modules)
+ GET / 200 in 2083ms
+ ✓ Compiled in 391ms (343 modules)
+ GET / 200 in 36ms
+ GET / 200 in 30ms
+ GET / 200 in 26ms
+ GET / 200 in 33ms
+ GET / 200 in 32ms
+ GET / 200 in 29ms
+ GET / 200 in 26ms
+ GET / 200 in 27ms
+ GET / 200 in 29ms
+ GET / 200 in 24ms
+ GET / 200 in 27ms
+ GET / 200 in 26ms
+ GET / 200 in 24ms
+ GET / 200 in 23ms
+ GET / 200 in 25ms
+ GET / 200 in 27ms
+ GET / 200 in 23ms
+ GET / 200 in 26ms
+ GET / 200 in 23ms
+ GET / 200 in 23ms
+ GET / 200 in 24ms
+ GET / 200 in 24ms
+ GET / 200 in 25ms
+ GET / 200 in 23ms
+ GET / 200 in 23ms
+ GET / 200 in 26ms
+ GET / 200 in 27ms
+ GET / 200 in 23ms
+ GET / 200 in 24ms
+ GET / 200 in 23ms
+ GET / 200 in 23ms
+ GET / 200 in 22ms
+ GET / 200 in 24ms
+ GET / 200 in 36ms
+ ○ Compiling /pbq/threat-analysis ...
+ ✓ Compiled /pbq/threat-analysis in 770ms (729 modules)
+ GET / 200 in 73ms
+ GET / 200 in 26ms
+ GET / 200 in 28ms
+ GET / 200 in 28ms
+ GET / 200 in 25ms
+ GET / 200 in 24ms
+ ✓ Compiled /api/pbq/submit in 209ms (361 modules)
+ POST /api/pbq/submit 500 in 401ms
+ GET / 200 in 72ms

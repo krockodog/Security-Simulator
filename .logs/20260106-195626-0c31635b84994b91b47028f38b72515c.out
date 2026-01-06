@@ -1,0 +1,19 @@
+app/pentest-pbq/nmap-command/page.tsx(42,56): error TS2339: Property 'isCorrect' does not exist on type 'AttackVector'.
+app/pentest-pbq/nmap-command/page.tsx(208,49): error TS2339: Property 'isCorrect' does not exist on type 'AttackVector'.
+app/pentest-pbq/nmap-command/page.tsx(240,46): error TS2339: Property 'isCorrect' does not exist on type 'AttackVector'.
+app/pentest-pbq/nmap-command/page.tsx(241,96): error TS2339: Property 'explanation' does not exist on type 'AttackVector'.
+app/pentest-pbq/web-vulns/page.tsx(33,12): error TS2551: Property 'payloads' does not exist on type 'WebVulnerability'. Did you mean 'payload'?
+app/pentest-pbq/web-vulns/page.tsx(33,29): error TS7006: Parameter 'payload' implicitly has an 'any' type.
+app/pentest-pbq/web-vulns/page.tsx(39,73): error TS2551: Property 'payloads' does not exist on type 'WebVulnerability'. Did you mean 'payload'?
+app/pentest-pbq/web-vulns/page.tsx(52,16): error TS2551: Property 'payloads' does not exist on type 'WebVulnerability'. Did you mean 'payload'?
+app/pentest-pbq/web-vulns/page.tsx(52,30): error TS7006: Parameter 'p' implicitly has an 'any' type.
+app/pentest-pbq/web-vulns/page.tsx(95,72): error TS2339: Property 'name' does not exist on type 'WebVulnerability'.
+app/pentest-pbq/web-vulns/page.tsx(97,29): error TS2339: Property 'description' does not exist on type 'WebVulnerability'.
+app/pentest-pbq/web-vulns/page.tsx(110,22): error TS2551: Property 'payloads' does not exist on type 'WebVulnerability'. Did you mean 'payload'?
+app/pentest-pbq/web-vulns/page.tsx(110,35): error TS7006: Parameter 'payload' implicitly has an 'any' type.
+app/pentest-pbq/web-vulns/page.tsx(140,100): error TS2339: Property 'name' does not exist on type 'WebVulnerability'.
+app/pentest-pbq/web-vulns/page.tsx(147,103): error TS2339: Property 'name' does not exist on type 'WebVulnerability'.
+app/pentest-pbq/web-vulns/page.tsx(214,73): error TS2339: Property 'name' does not exist on type 'WebVulnerability'.
+app/pentest-pbq/web-vulns/page.tsx(219,33): error TS2551: Property 'payloads' does not exist on type 'WebVulnerability'. Did you mean 'payload'?
+app/pentest-pbq/web-vulns/page.tsx(219,46): error TS7006: Parameter 'p' implicitly has an 'any' type.
+exit_code=2

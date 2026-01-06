@@ -1,0 +1,61 @@
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+  ▲ Next.js 14.2.28
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/29) ...
+   Generating static pages (7/29) 
+   Generating static pages (14/29) 
+   Generating static pages (21/29) 
+ ✓ Generating static pages (29/29)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    4.13 kB         108 kB
+├ ○ /_not-found                          876 B            88 kB
+├ ○ /acronym-quiz                        6.5 kB          131 kB
+├ ƒ /api/pbq/submit                      0 B                0 B
+├ ○ /exam                                9.13 kB         142 kB
+├ ○ /linux-plus                          2.73 kB         107 kB
+├ ○ /lpi-1                               2.96 kB         107 kB
+├ ○ /network-plus                        2.72 kB         107 kB
+├ ○ /pbq/certificate-mgmt                4.72 kB         147 kB
+├ ○ /pbq/firewall                        4.44 kB         122 kB
+├ ○ /pbq/incident-response               4.64 kB         122 kB
+├ ○ /pbq/log-analysis                    7.35 kB         131 kB
+├ ○ /pbq/threat-analysis                 5 kB            155 kB
+├ ○ /pbq/vpn-config                      3.9 kB          146 kB
+├ ○ /pentest-exam                        7.3 kB          138 kB
+├ ○ /pentest-pbq/certificate             6 kB            137 kB
+├ ○ /pentest-pbq/cloud-s3                1.66 kB         106 kB
+├ ○ /pentest-pbq/container-escape        1.66 kB         106 kB
+├ ○ /pentest-pbq/dns-recon               1.66 kB         106 kB
+├ ○ /pentest-pbq/dom-xss                 1.66 kB         106 kB
+├ ○ /pentest-pbq/nmap-command            6.19 kB         134 kB
+├ ○ /pentest-pbq/python-script           1.79 kB         130 kB
+├ ○ /pentest-pbq/robots-txt              1.66 kB         106 kB
+├ ○ /pentest-pbq/web-vulns               2.95 kB         157 kB
+├ ○ /pentest-pbq/wireless                1.66 kB         106 kB
+├ ○ /pentest-plus                        4.57 kB         109 kB
+├ ○ /security-plus                       4.08 kB         120 kB
+└ ○ /tool-commander                      4.87 kB         134 kB
++ First Load JS shared by all            87.1 kB
+  ├ chunks/2117-8563054bcbf63eeb.js      31.6 kB
+  ├ chunks/fd9d1056-0ad35491d2c4b6b8.js  53.6 kB
+  └ other shared chunks (total)          1.9 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+Successfully built app artifact
