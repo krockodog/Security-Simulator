@@ -6,109 +6,88 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { ArrowLeft, Terminal, CheckCircle2, XCircle } from 'lucide-react'
+import { toolChallenges as pt003ToolChallenges, toolCommanderOptions } from '@/lib/pt003-data'
 
-interface ToolChallenge {
-  id: string
-  tool: string
-  question: string
-  correct: string
-  options: string[]
-  explanation: string
-  usage: string
-}
-
-const toolChallenges: ToolChallenge[] = [
-  { 
-    id: '1', 
-    tool: 'Nmap', 
-    question: 'Scan all ports on 10.0.0.1', 
-    correct: 'nmap -p- 10.0.0.1', 
-    options: ['nmap -p- 10.0.0.1', 'nmap -sV 10.0.0.1', 'nmap -O 10.0.0.1', 'nmap --top-ports 100 10.0.0.1'],
-    explanation: '-p- scannt alle 65535 Ports. -sV zeigt Versionen, -O erkennt OS, --top-ports scannt nur häufige Ports.',
-    usage: 'Nutze -p- für vollständige Port-Enumerierung bei Penetration Tests.'
-  },
-  { 
-    id: '2', 
-    tool: 'SQLmap', 
-    question: 'Test URL for SQL injection', 
-    correct: 'sqlmap -u "http://site.com/page?id=1"', 
-    options: ['sqlmap -u "http://site.com/page?id=1"', 'sqlmap --crawl http://site.com', 'sqlmap -d mysql', 'sqlmap --wizard'],
-    explanation: '-u spezifiziert die Ziel-URL mit Parameter. --crawl crawlt die Website, -d verbindet direkt zur DB.',
-    usage: 'Teste immer URL-Parameter auf SQL Injection-Schwachstellen.'
-  },
-  { 
-    id: '3', 
-    tool: 'Hydra', 
-    question: 'SSH brute-force with wordlists', 
-    correct: 'hydra -L users.txt -P pass.txt ssh://10.0.0.1', 
-    options: ['hydra -L users.txt -P pass.txt ssh://10.0.0.1', 'hydra -l admin -p password 10.0.0.1', 'hydra -L users.txt ftp://10.0.0.1', 'hydra -U ssh'],
-    explanation: '-L nutzt Username-Liste, -P nutzt Passwort-Liste. -l/-p sind für einzelne Credentials.',
-    usage: 'Hydra eignet sich für Brute-Force-Angriffe auf Login-Services.'
-  },
-  { 
-    id: '4', 
-    tool: 'Gobuster', 
-    question: 'Directory enumeration on website', 
-    correct: 'gobuster dir -u http://site.com -w wordlist.txt', 
-    options: ['gobuster dir -u http://site.com -w wordlist.txt', 'gobuster dns -d site.com', 'gobuster vhost -u http://site.com', 'gobuster help'],
-    explanation: 'dir-Modus für Directory Brute-Forcing, dns für DNS-Subdomains, vhost für Virtual Hosts.',
-    usage: 'Finde versteckte Verzeichnisse und Dateien auf Webservern.'
-  },
-  { 
-    id: '5', 
-    tool: 'Hashcat', 
-    question: 'Crack NTLM hashes with wordlist', 
-    correct: 'hashcat -m 1000 hashes.txt wordlist.txt', 
-    options: ['hashcat -m 1000 hashes.txt wordlist.txt', 'hashcat -m 5600 hashes.txt', 'hashcat -a 3 hashes.txt', 'hashcat --help'],
-    explanation: '-m 1000 ist der Hash-Type für NTLM. -m 5600 ist für NetNTLMv2, -a 3 ist Brute-Force-Modus.',
-    usage: 'Hashcat ist der schnellste Hash-Cracker mit GPU-Unterstützung.'
-  },
-  { 
-    id: '6', 
-    tool: 'Metasploit', 
-    question: 'Use EternalBlue exploit', 
-    correct: 'use exploit/windows/smb/ms17_010_eternalblue', 
-    options: ['use exploit/windows/smb/ms17_010_eternalblue', 'use auxiliary/scanner/smb/smb_version', 'use exploit/multi/handler', 'use post/windows/gather/hashdump'],
-    explanation: 'EternalBlue exploitet SMBv1 (MS17-010). scanner/smb_version scannt nur, multi/handler ist ein Payload Handler.',
-    usage: 'Kritische Windows-Schwachstelle für lateral movement.'
-  },
-  { 
-    id: '7', 
-    tool: 'John', 
-    question: 'Crack /etc/shadow with wordlist', 
-    correct: 'john --wordlist=rockyou.txt shadow', 
-    options: ['john --wordlist=rockyou.txt shadow', 'john --incremental shadow', 'john --show shadow', 'john --format=raw-md5 hashes'],
-    explanation: '--wordlist nutzt Dictionary Attack. --incremental ist Brute-Force, --show zeigt bereits gecrackte Hashes.',
-    usage: 'John the Ripper für Linux/Unix Password Cracking.'
-  },
-  { 
-    id: '8', 
-    tool: 'Nikto', 
-    question: 'Scan web server for vulnerabilities', 
-    correct: 'nikto -h http://site.com', 
-    options: ['nikto -h http://site.com', 'nikto -h http://site.com -ssl', 'nikto -update', 'nikto -Display 1'],
-    explanation: '-h spezifiziert den Host. -ssl erzwingt SSL/TLS, -update aktualisiert die Datenbank.',
-    usage: 'Automatisierter Web-Server-Scanner für bekannte Schwachstellen.'
-  },
-  { 
-    id: '9', 
-    tool: 'Responder', 
-    question: 'Capture hashes on interface eth0', 
-    correct: 'responder -I eth0 -wrf', 
-    options: ['responder -I eth0 -wrf', 'responder -A', 'responder -h', 'responder --lm'],
-    explanation: '-I spezifiziert Interface, -w startet WPAD-Server, -r aktiviert SMB-Relay, -f startet Fingerprinting.',
-    usage: 'LLMNR/NBT-NS Poisoning für Credential Harvesting in Windows-Netzwerken.'
-  },
-  { 
-    id: '10', 
-    tool: 'Burp Suite', 
-    question: 'Which mode intercepts HTTP requests?', 
-    correct: 'Proxy → Intercept', 
-    options: ['Proxy → Intercept', 'Scanner → Active Scan', 'Intruder → Positions', 'Repeater → Send'],
-    explanation: 'Proxy Intercept fängt Requests ab. Scanner scannt automatisch, Intruder führt Fuzzing durch, Repeater sendet modifizierte Requests.',
-    usage: 'Essential für Web Application Penetration Testing und Request-Manipulation.'
+// Transform pt003 data to UI format with options
+const toolChallenges = pt003ToolChallenges.map((ch, idx) => {
+  // Generate wrong options based on tool type
+  const wrongOptions = toolCommanderOptions.commonFlags[ch.tool as keyof typeof toolCommanderOptions.commonFlags] || []
+  const options = [ch.correctCommand]
+  
+  // Generate 3 plausible wrong answers
+  if (ch.tool === 'Nmap') {
+    options.push(
+      `nmap -sV ${ch.correctCommand.split(' ').pop()}`,
+      `nmap -O ${ch.correctCommand.split(' ').pop()}`,
+      `nmap --top-ports 100 ${ch.correctCommand.split(' ').pop()}`
+    )
+  } else if (ch.tool === 'SQLmap') {
+    options.push(
+      'sqlmap --crawl http://target.com',
+      'sqlmap -d mysql://target',
+      'sqlmap --wizard'
+    )
+  } else if (ch.tool === 'Hydra') {
+    options.push(
+      'hydra -l admin -p password 10.0.0.1',
+      'hydra -L users.txt ftp://10.0.0.1',
+      'hydra -U ssh'
+    )
+  } else if (ch.tool === 'Gobuster') {
+    options.push(
+      'gobuster dns -d example.com',
+      'gobuster vhost -u http://example.com',
+      'gobuster fuzz -u http://example.com/FUZZ'
+    )
+  } else if (ch.tool === 'Hashcat') {
+    options.push(
+      'hashcat -m 5600 hash.txt wordlist.txt',
+      'hashcat -a 3 hash.txt ?a?a?a?a?a',
+      'hashcat --show hash.txt'
+    )
+  } else if (ch.tool === 'Metasploit') {
+    options.push(
+      'use auxiliary/scanner/smb/smb_version',
+      'use exploit/multi/handler',
+      'use post/windows/gather/hashdump'
+    )
+  } else if (ch.tool === 'Nikto') {
+    options.push(
+      'nikto -h https://target.com -ssl',
+      'nikto -update',
+      'nikto -Display 1 -h target.com'
+    )
+  } else if (ch.tool === 'Wireshark') {
+    options.push(
+      'tshark -r capture.pcap -Y "http"',
+      'wireshark -i eth0',
+      'tshark -D'
+    )
+  } else if (ch.tool === 'John the Ripper') {
+    options.push(
+      'john --incremental shadow',
+      'john --show shadow',
+      'john --format=raw-md5 hashes.txt'
+    )
+  } else {
+    // Generic fallback options
+    options.push(
+      `${ch.tool.toLowerCase()} --help`,
+      `${ch.tool.toLowerCase()} -v`,
+      `${ch.tool.toLowerCase()} --version`
+    )
   }
-]
+
+  return {
+    id: ch.id,
+    tool: ch.tool,
+    question: ch.scenario,
+    correct: ch.correctCommand,
+    options: options.slice(0, 4).sort(() => Math.random() - 0.5),
+    explanation: ch.explanation,
+    usage: `Flags verwendet: ${ch.flags.join(' ')}`
+  }
+})
 
 export default function ToolCommanderPage() {
   // Initialize with empty answers (user can fill them out)

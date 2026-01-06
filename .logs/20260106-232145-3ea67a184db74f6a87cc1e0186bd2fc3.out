@@ -16,3 +16,10 @@
  GET / 200 in 37ms
  GET / 200 in 36ms
  GET / 200 in 35ms
+ GET / 200 in 40ms
+ GET / 200 in 39ms
+ ✓ Compiled /pentest-plus in 377ms (562 modules)
+ GET / 200 in 76ms
+ GET / 200 in 33ms
+ ✓ Compiled in 375ms (292 modules)
+[?25h
