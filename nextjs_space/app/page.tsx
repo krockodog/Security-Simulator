@@ -117,12 +117,10 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div className="min-h-screen cyber-grid relative">
-      {/* Scanline Effect */}
-      
+    <div className="min-h-screen bg-black cyber-grid relative">
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[rgba(0,255,255,0.05)] via-transparent to-[rgba(255,0,255,0.05)]" />
+      <div className="relative overflow-hidden bg-black">
+        <div className="absolute inset-0 bg-gradient-to-br from-[rgba(0,255,255,0.03)] via-transparent to-[rgba(255,0,255,0.03)]" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
           <div className="text-center space-y-6">
             <div className="flex justify-center mb-6">
