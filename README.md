@@ -1,165 +1,206 @@
-# CompTIA Certification PBQ Simulator
+Das ist eine coole Stilrichtung! Pwnagotchi bringt diesen verspielten "Cyber-Tamagotchi"-Vibe rein, der das harte Thema Security etwas auflockert, aber trotzdem extrem technisch wirkt.
 
+Hier ist das Update:
 
+1. **3D-Effekt entfernt:** Die Schrift ist jetzt flach und klar lesbar ("Oldschool Terminal").
+2. **Pwnagotchi ASCII:** Ich habe ein klassisches Pwnagotchi-Face (`(◕‿◕)`) in einem Gehäuse integriert, das den Status anzeigt.
+3. **Layout:** Der Rest behält den "Terminal"-Look, den wir vorher hatten.
 
+Kopiere wieder den **gesamten** Block unten in deine `README.md`.
 
+```markdown
 <div align="center">
 
 ```text
-   _____                     _ _               
-  / ____|                   (_) |              
- | (___   ___  ___ _   _ _ __ _| |_ _   _      
-  \___ \ / _ \/ __| | | | '__| | __| | | |     
-  ____) |  __/ (__| |_| | |  | | |_| |_| |     
- |_____/ \___|\___|\__,_|_|  |_|\__|\__, |     
-                                     __/ |     
-      [ S I M U L A T O R ]         |___/      
+  ____                           _  _               _   
+ / ___|  ___   ___  _   _  _ __ (_)| |_  _   _    _| |_ 
+ \___ \ / _ \ / __|| | | || '__|| || __|| | | |  |_   _|
+  ___) || __/| (__ | |_| || |   | || |_ | |_| |    |_|  
+ |____/ \___| \___| \__,_||_|   |_| \__| \__, |         
+                                         |___/          
+           &   P E N T E S T +                          
+                                                        
+            S I M U L A T O R                           
 
-           _______
-         /|       |\
-        | |   _   | |
-        | |  |_|  | |  SECURITY & DEFENSE
-        | |       | |
-         \|_______|/
-
-> **Live Demo:** [https://trygit.me](https://trygit.me)
-
-Ein interaktiver Performance-Based Questions (PBQ) Simulator für CompTIA Security+ (SY0-701) und PenTest+ (PT0-003) Zertifizierungen.
-
-## 🎯 Features
-
-### Security+ SY0-701
-- **6 PBQ-Simulationen:**
-  - Firewall Rule Ordering (Drag & Drop)
-  - Incident Response Workflow
-  - Threat Analysis & Remediation
-  - Log Analysis
-  - Certificate Management
-  - VPN Configuration
-- **60 Multiple-Choice Fragen** aus allen Domains
-- **46 Akronym-Quiz Fragen** (randomisierte Antwortpositionen)
-
-### PenTest+ PT0-003
-- **10 interaktive PBQ-Simulationen:**
-  1. Nmap Command Construction
-  2. Web Vulnerability Analysis
-  3. Certificate/TLS Testing
-  4. Python Exploit Scripting
-  5. Container Escape (Docker Privilege Escalation)
-  6. DNS Reconnaissance & WHOIS
-  7. Robots.txt Vulnerability Analysis
-  8. DOM-based XSS Exploitation
-  9. AWS S3 Bucket Security
-  10. Wireless Penetration Testing
-
-- **Tool Commander:** 10 CLI-Challenges für:
-  - Nmap, SQLmap, Hydra, Gobuster
-  - Hashcat, Metasploit, Nikto
-  - Wireshark/tshark, John the Ripper
-
-- **91 Multiple-Choice Fragen:**
-  | Domain | Fragen | Gewichtung |
-  |--------|--------|------------|
-  | Planning & Scoping | 14 | 15% |
-  | Information Gathering | 19 | 21% |
-  | Attacks & Exploits | 19 | 35% |
-  | Reporting | 14 | 15% |
-  | Tools & Code Analysis | 24 | 20% |
-
-## 🛠️ Tech Stack
-
-- **Framework:** Next.js 14 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS + Radix UI
-- **Database:** PostgreSQL + Prisma ORM
-- **Theme:** Dark "Cyber" Design (Pure Black + Cyan/Magenta Accents)
-
-## 📁 Projektstruktur
+       .---------------------------------.
+       |  [O] [O]              (◕‿◕)     |
+       |                                 |
+       |      HACK THE PLANET?           |
+       |      [YES]     NO               |
+       |                                 |
+       '---------------------------------'
 
 ```
-nextjs_space/
-├── app/
-│   ├── page.tsx                 # Landing Page
-│   ├── security-plus/           # Security+ Dashboard
-│   ├── pentest-plus/            # PenTest+ Dashboard
-│   ├── exam/                    # Security+ MCQ Exam
-│   ├── pentest-exam/            # PenTest+ MCQ Exam
-│   ├── acronym-quiz/            # Akronym-Quiz
-│   ├── tool-commander/          # CLI Tool Challenges
-│   ├── pbq/                     # Security+ PBQs
-│   │   ├── firewall/
-│   │   ├── incident-response/
-│   │   ├── threat-analysis/
-│   │   ├── log-analysis/
-│   │   ├── certificate-mgmt/
-│   │   └── vpn-config/
-│   └── pentest-pbq/             # PenTest+ PBQs
-│       ├── nmap-command/
-│       ├── web-vulns/
-│       ├── certificate/
-│       ├── python-script/
-│       ├── container-escape/
-│       ├── dns-recon/
-│       ├── robots-txt/
-│       ├── dom-xss/
-│       ├── cloud-s3/
-│       └── wireless/
-├── lib/
-│   ├── exam-data.ts             # Security+ Fragen
-│   ├── pt003-data.ts            # PenTest+ Fragen (91 MCQ + 10 PBQ)
-│   └── pbq-data.ts              # Security+ PBQ Content
-└── components/
-    ├── ui/                      # Radix UI Components
-    ├── pbq/                     # PBQ-spezifische Components
-    └── cookie-consent.tsx       # DSGVO-Banner
-```
 
-## 🚀 Installation
+**[ MISSION BRIEFING ]**
 
-```bash
-# Repository klonen
-git clone https://github.com/yourusername/security-plus-pbq-simulator.git
-cd security-plus-pbq-simulator/nextjs_space
 
-# Dependencies installieren
-yarn install
 
-# Prisma Client generieren
-yarn prisma generate
 
-# Development Server starten
-yarn dev
-```
 
-## 📊 Implementierungsstatus
+Ein interaktiver **Performance-Based Questions (PBQ) Simulator** für CompTIA Security+ (SY0-701) und PenTest+ (PT0-003).
 
-| Zertifizierung | PBQs | MCQs | Status |
-|----------------|------|------|--------|
-| Security+ SY0-701 | 6/6 | 60/60 | ✅ Vollständig |
-| PenTest+ PT0-003 | 10/10 | 91/91 | ✅ Vollständig |
-| Network+ N10-009 | - | - | 🔜 Coming Soon |
-| Linux+ XK0-005 | - | - | 🔜 Coming Soon |
-| LPI-1 (101/102) | - | - | 🔜 Coming Soon |
+<h3>
+<a href="https://trygit.me">>> INITIALIZE LIVE DEMO <<</a>
+</h3>
 
-## 🎨 Design
-
-- **Theme:** Minimalistisches "Cyber" Dark Mode
-- **Hintergrund:** Pure Black (`#000000`)
-- **Akzentfarben:** Cyan (`#00FFFF`) + Magenta (`#FF00FF`)
-- **Borders:** 1px subtle mit `border-cyan-500/30`
-- **Komponenten:** shadcn/ui basiert auf Radix Primitives
-
-## 📝 DSGVO-Konformität
-
-- Cookie-Consent Banner mit expliziter Zustimmung
-- Keine Third-Party Tracking-Scripts
-- LocalStorage nur für Benutzereinstellungen
-
-## 📜 Lizenz
-
-Dieses Projekt ist für **Bildungszwecke** konzipiert.
+</div>
 
 ---
 
-**© 2025 CompTIA - Zertifikation - als Unterstützung | Entwickelt für IT - Studenten**  
-**Copyright by [trygit.me](https://trygit.me)**
+## `root@pwnagotchi:~/modules#` _
+
+Das System emuliert realistische Prüfungsszenarien und CLI-Herausforderungen in einer sicheren Sandbox.
+
+### `[ DIR: SECURITY_PLUS_SY0-701 ]`
+
+```properties
+[ PBQ_SIMULATIONS ]
+> Firewall Rule Ordering .... [READY] (Drag & Drop Logic)
+> Incident Response ......... [READY] (Workflow Analysis)
+> Threat Remediation ........ [READY] (Active Defense)
+> Log Analysis .............. [READY] (Pattern Recognition)
+> Cert Management ........... [READY] (PKI Infrastructure)
+> VPN Config ................ [READY] (Tunneling Protocols)
+
+[ KNOWLEDGE_BASE ]
+> MCQ_Database .............. [60 Records] (All Domains)
+> Acronym_Quiz .............. [46 Records] (Randomized)
+
+```
+
+### `[ DIR: PENTEST_PLUS_PT0-003 ]`
+
+**// INTERACTIVE_PBQ_LIST**
+
+1. `Nmap Command Construction` - Network Reconnaissance
+2. `Web Vuln Analysis` - OWASP Top 10 Identification
+3. `TLS/Cert Testing` - Encryption Standards
+4. `Python Exploit Scripting` - Payload Development
+5. `Container Escape` - Docker PrivEsc Scenarios
+6. `DNS & WHOIS` - OSINT Gathering
+7. `Robots.txt Analysis` - Information Leakage
+8. `DOM-based XSS` - Client-Side Exploitation
+9. `AWS S3 Security` - Cloud Bucket Enumeration
+10. `Wireless Pentest` - Aircrack-ng / WPA2 Logic
+
+**// TOOL_COMMANDER_CLI**
+Eine emulierte Shell-Umgebung für Tool-Syntax-Training:
+
+> `nmap`, `sqlmap`, `hydra`, `gobuster`, `hashcat`, `metasploit`, `nikto`, `wireshark`, `john`
+
+**// EXAM_METRICS**
+| DOMAIN | COUNT | WEIGHT |
+| :--- | :---: | :---: |
+| Planning & Scoping | 14 | 15% |
+| Information Gathering | 19 | 21% |
+| Attacks & Exploits | 19 | 35% |
+| Reporting | 14 | 15% |
+| Tools & Code Analysis | 24 | 20% |
+
+---
+
+## `root@pwnagotchi:~/sys/diag#` _
+
+Das Projekt basiert auf einem modernen, gehärteten Tech-Stack.
+
+```text
++---------------------------------------------------------------+
+|                      SYSTEM ARCHITECTURE                      |
++----------------------+-----------------------+----------------+
+| CORE FRAMEWORK       | INTERFACE / UI        | DATA LAYER     |
++----------------------+-----------------------+----------------+
+| > Next.js 14         | > Tailwind CSS        | > PostgreSQL   |
+|   (App Router)       | > Radix UI            | > Prisma ORM   |
+| > TypeScript         | > Cyber-Dark Theme    |                |
++----------------------+-----------------------+----------------+
+| FEATURES: Pure Black (#000000) + Cyan/Magenta Accents         |
++---------------------------------------------------------------+
+
+```
+
+## `root@pwnagotchi:~/source/tree#` ls -R
+
+```bash
+nextjs_space/
+├── app/
+│   ├── security-plus/       # [SECURE] Dashboard
+│   ├── pentest-plus/        # [OFFENSIVE] Dashboard
+│   ├── tool-commander/      # [CLI] Tool Challenges
+│   ├── pbq/                 # [SIM] Security+ Modules
+│   │   ├── firewall/        # >> Rule Sets
+│   │   ├── incident-res/    # >> IR Playbooks
+│   │   └── ...
+│   └── pentest-pbq/         # [SIM] PenTest+ Modules
+│       ├── nmap-command/    # >> Network Mapper
+│       ├── python-script/   # >> Exploit Dev
+│       ├── container-esc/   # >> Docker Breakout
+│       └── ...
+└── lib/
+    ├── exam-data.ts         # Encrypted Question DB
+    └── pt003-data.ts        # Target Definitions
+
+```
+
+---
+
+## `root@pwnagotchi:~/deploy#` ./install.sh
+
+Befolge das Protokoll zur lokalen Initialisierung.
+
+```bash
+# 1. Establish Secure Connection (Clone)
+git clone [https://github.com/yourusername/security-plus-pbq-simulator.git](https://github.com/yourusername/security-plus-pbq-simulator.git)
+
+# 2. Navigate to Operations Directory
+cd security-plus-pbq-simulator/nextjs_space
+
+# 3. Install Dependencies
+yarn install
+
+# 4. Generate Data Models
+yarn prisma generate
+
+# 5. Initialize Sequence
+yarn dev
+
+```
+
+---
+
+## `root@pwnagotchi:~/status#` cat roadmap.log
+
+| TARGET SYSTEM | TYPE | PBQ | MCQ | STATUS |
+| --- | --- | --- | --- | --- |
+| **Security+ SY0-701** | DEFENSE | 6 | 60 | `[ACTIVE]` ✅ |
+| **PenTest+ PT0-003** | OFFENSE | 10 | 91 | `[ACTIVE]` ✅ |
+| **Network+ N10-009** | INFRA | - | - | `[PENDING]` ⏳ |
+| **Linux+ XK0-005** | OS | - | - | `[PENDING]` ⏳ |
+| **LPI-1 (101/102)** | OS | - | - | `[PENDING]` ⏳ |
+
+---
+
+## `root@pwnagotchi:~/legal#` view LICENSE
+
+> **PRIVACY PROTOCOL:**
+> * GDPR/DSGVO Compliant.
+> * No external tracking beacons detected.
+> * LocalStorage used strictly for user preferences.
+> 
+> 
+
+<div align="center">
+
+`© 2025 CompTIA - Zertifikation - als Unterstützung`
+
+
+
+
+
+**[ ACCESS GRANTED: TRYGIT.ME ]**
+
+</div>
+
+```
+
+```
