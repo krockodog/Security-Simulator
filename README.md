@@ -23,7 +23,7 @@ Kopiere wieder den **gesamten** Block unten in deine `README.md`.
             S I M U L A T O R                           
 
        .---------------------------------.
-       |  [O] [O]              (◕‿◕)     |
+       |   (◕‿◕)            (◕‿◕)    |
        |                                 |
        |      HACK THE PLANET?           |
        |      [YES]     NO               |
