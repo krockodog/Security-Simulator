@@ -1,5 +1,27 @@
 # CompTIA Certification PBQ Simulator
 
+
+
+
+<div align="center">
+
+```text
+   _____                     _ _               
+  / ____|                   (_) |              
+ | (___   ___  ___ _   _ _ __ _| |_ _   _      
+  \___ \ / _ \/ __| | | | '__| | __| | | |     
+  ____) |  __/ (__| |_| | |  | | |_| |_| |     
+ |_____/ \___|\___|\__,_|_|  |_|\__|\__, |     
+                                     __/ |     
+      [ S I M U L A T O R ]         |___/      
+
+           _______
+         /|       |\
+        | |   _   | |
+        | |  |_|  | |  SECURITY & DEFENSE
+        | |       | |
+         \|_______|/
+
 > **Live Demo:** [https://trygit.me](https://trygit.me)
 
 Ein interaktiver Performance-Based Questions (PBQ) Simulator für CompTIA Security+ (SY0-701) und PenTest+ (PT0-003) Zertifizierungen.
